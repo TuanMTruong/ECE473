@@ -4,7 +4,7 @@
 
 ## General Flags
 PROJECT = main
-MCU = atxmega32a4u
+MCU = atmega32u4
 TARGET = $(PROJECT).elf
 CC = avr-gcc
 BATCHISP = "C:/Program Files (x86)/Atmel/Flip 3.4.2/bin/batchisp.exe"
