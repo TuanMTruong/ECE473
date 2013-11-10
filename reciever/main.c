@@ -24,17 +24,19 @@
 //includes
 #include<avr/io.h>
 #include<avr/interrupt.h>
+#include<util/delay.h>
 
 // macros
 #define LEDPORT PORTD
 #define LED	6
 #define CPU_PRESCALE(n) (CLKPR = 0x80, CLKPR = (n))
 #define CPU_16MHz 0x00
-#define CPU_4Mhz 0x02
+#define CPU_4MHz 0x02
+#define buffersize 50
 
 //global variables
-uint8_t dataring[50];
-uint8_t ring counter= 0;
+uint8_t dataring[buffersize];
+uint8_t ringcounter= 0;
 
 //Sets up SPI as master with a prescale division of 4
 //The reason for the slow speed for placing slave further away, at a slower speed
@@ -66,7 +68,7 @@ void Setup_USART(){
 	UCSR1C = (3<<UCSZ10);
 
 	//set baud rate to 38.4K
-	UDRR1 = 12;
+	UBRR1 = 12;
 	return;
 }
 
@@ -76,7 +78,7 @@ void Setup_USART(){
 //When data is received it will be stored in a buffer waiting to be accessed
 ISR(USART1_RX_vect){
 	//Store data
-
+	
 }
 
 //Bad interrupt catcher
@@ -89,11 +91,15 @@ ISR(BADISR_vect){
 
 //functions that access data buffer
 void PushData(uint8_t data){
-
+	if(ringcounter >= buffersize){
+		ringcounter = 0;
+	}
+	dataring[ringcounter] = data;
+	ringcounter++;
 }
 
 uint8_t PopData(){
-
+	return dataring[ringcounter];
 }
 
 uint8_t ReadData(uint8_t location){
