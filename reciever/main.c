@@ -29,19 +29,42 @@
 // macros
 #define LEDPORT PORTD
 #define LED	6
+#define SS_PIN	0
+#define SCLK_PIN 1
+#define MOSI_PIN 2
+#define MISO_PIN 3
+#define RX_PIN	2
+#define TX_PIN	3
+
 #define CPU_PRESCALE(n) (CLKPR = 0x80, CLKPR = (n))
 #define CPU_16MHz 0x00
 #define CPU_4MHz 0x02
+
 #define buffersize 50
+
+
 
 //global variables
 uint8_t dataring[buffersize];
 uint8_t ringcounter= 0;
 
+//Set up Data Direction Registers for LEDs, enables, and latches
+void Setup_DDR(){
+	//1 = output, 0 = input
+	//on board LED 
+	DDRD = (1<<LED);
+	//set latch pins
+
+	//set enable pins
+
+}
 //Sets up SPI as master with a prescale division of 4
 //The reason for the slow speed for placing slave further away, at a slower speed
 //there is a smaller chance so lost data.
 void Setup_SPI(){
+	//set up DDR for SPI, 1 = output, 0 = input
+	DDRB |= (1<< SS_PIN) | (1<< SCLK_PIN) | (1<< MOSI_PIN);
+	DDRB &= ~(1<<MISO_PIN);
 	//Set up SPI control register
 	SPCR = (1<<SPE) | (1<<MSTR) | (3<<SPR0);
 
@@ -60,7 +83,9 @@ void Send_SPI(uint8_t data){
 
 
 void Setup_USART(){
-	
+	//set up DDR for USART, 1 = output, 0 = input
+	DDRD |= (1<<TX_PIN);
+	DDRD &= ~(1<<RX_PIN);
 	//By default USART is asynchronous, parity is disable, and 1 stop bit
 	UCSR1A = (1<<U2X1);
 	UCSR1B = (1<<RXEN1) | (1<<TXEN1);
@@ -110,6 +135,7 @@ uint8_t ReadData(uint8_t location){
 int main(){
 	//Set clock to 4 Mhz
 	CPU_PRESCALE(CPU_4MHz);
+	Setup_DDR();
 	Setup_SPI();
 	Setup_USART();
 	
