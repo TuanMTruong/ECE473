@@ -37,6 +37,7 @@
 //	- USART_TXC0	PC3
 // - Audio in
 // 	- AUD_IN 	PA1
+//	- AUD_VOL	PE0
 // - Temp Sensor
 //	- TEMP		PA0
 //
@@ -44,7 +45,7 @@
 /******************************************************************/
 
 
-
+#define F_CPU 320000000UL
 
 //the includes
 #include<avr/io.h>
@@ -75,8 +76,15 @@
 #define TX_PIN		PIN3_bm
 
 #define AUD_IN_PIN	PIN1_bm
+#define AUD_VOL_PIN	PIN0_bm
 
 #define TEMP_PIN	PIN0_bm
+
+
+
+#define USART_Baudrate_Set(_usart, _bselValue, _bScaleFactor)            \
+	(_usart).BAUDCTRLA =(uint8_t)_bselValue;                             \
+	(_usart).BAUDCTRLB =(_bScaleFactor << USART_BSCALE0_bp)|(_bselValue >> 8)
 
 //global variables
 
@@ -93,7 +101,7 @@ void setClockTo32MHz() {
 //set up Data Direction Register non-serial protocols
 void Setup_DDR(){
 	//1 = output, 0 = input
-	PORTE.DIRSET = SHIFT_LATCH_PIN | SHIFT_LOAD_PIN;
+	PORTE.DIRSET = SHIFT_LATCH_PIN | SHIFT_LOAD_PIN | AUD_VOL_PIN;
 	PORTB.DIRSET = FQD_RST_PIN | FQD_AUDIO_PIN;
 	PORTD.DIRSET = LCD_SS_PIN | LCD_RST_PIN | LCD_SIG_PIN | LCD_LIGHT_PIN;
 	
@@ -136,15 +144,15 @@ void Setup_USARTC(){
 
 	//Set up USART interrupts
 
-	//Enable USART and 2X speed
-	USARTC0.CTRLB = USART_RXEN_bm | USART_TXEN_bm | USART_CLK2X_bm;
+	//Enable USART
+	USARTC0.CTRLB = USART_RXEN_bm | USART_TXEN_bm;
 
 	//asynchronous, no parity, 1 stop bit, 8bit
 	USARTC0.CTRLC = USART_CHSIZE_8BIT_gc;
 	
-	//Set baudrate
-
-	return
+	//Set baudrate to 57600 bps
+	USART_Baudrate_Set(USARTC0, 1079, -5);
+	return;
 
 }
 
@@ -152,8 +160,29 @@ void Setup_TWIC(){
 
 }
 
+//Set up the PWM on PE0 (timer TCE0) to control the gain of mic amplifier
+void Setup_PWM(){
+	//Set up TCE0 CLKSEL clk/64
+	TCE0.CTRLA = TC_CLKSEL_DIV64_gc; //needs to be adjusted for RC value to create stable DC voltage
+	//Enable output compare on channel 0A for timmer
+	//Set up single slope PWM mode
+	TCE0.CTRLB = TC0_CCAEN_bm | TC_WGMODE_SINGLESLOPE_gc;
+	//enable interrupt 
 
 
+	return;
+}
+
+
+//Set up internal timer for keeping track of the time
+void Setup_Timer(){
+	
+}
+
+//Enable internal 32KHz clock for time counting
+void Setup_32KHz(){
+
+}
 
 
 
@@ -162,13 +191,22 @@ int main(){
 	//set 32MHz clock
 	setClockTo32MHz();
 	//set up DDR
+	Setup_DDR();
 	//set up SPIC
+	Setup_SPIC();
 	//set up SPID
+	Setup_SPID();
 	//set up USARTC
+	Setup_USARTC();
 	//set up TWIC
+
 	//set up PWM
+	Setup_PWM();
 	//set up ADC
 
+	while(1){
 
+
+	}
 
 }

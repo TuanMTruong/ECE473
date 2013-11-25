@@ -116,7 +116,7 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x2c8
+.text           0x00000000      0x2f6
  *(.vectors)
  .vectors       0x00000000      0x1fc /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avrxmega2/crtx32a4u.o
                 0x00000000                __vectors
@@ -299,28 +299,31 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a
                 0x00000236                __vector_87
                 0x00000236                __vector_65
                 0x00000236                __vector_38
- .text          0x0000023a       0x84 main.o
+ .text          0x0000023a       0x9e main.o
                 0x0000023a                setClockTo32MHz
                 0x00000258                Setup_DDR
                 0x0000027a                Setup_SPIC
                 0x0000028e                Setup_SPID
                 0x000002a2                Setup_USARTC
-                0x000002bc                Setup_TWIC
- .text          0x000002be        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
- .text          0x000002be        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_copy_data.o)
- .text          0x000002be        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_clear_bss.o)
-                0x000002be                . = ALIGN (0x2)
+                0x000002c4                Setup_TWIC
+                0x000002c6                Setup_PWM
+                0x000002d4                Setup_Timer
+                0x000002d6                Setup_32KHz
+ .text          0x000002d8        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
+ .text          0x000002d8        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_copy_data.o)
+ .text          0x000002d8        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_clear_bss.o)
+                0x000002d8                . = ALIGN (0x2)
  *(.text.*)
- .text.startup  0x000002be        0x6 main.o
-                0x000002be                main
- .text.libgcc   0x000002c4        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
- .text.libgcc   0x000002c4        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_copy_data.o)
- .text.libgcc   0x000002c4        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_clear_bss.o)
-                0x000002c4                . = ALIGN (0x2)
+ .text.startup  0x000002d8       0x1a main.o
+                0x000002d8                main
+ .text.libgcc   0x000002f2        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
+ .text.libgcc   0x000002f2        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_copy_data.o)
+ .text.libgcc   0x000002f2        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_clear_bss.o)
+                0x000002f2                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000002c4        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
-                0x000002c4                exit
-                0x000002c4                _exit
+ .fini9         0x000002f2        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
+                0x000002f2                exit
+                0x000002f2                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -339,11 +342,11 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000002c4        0x4 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
+ .fini0         0x000002f2        0x4 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
  *(.fini0)
-                0x000002c8                _etext = .
+                0x000002f6                _etext = .
 
-.data           0x00802000        0x0 load address 0x000002c8
+.data           0x00802000        0x0 load address 0x000002f6
                 0x00802000                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00802000        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avrxmega2/crtx32a4u.o
@@ -370,8 +373,8 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a
  *(.bss*)
  *(COMMON)
                 0x00802000                PROVIDE (__bss_end, .)
-                0x000002c8                __data_load_start = LOADADDR (.data)
-                0x000002c8                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000002f6                __data_load_start = LOADADDR (.data)
+                0x000002f6                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00802000        0x0
                 0x00802000                PROVIDE (__noinit_start, .)
@@ -445,36 +448,36 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x733
+.debug_info     0x00000000      0xdf5
  *(.debug_info)
- .debug_info    0x00000000      0x4e4 main.o
- .debug_info    0x000004e4       0xc5 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
- .debug_info    0x000005a9       0xc5 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_copy_data.o)
- .debug_info    0x0000066e       0xc5 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_clear_bss.o)
+ .debug_info    0x00000000      0xba6 main.o
+ .debug_info    0x00000ba6       0xc5 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
+ .debug_info    0x00000c6b       0xc5 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_copy_data.o)
+ .debug_info    0x00000d30       0xc5 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_clear_bss.o)
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x123
+.debug_abbrev   0x00000000      0x167
  *(.debug_abbrev)
- .debug_abbrev  0x00000000       0xe7 main.o
- .debug_abbrev  0x000000e7       0x14 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
- .debug_abbrev  0x000000fb       0x14 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_copy_data.o)
- .debug_abbrev  0x0000010f       0x14 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_clear_bss.o)
+ .debug_abbrev  0x00000000      0x12b main.o
+ .debug_abbrev  0x0000012b       0x14 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
+ .debug_abbrev  0x0000013f       0x14 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_copy_data.o)
+ .debug_abbrev  0x00000153       0x14 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_clear_bss.o)
 
-.debug_line     0x00000000      0x243
+.debug_line     0x00000000      0x24e
  *(.debug_line)
- .debug_line    0x00000000      0x120 main.o
- .debug_line    0x00000120       0x5c /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
- .debug_line    0x0000017c       0x65 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_copy_data.o)
- .debug_line    0x000001e1       0x62 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_clear_bss.o)
+ .debug_line    0x00000000      0x12b main.o
+ .debug_line    0x0000012b       0x5c /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
+ .debug_line    0x00000187       0x65 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_copy_data.o)
+ .debug_line    0x000001ec       0x62 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_clear_bss.o)
 
-.debug_frame    0x00000000       0x84
+.debug_frame    0x00000000       0xb4
  *(.debug_frame)
- .debug_frame   0x00000000       0x84 main.o
+ .debug_frame   0x00000000       0xb4 main.o
 
-.debug_str      0x00000000      0x3e0
+.debug_str      0x00000000      0x89e
  *(.debug_str)
- .debug_str     0x00000000      0x3e0 main.o
-                                0x425 (size before relaxing)
+ .debug_str     0x00000000      0x89e main.o
+                                0x8e3 (size before relaxing)
 
 .debug_loc
  *(.debug_loc)
@@ -490,10 +493,13 @@ LOAD linker stubs
 Cross Reference Table
 
 Symbol                                            File
+Setup_32KHz                                       main.o
 Setup_DDR                                         main.o
+Setup_PWM                                         main.o
 Setup_SPIC                                        main.o
 Setup_SPID                                        main.o
 Setup_TWIC                                        main.o
+Setup_Timer                                       main.o
 Setup_USARTC                                      main.o
 __bad_interrupt                                   /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avrxmega2/crtx32a4u.o
 __bss_end                                         /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_clear_bss.o)
