@@ -87,6 +87,10 @@
 	(_usart).BAUDCTRLB =(_bScaleFactor << USART_BSCALE0_bp)|(_bselValue >> 8)
 
 //global variables
+uint8_t USART_BUFFER_CURRENT[26];
+uint8_t USART_BUFFER_PREC[26];
+
+
 
 
 //Sets up the clock for 32MHz (very self explanatory)
@@ -151,7 +155,8 @@ void Setup_USARTC(){
 	USARTC0.CTRLC = USART_CHSIZE_8BIT_gc;
 	
 	//Set baudrate to 57600 bps
-	USART_Baudrate_Set(USARTC0, 1079, -5);
+	//9600 = 3317, -4
+	USART_Baudrate_Set(USARTC0, 3317, -4);
 	return;
 
 }
@@ -184,12 +189,39 @@ void Setup_32KHz(){
 
 }
 
+//pop buffer
+uint8_t pop_buffer(uint8_t *buffer, uint8_t buffer_location){
+    return buffer[buffer_location];
+}
 
+void push_buffer(uint8_t *buffer, uint8_t buffer_location, uint8_t data){
+    *(buffer + buffer_location) = data;
+    return;
+}
 
+//return 1 if there is a different in the two buffer
+uint8_t compare_buffer(uint8_t *buffer1, uint8_t *buffer2){
+    uint8_t i =0;
+    
+    while (*buffer1) {
+        if (*buffer1 != *buffer2) {
+            return 1;
+        }
+    }
+    return 0;
+    
+}
+
+void usart_send(uint8_t data){
+
+}
 
 int main(){
 	//set 32MHz clock
 	setClockTo32MHz();
+	
+	_delay_ms(200);
+	
 	//set up DDR
 	Setup_DDR();
 	//set up SPIC
@@ -201,11 +233,16 @@ int main(){
 	//set up TWIC
 
 	//set up PWM
-	Setup_PWM();
+//	Setup_PWM();
 	//set up ADC
 
-	while(1){
+	_delay_ms(200);
+	_delay_ms(200);
 
+
+
+	while(1){
+	
 
 	}
 
