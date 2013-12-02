@@ -44,23 +44,17 @@
 //
 /******************************************************************/
 
-
-#define F_CPU 320000000UL
+//defining clock speed
+#define F_CPU 32000000UL
 
 //the includes
 #include<avr/io.h>
 #include<avr/interrupt.h>
 #include<util/delay.h>
+#include"spi.h"
+
 
 //macros
-#define SS_PIN		PIN4_bm
-#define MOSI_PIN 	PIN5_bm
-#define MISO_PIN	PIN6_bm
-#define SCK_PIN		PIN7_bm
-
-#define SHIFT_LOAD_PIN	PIN2_bm
-#define SHIFT_LATCH_PIN PIN3_bm
-
 #define FQD_RST_PIN	PIN0_bm
 #define FQD_AUDIO_PIN	PIN2_bm
 
@@ -115,30 +109,7 @@ void Setup_DDR(){
 	return;
 }
 
-//sets up the SPI on port C
-void Setup_SPIC(){
-	//Setup DDR for SPIC (1 = output, 0 = input)
-	PORTC.DIRSET = SS_PIN | SCK_PIN | MOSI_PIN;
-	PORTC.DIRCLR = MISO_PIN;
 
-	//Set up for 2x speed, enabled, master, at 64 prescale
-	SPIC.CTRL = SPI_CLK2X_bm | SPI_ENABLE_bm | SPI_MASTER_bm |SPI_PRESCALER_DIV64_gc;
-	
-	return;
-}
-
-//sets up the SPI on port D
-void Setup_SPID(){
-	//Setup DDR for SPIC (1 = output, 0 = input)
-	PORTD.DIRSET = SS_PIN | SCK_PIN | MOSI_PIN;
-	PORTD.DIRCLR = MISO_PIN;
-
-	//Set up for 2x speed, enabled, master, at 64 prescale
-	SPID.CTRL = SPI_CLK2X_bm | SPI_ENABLE_bm | SPI_MASTER_bm |SPI_PRESCALER_DIV64_gc;
-	
-	return;
-
-}
 
 //Sets up the usart on port c
 void Setup_USARTC(){
@@ -213,7 +184,9 @@ uint8_t compare_buffer(uint8_t *buffer1, uint8_t *buffer2){
 }
 
 void usart_send(uint8_t data){
-
+	while(!(USARTC0.STATUS &USART_DREIF_bm)){}
+	USARTC0.DATA = data;
+	return;
 }
 
 int main(){
@@ -241,8 +214,11 @@ int main(){
 
 
 
+
 	while(1){
-	
+        _delay_ms(200);
+        _delay_ms(200);
+        usart_send(Read_Buttons());
 
 	}
 
