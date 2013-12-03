@@ -20,7 +20,7 @@ void Setup_USART(){
 	DDRD &= ~(1<<RX_PIN);
 	//By default USART is asynchronous, parity is disable, and 1 stop bit
 	UCSR1A = (1<<U2X1);
-	UCSR1B = (1<<RXEN1) | (1<<TXEN1);
+	UCSR1B = (1<<RXEN1) | (1<<TXEN1) | (1<<RXCIE1);
 	//Setting USART data frame to 8bit
 	UCSR1C = (3<<UCSZ10);
 
@@ -45,3 +45,13 @@ uint8_t PopData(){
 uint8_t ReadData(uint8_t location){
 	return dataring[location];
 }
+
+uint8_t get_buff_location(){
+	return ringcounter;
+}
+
+void set_buff_location(uint8_t location){
+	ringcounter = location;
+	return;
+}
+

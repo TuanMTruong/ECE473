@@ -20,7 +20,8 @@ void Setup_USART();
 void PushData(uint8_t data);
 uint8_t PopData();
 uint8_t ReadData(uint8_t location);
-
+uint8_t get_buff_location();
+void set_buff_location(uint8_t location);
 
 
 #endif /* USART_H_ */

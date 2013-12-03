@@ -1,121 +1,126 @@
    1               		.file	"hs_converter.c"
-   2               	__SP_H__ = 0x3e
-   3               	__SP_L__ = 0x3d
-   4               	__SREG__ = 0x3f
-   5               	__tmp_reg__ = 0
-   6               	__zero_reg__ = 1
-   7               		.section	.text.hs_convert,"ax",@progbits
-   8               	.global	hs_convert
-  10               	hs_convert:
-  11               	/* prologue: function */
-  12               	/* frame size = 0 */
-  13               	/* stack size = 0 */
-  14               	.L__stack_usage = 0
-  15 0000 FA01      		movw r30,r20
-  16 0002 1082      		st Z,__zero_reg__
-  17 0004 1182      		std Z+1,__zero_reg__
-  18 0006 1282      		std Z+2,__zero_reg__
-  19 0008 8432      		cpi r24,lo8(36)
-  20 000a 00F4      		brsh .L2
-  21 000c 97E0      		ldi r25,lo8(7)
-  22 000e 899F      		mul r24,r25
-  23 0010 902D      		mov r25,r0
-  24 0012 1124      		clr r1
-  25 0014 9083      		st Z,r25
-  26               	.L2:
-  27 0016 982F      		mov r25,r24
-  28 0018 9452      		subi r25,lo8(-(-36))
-  29 001a 9432      		cpi r25,lo8(36)
-  30 001c 00F4      		brsh .L3
-  31 001e 9FEF      		ldi r25,lo8(-1)
-  32 0020 9083      		st Z,r25
-  33 0022 97E0      		ldi r25,lo8(7)
-  34 0024 899F      		mul r24,r25
-  35 0026 902D      		mov r25,r0
-  36 0028 1124      		clr r1
-  37 002a 9C5F      		subi r25,lo8(-(4))
-  38 002c 9183      		std Z+1,r25
-  39               	.L3:
-  40 002e 982F      		mov r25,r24
-  41 0030 9854      		subi r25,lo8(-(-72))
-  42 0032 9432      		cpi r25,lo8(36)
-  43 0034 00F4      		brsh .L4
-  44 0036 9FEF      		ldi r25,lo8(-1)
-  45 0038 9183      		std Z+1,r25
-  46 003a 99EF      		ldi r25,lo8(-7)
-  47 003c 899F      		mul r24,r25
-  48 003e 902D      		mov r25,r0
-  49 0040 1124      		clr r1
-  50 0042 9950      		subi r25,lo8(-(-9))
-  51 0044 9083      		st Z,r25
-  52               	.L4:
-  53 0046 982F      		mov r25,r24
-  54 0048 9C56      		subi r25,lo8(-(-108))
-  55 004a 9432      		cpi r25,lo8(36)
-  56 004c 00F4      		brsh .L5
-  57 004e 9FEF      		ldi r25,lo8(-1)
-  58 0050 9183      		std Z+1,r25
-  59 0052 97E0      		ldi r25,lo8(7)
-  60 0054 899F      		mul r24,r25
-  61 0056 902D      		mov r25,r0
-  62 0058 1124      		clr r1
-  63 005a 945F      		subi r25,lo8(-(12))
-  64 005c 9283      		std Z+2,r25
-  65               	.L5:
-  66 005e 982F      		mov r25,r24
-  67 0060 9059      		subi r25,lo8(-(112))
-  68 0062 9432      		cpi r25,lo8(36)
-  69 0064 00F4      		brsh .L6
-  70 0066 9FEF      		ldi r25,lo8(-1)
-  71 0068 9283      		std Z+2,r25
-  72 006a 99EF      		ldi r25,lo8(-7)
-  73 006c 899F      		mul r24,r25
-  74 006e 902D      		mov r25,r0
-  75 0070 1124      		clr r1
-  76 0072 9151      		subi r25,lo8(-(-17))
-  77 0074 9183      		std Z+1,r25
-  78               	.L6:
-  79 0076 982F      		mov r25,r24
-  80 0078 945B      		subi r25,lo8(-(76))
-  81 007a 9432      		cpi r25,lo8(36)
-  82 007c 00F4      		brsh .L7
-  83 007e 9FEF      		ldi r25,lo8(-1)
-  84 0080 9283      		std Z+2,r25
-  85 0082 97E0      		ldi r25,lo8(7)
-  86 0084 899F      		mul r24,r25
-  87 0086 902D      		mov r25,r0
-  88 0088 1124      		clr r1
-  89 008a 9C5E      		subi r25,lo8(-(20))
-  90 008c 9083      		st Z,r25
-  91               	.L7:
-  92 008e 982F      		mov r25,r24
-  93 0090 985D      		subi r25,lo8(-(40))
-  94 0092 9432      		cpi r25,lo8(36)
-  95 0094 00F4      		brsh .L8
-  96 0096 9FEF      		ldi r25,lo8(-1)
-  97 0098 9083      		st Z,r25
-  98 009a 99EF      		ldi r25,lo8(-7)
-  99 009c 899F      		mul r24,r25
- 100 009e 802D      		mov r24,r0
- 101 00a0 1124      		clr r1
- 102 00a2 8951      		subi r24,lo8(-(-25))
- 103 00a4 8283      		std Z+2,r24
- 104 00a6 0895      		ret
- 105               	.L8:
- 106 00a8 8C3F      		cpi r24,lo8(-4)
- 107 00aa 00F0      		brlo .L1
- 108 00ac 8FEF      		ldi r24,lo8(-1)
- 109 00ae 8083      		st Z,r24
- 110               	.L1:
- 111 00b0 0895      		ret
- 113               		.ident	"GCC: (GNU) 4.7.2"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__ = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.section	.text.hs_convert,"ax",@progbits
+  11               	.global	hs_convert
+  13               	hs_convert:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16               	/* stack size = 0 */
+  17               	.L__stack_usage = 0
+  18 0000 FA01      		movw r30,r20
+  19 0002 1082      		st Z,__zero_reg__
+  20 0004 1182      		std Z+1,__zero_reg__
+  21 0006 1282      		std Z+2,__zero_reg__
+  22 0008 8432      		cpi r24,lo8(36)
+  23 000a 00F4      		brsh .L2
+  24 000c 97E0      		ldi r25,lo8(7)
+  25 000e 899F      		mul r24,r25
+  26 0010 902D      		mov r25,r0
+  27 0012 1124      		clr r1
+  28 0014 9083      		st Z,r25
+  29               	.L2:
+  30 0016 982F      		mov r25,r24
+  31 0018 9452      		subi r25,lo8(-(-36))
+  32 001a 9432      		cpi r25,lo8(36)
+  33 001c 00F4      		brsh .L3
+  34 001e 9FEF      		ldi r25,lo8(-1)
+  35 0020 9083      		st Z,r25
+  36 0022 97E0      		ldi r25,lo8(7)
+  37 0024 899F      		mul r24,r25
+  38 0026 902D      		mov r25,r0
+  39 0028 1124      		clr r1
+  40 002a 9C5F      		subi r25,lo8(-(4))
+  41 002c 9183      		std Z+1,r25
+  42               	.L3:
+  43 002e 982F      		mov r25,r24
+  44 0030 9854      		subi r25,lo8(-(-72))
+  45 0032 9432      		cpi r25,lo8(36)
+  46 0034 00F4      		brsh .L4
+  47 0036 9FEF      		ldi r25,lo8(-1)
+  48 0038 9183      		std Z+1,r25
+  49 003a 99EF      		ldi r25,lo8(-7)
+  50 003c 899F      		mul r24,r25
+  51 003e 902D      		mov r25,r0
+  52 0040 1124      		clr r1
+  53 0042 9950      		subi r25,lo8(-(-9))
+  54 0044 9083      		st Z,r25
+  55               	.L4:
+  56 0046 982F      		mov r25,r24
+  57 0048 9C56      		subi r25,lo8(-(-108))
+  58 004a 9432      		cpi r25,lo8(36)
+  59 004c 00F4      		brsh .L5
+  60 004e 9FEF      		ldi r25,lo8(-1)
+  61 0050 9183      		std Z+1,r25
+  62 0052 97E0      		ldi r25,lo8(7)
+  63 0054 899F      		mul r24,r25
+  64 0056 902D      		mov r25,r0
+  65 0058 1124      		clr r1
+  66 005a 945F      		subi r25,lo8(-(12))
+  67 005c 9283      		std Z+2,r25
+  68               	.L5:
+  69 005e 982F      		mov r25,r24
+  70 0060 9059      		subi r25,lo8(-(112))
+  71 0062 9432      		cpi r25,lo8(36)
+  72 0064 00F4      		brsh .L6
+  73 0066 9FEF      		ldi r25,lo8(-1)
+  74 0068 9283      		std Z+2,r25
+  75 006a 99EF      		ldi r25,lo8(-7)
+  76 006c 899F      		mul r24,r25
+  77 006e 902D      		mov r25,r0
+  78 0070 1124      		clr r1
+  79 0072 9151      		subi r25,lo8(-(-17))
+  80 0074 9183      		std Z+1,r25
+  81               	.L6:
+  82 0076 982F      		mov r25,r24
+  83 0078 945B      		subi r25,lo8(-(76))
+  84 007a 9432      		cpi r25,lo8(36)
+  85 007c 00F4      		brsh .L7
+  86 007e 9FEF      		ldi r25,lo8(-1)
+  87 0080 9283      		std Z+2,r25
+  88 0082 97E0      		ldi r25,lo8(7)
+  89 0084 899F      		mul r24,r25
+  90 0086 902D      		mov r25,r0
+  91 0088 1124      		clr r1
+  92 008a 9C5E      		subi r25,lo8(-(20))
+  93 008c 9083      		st Z,r25
+  94               	.L7:
+  95 008e 982F      		mov r25,r24
+  96 0090 985D      		subi r25,lo8(-(40))
+  97 0092 9432      		cpi r25,lo8(36)
+  98 0094 00F4      		brsh .L8
+  99 0096 9FEF      		ldi r25,lo8(-1)
+ 100 0098 9083      		st Z,r25
+ 101 009a 99EF      		ldi r25,lo8(-7)
+ 102 009c 899F      		mul r24,r25
+ 103 009e 802D      		mov r24,r0
+ 104 00a0 1124      		clr r1
+ 105 00a2 8951      		subi r24,lo8(-(-25))
+ 106 00a4 8283      		std Z+2,r24
+ 107 00a6 0895      		ret
+ 108               	.L8:
+ 109 00a8 8C3F      		cpi r24,lo8(-4)
+ 110 00aa 00F0      		brlo .L1
+ 111 00ac 8FEF      		ldi r24,lo8(-1)
+ 112 00ae 8083      		st Z,r24
+ 113               	.L1:
+ 114 00b0 0895      		ret
 DEFINED SYMBOLS
                             *ABS*:00000000 hs_converter.c
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc0NmtmU.s:2      *ABS*:0000003e __SP_H__
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc0NmtmU.s:3      *ABS*:0000003d __SP_L__
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc0NmtmU.s:4      *ABS*:0000003f __SREG__
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc0NmtmU.s:5      *ABS*:00000000 __tmp_reg__
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc0NmtmU.s:6      *ABS*:00000001 __zero_reg__
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc0NmtmU.s:10     .text.hs_convert:00000000 hs_convert
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFxiixD.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFxiixD.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFxiixD.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFxiixD.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFxiixD.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFxiixD.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFxiixD.s:13     .text.hs_convert:00000000 hs_convert
 
-NO UNDEFINED SYMBOLS
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

@@ -20,6 +20,7 @@
 
 void Setup_SPI();
 void Send_SPI_byte(uint8_t data);
+void Send_SPI_array( uint8_t *red, uint8_t *green, uint8_t *blue, uint8_t lenght);
 
 
 #endif /* SPI_H_ */

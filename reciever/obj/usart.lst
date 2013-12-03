@@ -1,96 +1,127 @@
    1               		.file	"usart.c"
-   2               	__SP_H__ = 0x3e
-   3               	__SP_L__ = 0x3d
-   4               	__SREG__ = 0x3f
-   5               	__tmp_reg__ = 0
-   6               	__zero_reg__ = 1
-   7               		.section	.text.Setup_USART,"ax",@progbits
-   8               	.global	Setup_USART
-  10               	Setup_USART:
-  11               	/* prologue: function */
-  12               	/* frame size = 0 */
-  13               	/* stack size = 0 */
-  14               	.L__stack_usage = 0
-  15 0000 539A      		sbi 0xa,3
-  16 0002 5298      		cbi 0xa,2
-  17 0004 82E0      		ldi r24,lo8(2)
-  18 0006 8093 C800 		sts 200,r24
-  19 000a 88E1      		ldi r24,lo8(24)
-  20 000c 8093 C900 		sts 201,r24
-  21 0010 86E0      		ldi r24,lo8(6)
-  22 0012 8093 CA00 		sts 202,r24
-  23 0016 82E2      		ldi r24,lo8(34)
-  24 0018 90E0      		ldi r25,0
-  25 001a 9093 CD00 		sts 204+1,r25
-  26 001e 8093 CC00 		sts 204,r24
-  27 0022 0895      		ret
-  29               		.section	.text.PushData,"ax",@progbits
-  30               	.global	PushData
-  32               	PushData:
-  33               	/* prologue: function */
-  34               	/* frame size = 0 */
-  35               	/* stack size = 0 */
-  36               	.L__stack_usage = 0
-  37 0000 9091 0000 		lds r25,ringcounter
-  38 0004 9233      		cpi r25,lo8(50)
-  39 0006 00F0      		brlo .L3
-  40 0008 1092 0000 		sts ringcounter,__zero_reg__
-  41               	.L3:
-  42 000c 9091 0000 		lds r25,ringcounter
-  43 0010 E92F      		mov r30,r25
-  44 0012 F0E0      		ldi r31,0
-  45 0014 E050      		subi r30,lo8(-(dataring))
-  46 0016 F040      		sbci r31,hi8(-(dataring))
-  47 0018 8083      		st Z,r24
-  48 001a 9F5F      		subi r25,lo8(-(1))
-  49 001c 9093 0000 		sts ringcounter,r25
-  50 0020 0895      		ret
-  52               		.section	.text.PopData,"ax",@progbits
-  53               	.global	PopData
-  55               	PopData:
-  56               	/* prologue: function */
-  57               	/* frame size = 0 */
-  58               	/* stack size = 0 */
-  59               	.L__stack_usage = 0
-  60 0000 E091 0000 		lds r30,ringcounter
-  61 0004 F0E0      		ldi r31,0
-  62 0006 E050      		subi r30,lo8(-(dataring))
-  63 0008 F040      		sbci r31,hi8(-(dataring))
-  64 000a 8081      		ld r24,Z
-  65 000c 0895      		ret
-  67               		.section	.text.ReadData,"ax",@progbits
-  68               	.global	ReadData
-  70               	ReadData:
-  71               	/* prologue: function */
-  72               	/* frame size = 0 */
-  73               	/* stack size = 0 */
-  74               	.L__stack_usage = 0
-  75 0000 E82F      		mov r30,r24
-  76 0002 F0E0      		ldi r31,0
-  77 0004 E050      		subi r30,lo8(-(dataring))
-  78 0006 F040      		sbci r31,hi8(-(dataring))
-  79 0008 8081      		ld r24,Z
-  80 000a 0895      		ret
-  82               	.global	ringcounter
-  83               		.section .bss
-  86               	ringcounter:
-  87 0000 00        		.zero	1
-  88               		.comm	dataring,50,1
-  89               		.ident	"GCC: (GNU) 4.7.2"
-  90               	.global __do_clear_bss
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__ = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.section	.text.Setup_USART,"ax",@progbits
+  11               	.global	Setup_USART
+  13               	Setup_USART:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16               	/* stack size = 0 */
+  17               	.L__stack_usage = 0
+  18 0000 539A      		sbi 42-32,3
+  19 0002 5298      		cbi 42-32,2
+  20 0004 82E0      		ldi r24,lo8(2)
+  21 0006 8093 C800 		sts 200,r24
+  22 000a 88E9      		ldi r24,lo8(-104)
+  23 000c 8093 C900 		sts 201,r24
+  24 0010 86E0      		ldi r24,lo8(6)
+  25 0012 8093 CA00 		sts 202,r24
+  26 0016 82E2      		ldi r24,lo8(34)
+  27 0018 90E0      		ldi r25,hi8(34)
+  28 001a 9093 CD00 		sts 204+1,r25
+  29 001e 8093 CC00 		sts 204,r24
+  30               	/* epilogue start */
+  31 0022 0895      		ret
+  33               		.section	.text.PushData,"ax",@progbits
+  34               	.global	PushData
+  36               	PushData:
+  37               	/* prologue: function */
+  38               	/* frame size = 0 */
+  39               	/* stack size = 0 */
+  40               	.L__stack_usage = 0
+  41 0000 9091 0000 		lds r25,ringcounter
+  42 0004 9233      		cpi r25,lo8(50)
+  43 0006 00F0      		brlo .L3
+  44 0008 1092 0000 		sts ringcounter,__zero_reg__
+  45               	.L3:
+  46 000c 9091 0000 		lds r25,ringcounter
+  47 0010 E92F      		mov r30,r25
+  48 0012 F0E0      		ldi r31,lo8(0)
+  49 0014 E050      		subi r30,lo8(-(dataring))
+  50 0016 F040      		sbci r31,hi8(-(dataring))
+  51 0018 8083      		st Z,r24
+  52 001a 9F5F      		subi r25,lo8(-(1))
+  53 001c 9093 0000 		sts ringcounter,r25
+  54               	/* epilogue start */
+  55 0020 0895      		ret
+  57               		.section	.text.PopData,"ax",@progbits
+  58               	.global	PopData
+  60               	PopData:
+  61               	/* prologue: function */
+  62               	/* frame size = 0 */
+  63               	/* stack size = 0 */
+  64               	.L__stack_usage = 0
+  65 0000 8091 0000 		lds r24,ringcounter
+  66 0004 E0E0      		ldi r30,lo8(dataring)
+  67 0006 F0E0      		ldi r31,hi8(dataring)
+  68 0008 E80F      		add r30,r24
+  69 000a F11D      		adc r31,__zero_reg__
+  70 000c 8081      		ld r24,Z
+  71               	/* epilogue start */
+  72 000e 0895      		ret
+  74               		.section	.text.ReadData,"ax",@progbits
+  75               	.global	ReadData
+  77               	ReadData:
+  78               	/* prologue: function */
+  79               	/* frame size = 0 */
+  80               	/* stack size = 0 */
+  81               	.L__stack_usage = 0
+  82 0000 E0E0      		ldi r30,lo8(dataring)
+  83 0002 F0E0      		ldi r31,hi8(dataring)
+  84 0004 E80F      		add r30,r24
+  85 0006 F11D      		adc r31,__zero_reg__
+  86 0008 8081      		ld r24,Z
+  87               	/* epilogue start */
+  88 000a 0895      		ret
+  90               		.section	.text.get_buff_location,"ax",@progbits
+  91               	.global	get_buff_location
+  93               	get_buff_location:
+  94               	/* prologue: function */
+  95               	/* frame size = 0 */
+  96               	/* stack size = 0 */
+  97               	.L__stack_usage = 0
+  98 0000 8091 0000 		lds r24,ringcounter
+  99               	/* epilogue start */
+ 100 0004 0895      		ret
+ 102               		.section	.text.set_buff_location,"ax",@progbits
+ 103               	.global	set_buff_location
+ 105               	set_buff_location:
+ 106               	/* prologue: function */
+ 107               	/* frame size = 0 */
+ 108               	/* stack size = 0 */
+ 109               	.L__stack_usage = 0
+ 110 0000 8093 0000 		sts ringcounter,r24
+ 111               	/* epilogue start */
+ 112 0004 0895      		ret
+ 114               	.global	ringcounter
+ 115               	.global	ringcounter
+ 116               		.section .bss
+ 119               	ringcounter:
+ 120 0000 00        		.skip 1,0
+ 121               		.comm dataring,50,1
 DEFINED SYMBOLS
                             *ABS*:00000000 usart.c
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc1RB7Dg.s:2      *ABS*:0000003e __SP_H__
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc1RB7Dg.s:3      *ABS*:0000003d __SP_L__
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc1RB7Dg.s:4      *ABS*:0000003f __SREG__
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc1RB7Dg.s:5      *ABS*:00000000 __tmp_reg__
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc1RB7Dg.s:6      *ABS*:00000001 __zero_reg__
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc1RB7Dg.s:10     .text.Setup_USART:00000000 Setup_USART
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc1RB7Dg.s:32     .text.PushData:00000000 PushData
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc1RB7Dg.s:86     .bss:00000000 ringcounter
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:13     .text.Setup_USART:00000000 Setup_USART
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:36     .text.PushData:00000000 PushData
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:119    .bss:00000000 ringcounter
                             *COM*:00000032 dataring
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc1RB7Dg.s:55     .text.PopData:00000000 PopData
-/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc1RB7Dg.s:70     .text.ReadData:00000000 ReadData
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:60     .text.PopData:00000000 PopData
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:77     .text.ReadData:00000000 ReadData
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:93     .text.get_buff_location:00000000 get_buff_location
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:105    .text.set_buff_location:00000000 set_buff_location
 
 UNDEFINED SYMBOLS
+__do_copy_data
 __do_clear_bss
