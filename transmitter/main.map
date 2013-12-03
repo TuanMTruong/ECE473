@@ -18,6 +18,7 @@ Discarded input sections
 
  .bss           0x00000000        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avrxmega2/crtx32a4u.o
  .text          0x00000000        0x0 obj/main.o
+ .bss           0x00000000        0x1 obj/main.o
  .text.Setup_TWIC
                 0x00000000        0x2 obj/main.o
  .text.pop_buffer
@@ -26,10 +27,6 @@ Discarded input sections
                 0x00000000        0xa obj/main.o
  .text.compare_buffer
                 0x00000000       0x18 obj/main.o
- .text.next_mode
-                0x00000000       0x14 obj/main.o
- .text.set_mode
-                0x00000000       0x34 obj/main.o
  .text          0x00000000        0x0 obj/usart.o
  .bss           0x00000000        0x0 obj/usart.o
  COMMON         0x00000000       0x34 obj/usart.o
@@ -166,7 +163,7 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x474
+.text           0x00000000      0x4aa
  *(.vectors)
  .vectors       0x00000000      0x1fc /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avrxmega2/crtx32a4u.o
                 0x00000000                __vectors
@@ -355,37 +352,37 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a
                 0x00000234       0x22 obj/main.o
                 0x00000234                Setup_DDR
  .text.checkbutton
-                0x00000256       0xd8 obj/main.o
+                0x00000256       0xc2 obj/main.o
                 0x00000256                checkbutton
  .text.startup.main
-                0x0000032e       0x6a obj/main.o
-                0x0000032e                main
+                0x00000318       0xb6 obj/main.o
+                0x00000318                main
  .text.Setup_USARTC
-                0x00000398       0x22 obj/usart.o
-                0x00000398                Setup_USARTC
+                0x000003ce       0x22 obj/usart.o
+                0x000003ce                Setup_USARTC
  .text.usart_send_byte
-                0x000003ba        0xe obj/usart.o
-                0x000003ba                usart_send_byte
+                0x000003f0        0xe obj/usart.o
+                0x000003f0                usart_send_byte
  .text.usart_send_string
-                0x000003c8       0x38 obj/usart.o
-                0x000003c8                usart_send_string
+                0x000003fe       0x38 obj/usart.o
+                0x000003fe                usart_send_string
  .text.Setup_SPIC
-                0x00000400       0x14 obj/spi.o
-                0x00000400                Setup_SPIC
+                0x00000436       0x14 obj/spi.o
+                0x00000436                Setup_SPIC
  .text.Setup_SPID
-                0x00000414       0x14 obj/spi.o
-                0x00000414                Setup_SPID
+                0x0000044a       0x14 obj/spi.o
+                0x0000044a                Setup_SPID
  .text.Read_Buttons
-                0x00000428       0x2a obj/spi.o
-                0x00000428                Read_Buttons
+                0x0000045e       0x2a obj/spi.o
+                0x0000045e                Read_Buttons
  .text.setClockTo32MHz
-                0x00000452       0x1e obj/timer.o
-                0x00000452                setClockTo32MHz
-                0x00000470                . = ALIGN (0x2)
+                0x00000488       0x1e obj/timer.o
+                0x00000488                setClockTo32MHz
+                0x000004a6                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000470        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
-                0x00000470                exit
-                0x00000470                _exit
+ .fini9         0x000004a6        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
+                0x000004a6                exit
+                0x000004a6                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -404,11 +401,11 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000470        0x4 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
+ .fini0         0x000004a6        0x4 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
  *(.fini0)
-                0x00000474                _etext = .
+                0x000004aa                _etext = .
 
-.data           0x00802000        0x0 load address 0x00000474
+.data           0x00802000        0x0 load address 0x000004aa
                 0x00802000                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00802000        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avrxmega2/crtx32a4u.o
@@ -427,23 +424,21 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a
                 0x00802000                _edata = .
                 0x00802000                PROVIDE (__data_end, .)
 
-.bss            0x00802000        0x1
+.bss            0x00802000        0x0
                 0x00802000                PROVIDE (__bss_start, .)
  *(.bss)
- .bss           0x00802000        0x1 obj/main.o
-                0x00802000                mode
  *(.bss*)
  *(COMMON)
-                0x00802001                PROVIDE (__bss_end, .)
-                0x00000474                __data_load_start = LOADADDR (.data)
-                0x00000474                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00802000                PROVIDE (__bss_end, .)
+                0x000004aa                __data_load_start = LOADADDR (.data)
+                0x000004aa                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00802001        0x0
-                0x00802001                PROVIDE (__noinit_start, .)
+.noinit         0x00802000        0x0
+                0x00802000                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00802001                PROVIDE (__noinit_end, .)
-                0x00802001                _end = .
-                0x00802001                PROVIDE (__heap_start, .)
+                0x00802000                PROVIDE (__noinit_end, .)
+                0x00802000                _end = .
+                0x00802000                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -714,12 +709,11 @@ exit                                              /usr/local/CrossPack-AVR-20130
 main                                              obj/main.o
                                                   /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avrxmega2/crtx32a4u.o
 mode                                              obj/main.o
-next_mode                                         obj/main.o
 pop_buffer                                        obj/main.o
 push_buffer                                       obj/main.o
 setClockTo32MHz                                   obj/timer.o
                                                   obj/main.o
-set_mode                                          obj/main.o
 usart_send_byte                                   obj/usart.o
+                                                  obj/main.o
 usart_send_string                                 obj/usart.o
                                                   obj/main.o

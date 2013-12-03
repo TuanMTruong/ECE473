@@ -9,7 +9,9 @@
 #include"hs_converter.h"
 
 
-
+//takes an 8bit vaule from 0-255 and converts it into a rainbow spectrum
+//must pass in an 3 element array to store RGB data in
+//WIP: fix scale factor to control saturation 
 void hs_convert(uint8_t color, uint8_t scale, uint8_t *hs_data){
     uint8_t *red = hs_data;
     uint8_t *green = hs_data+1;
