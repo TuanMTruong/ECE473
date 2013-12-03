@@ -4,7 +4,22 @@
 //
 /******************************************************************/
 
+//macros
+#define SS_PIN		PIN4_bm
+#define MOSI_PIN 	PIN5_bm
+#define MISO_PIN	PIN6_bm
+#define SCK_PIN		PIN7_bm
+
+#define SHIFT_LOAD_PIN	PIN2_bm
+#define SHIFT_LATCH_PIN PIN3_bm
+
+#define FQD_RST_PIN	PIN0_bm
+#define FQD_AUDIO_PIN	PIN2_bm
+
+
 void Setup_SPIC();
 void Setup_SPID();
 
+void Setup_SPIC();
+void Setup_SPID();
 uint8_t Read_Buttons();

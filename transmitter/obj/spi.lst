@@ -1,0 +1,86 @@
+   1               		.file	"spi.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__ = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.section	.text.Setup_SPIC,"ax",@progbits
+  11               	.global	Setup_SPIC
+  13               	Setup_SPIC:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16               	/* stack size = 0 */
+  17               	.L__stack_usage = 0
+  18 0000 E0E4      		ldi r30,lo8(1600)
+  19 0002 F6E0      		ldi r31,hi8(1600)
+  20 0004 80EB      		ldi r24,lo8(-80)
+  21 0006 8183      		std Z+1,r24
+  22 0008 80E4      		ldi r24,lo8(64)
+  23 000a 8283      		std Z+2,r24
+  24 000c 82ED      		ldi r24,lo8(-46)
+  25 000e 8093 C008 		sts 2240,r24
+  26               	/* epilogue start */
+  27 0012 0895      		ret
+  29               		.section	.text.Setup_SPID,"ax",@progbits
+  30               	.global	Setup_SPID
+  32               	Setup_SPID:
+  33               	/* prologue: function */
+  34               	/* frame size = 0 */
+  35               	/* stack size = 0 */
+  36               	.L__stack_usage = 0
+  37 0000 E0E6      		ldi r30,lo8(1632)
+  38 0002 F6E0      		ldi r31,hi8(1632)
+  39 0004 80EB      		ldi r24,lo8(-80)
+  40 0006 8183      		std Z+1,r24
+  41 0008 80E4      		ldi r24,lo8(64)
+  42 000a 8283      		std Z+2,r24
+  43 000c 82ED      		ldi r24,lo8(-46)
+  44 000e 8093 C009 		sts 2496,r24
+  45               	/* epilogue start */
+  46 0012 0895      		ret
+  48               		.section	.text.Read_Buttons,"ax",@progbits
+  49               	.global	Read_Buttons
+  51               	Read_Buttons:
+  52               	/* prologue: function */
+  53               	/* frame size = 0 */
+  54               	/* stack size = 0 */
+  55               	.L__stack_usage = 0
+  56 0000 E0E8      		ldi r30,lo8(1664)
+  57 0002 F6E0      		ldi r31,hi8(1664)
+  58 0004 84E0      		ldi r24,lo8(4)
+  59 0006 8683      		std Z+6,r24
+  60 0008 8583      		std Z+5,r24
+  61 000a 88E0      		ldi r24,lo8(8)
+  62 000c 8683      		std Z+6,r24
+  63 000e E0EC      		ldi r30,lo8(2240)
+  64 0010 F8E0      		ldi r31,hi8(2240)
+  65 0012 1382      		std Z+3,__zero_reg__
+  66               	.L4:
+  67 0014 8091 C208 		lds r24,2242
+  68 0018 87FF      		sbrs r24,7
+  69 001a 00C0      		rjmp .L4
+  70 001c 8091 C308 		lds r24,2243
+  71 0020 9CE0      		ldi r25,lo8(12)
+  72 0022 E0E8      		ldi r30,lo8(1664)
+  73 0024 F6E0      		ldi r31,hi8(1664)
+  74 0026 9583      		std Z+5,r25
+  75               	/* epilogue start */
+  76 0028 0895      		ret
+DEFINED SYMBOLS
+                            *ABS*:00000000 spi.c
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:13     .text.Setup_SPIC:00000000 Setup_SPIC
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:32     .text.Setup_SPID:00000000 Setup_SPID
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:51     .text.Read_Buttons:00000000 Read_Buttons
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

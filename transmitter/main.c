@@ -52,12 +52,11 @@
 #include<avr/interrupt.h>
 #include<util/delay.h>
 #include"spi.h"
+#include"usart.h"
+#include"timer.h"
 
 
 //macros
-#define FQD_RST_PIN	PIN0_bm
-#define FQD_AUDIO_PIN	PIN2_bm
-
 #define SDA_PIN		PIN0_bm
 #define SCL_PIN		PIN1_bm
 
@@ -66,8 +65,7 @@
 #define LCD_SIG_PIN	PIN2_bm
 #define LCD_LIGHT_PIN	PIN3_bm
 
-#define RX_PIN		PIN2_bm
-#define TX_PIN		PIN3_bm
+
 
 #define AUD_IN_PIN	PIN1_bm
 #define AUD_VOL_PIN	PIN0_bm
@@ -76,25 +74,24 @@
 
 
 
-#define USART_Baudrate_Set(_usart, _bselValue, _bScaleFactor)            \
-	(_usart).BAUDCTRLA =(uint8_t)_bselValue;                             \
-	(_usart).BAUDCTRLB =(_bScaleFactor << USART_BSCALE0_bp)|(_bselValue >> 8)
+#define OPEN_COM 0xAB
+#define CLOSE_COM 0xBA
+#define ADDR_MODE 0xCB
+#define COLOR_MODE 0xBC
 
-//global variables
-uint8_t USART_BUFFER_CURRENT[26];
-uint8_t USART_BUFFER_PREC[26];
+#define RED_BUTTON 5
+#define GREEN_BUTTON 7
+#define BLUE_BUTTON 4
+#define YELLOW_BUTTON 6
+
+#define LED_NUM 32
+
+#define FULL_COLOR 0
+#define RAINBOW_MODE 1
 
 
+uint8_t mode = 0;
 
-
-//Sets up the clock for 32MHz (very self explanatory)
-void setClockTo32MHz() {
-	CCP = CCP_IOREG_gc;              // disable register security for oscillator update
-	OSC.CTRL = OSC_RC32MEN_bm;       // enable 32MHz oscillator
-	while(!(OSC.STATUS & OSC_RC32MRDY_bm)); // wait for oscillator to be ready
-	CCP = CCP_IOREG_gc;              // disable register security for clock update
-	CLK.CTRL = CLK_SCLKSEL_RC32M_gc; // switch to 32MHz clock
-}
 
 //set up Data Direction Register non-serial protocols
 void Setup_DDR(){
@@ -102,7 +99,7 @@ void Setup_DDR(){
 	PORTE.DIRSET = SHIFT_LATCH_PIN | SHIFT_LOAD_PIN | AUD_VOL_PIN;
 	PORTB.DIRSET = FQD_RST_PIN | FQD_AUDIO_PIN;
 	PORTD.DIRSET = LCD_SS_PIN | LCD_RST_PIN | LCD_SIG_PIN | LCD_LIGHT_PIN;
-	
+
 	//set audio and temp sensor to input
 	PORTA.DIRCLR = AUD_IN_PIN | TEMP_PIN;
 
@@ -111,115 +108,154 @@ void Setup_DDR(){
 
 
 
-//Sets up the usart on port c
-void Setup_USARTC(){
-	//Setup DDR (1 = output, 0 = input)
-	PORTC.DIRSET = TX_PIN;
-	PORTC.DIRCLR = RX_PIN;
-
-	//Set up USART interrupts
-
-	//Enable USART
-	USARTC0.CTRLB = USART_RXEN_bm | USART_TXEN_bm;
-
-	//asynchronous, no parity, 1 stop bit, 8bit
-	USARTC0.CTRLC = USART_CHSIZE_8BIT_gc;
-	
-	//Set baudrate to 57600 bps
-	//9600 = 3317, -4
-	USART_Baudrate_Set(USARTC0, 3317, -4);
-	return;
-
-}
 
 void Setup_TWIC(){
 
 }
 
-//Set up the PWM on PE0 (timer TCE0) to control the gain of mic amplifier
-void Setup_PWM(){
-	//Set up TCE0 CLKSEL clk/64
-	TCE0.CTRLA = TC_CLKSEL_DIV64_gc; //needs to be adjusted for RC value to create stable DC voltage
-	//Enable output compare on channel 0A for timmer
-	//Set up single slope PWM mode
-	TCE0.CTRLB = TC0_CCAEN_bm | TC_WGMODE_SINGLESLOPE_gc;
-	//enable interrupt 
 
 
-	return;
-}
 
-
-//Set up internal timer for keeping track of the time
-void Setup_Timer(){
-	
-}
-
-//Enable internal 32KHz clock for time counting
-void Setup_32KHz(){
-
-}
 
 //pop buffer
 uint8_t pop_buffer(uint8_t *buffer, uint8_t buffer_location){
-    return buffer[buffer_location];
+	return buffer[buffer_location];
 }
 
 void push_buffer(uint8_t *buffer, uint8_t buffer_location, uint8_t data){
-    *(buffer + buffer_location) = data;
-    return;
+	*(buffer + buffer_location) = data;
+	return;
 }
 
 //return 1 if there is a different in the two buffer
 uint8_t compare_buffer(uint8_t *buffer1, uint8_t *buffer2){
+	uint8_t i =0;
+
+	while (*buffer1) {
+		if (*buffer1 != *buffer2) {
+			return 1;
+		}
+	}
+	return 0;
+
+}
+
+
+void next_mode(){
+    mode++;
+    if (mode >3) mode = 0;
+    return;
+}
+
+void set_mode(uint8_t *array){
+    *(array) = OPEN_COM;
     uint8_t i =0;
-    
-    while (*buffer1) {
-        if (*buffer1 != *buffer2) {
-            return 1;
-        }
+    if (mode == FULL_COLOR){
+        *(array+1) = COLOR_MODE;
+        *(array+3) = CLOSE_COM;
     }
-    return 0;
+    if (mode == RAINBOW_MODE){
+        *(array+1) = ADDR_MODE;
+        for(i =2; i<(LED_NUM +2); i++){
+            *(array+i) = (i-1) *7;
+        }
+        *(array+i) = CLOSE_COM;
+    }
     
 }
 
-void usart_send(uint8_t data){
-	while(!(USARTC0.STATUS &USART_DREIF_bm)){}
-	USARTC0.DATA = data;
-	return;
+void checkbutton(uint8_t *encoders, uint8_t *array){
+    uint8_t input =0;
+    uint8_t i =0;
+    input = Read_Buttons();
+    if(input & 0xF0){
+        if(input & (1<<RED_BUTTON)){
+            mode = FULL_COLOR;
+            *(array+2) = 35;
+        }
+        else if(input & (1<<GREEN_BUTTON)){
+            mode = FULL_COLOR;
+            *(array+2) = 108;
+        }
+        else if(input & (1<<BLUE_BUTTON)){
+            mode = FULL_COLOR;
+            *(array+2) = 180;
+        }
+        else if(input & (1<<YELLOW_BUTTON)){
+            
+            mode = FULL_COLOR;
+            *(array+2) = 50;
+        
+           
+        }
+        
+        
+        usart_send_string(array, 4);
+        _delay_ms(5);
+    }
+    
+    
+    uint8_t *prev = encoders;
+    uint8_t *curr = encoders +1;
+    *curr = input & 0x03;
+    
+    if (((*prev &0x03) == 0x03) &&  ((*curr&0x03)==0x02)){
+        *(array+2) = *(array+2) +1;
+        if (*(array+2) > 252) {
+            *(array+2) = 252;
+            return;
+        }
+        usart_send_string(array, 4);
+        _delay_ms(5);
+    }
+    else if (((*prev &0x03) == 0x03) &&  ((*curr&0x03)==0x01)){
+        *(array+2) = *(array+2) -1;
+        if (*(array+2) < 1) {
+            *(array+2) = 1;
+            return;
+        }
+        usart_send_string(array, 4);
+        _delay_ms(5);
+
+    }
+    
+    
+    *prev = *curr;
+    
+
 }
 
 int main(){
 	//set 32MHz clock
 	setClockTo32MHz();
-	
+
 	_delay_ms(200);
-	
-	//set up DDR
+
+	//set up
 	Setup_DDR();
-	//set up SPIC
 	Setup_SPIC();
-	//set up SPID
 	Setup_SPID();
-	//set up USARTC
 	Setup_USARTC();
-	//set up TWIC
 
-	//set up PWM
-//	Setup_PWM();
-	//set up ADC
+	//	Setup_PWM();
 
 	_delay_ms(200);
 	_delay_ms(200);
+ uint8_t i =0;
 
-
-
-
+	uint8_t array[50];
+	array[0] = OPEN_COM;
+	array[1] = COLOR_MODE;
+	array[2] = 0xAB;
+	array[3] = CLOSE_COM;
+    
+    
+	
+	uint8_t temp;
+	uint8_t encoders[2];
 	while(1){
-        _delay_ms(200);
-        _delay_ms(200);
-        usart_send(Read_Buttons());
-
-	}
+		//_delay_ms(50);
+        checkbutton(encoders, array);
+    }
 
 }

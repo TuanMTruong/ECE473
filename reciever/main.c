@@ -123,16 +123,20 @@ void display_mode(uint8_t *data){
 	
 	if (ReadData(1)== COLOR_MODE){
 		hs_convert(ReadData(2), 0, data);
-		_delay_ms(5);
+		_delay_ms(1);
 		for(i=0; i<LED_NUM; i++){
+            //cli();
 			Send_SPI_array(data, (data+1), (data+2),1);
+            //sei();
 		}
 	}
 	else if (ReadData(1) == ADDR_MODE){
-		_delay_ms(5);
+		_delay_ms(1);
 		for(i=0; i<LED_NUM; i++){
+           // cli();
 			hs_convert(ReadData(i+2), 0, data);
 			Send_SPI_array(data, (data+1), (data+2),1);
+            //sei();
 
 		}
 	}
@@ -147,6 +151,7 @@ int main(){
 	Setup_USART();
 
 	uint8_t hs_rgb[3];
+    
 
 	uint8_t red_array[50];
 	uint8_t blue_array[50];
@@ -191,10 +196,11 @@ int main(){
 
 #if SINGLE_COLOR_TESTING
 		if(verify_buff()){
+            
 		//	LED_PORT ^= 1<<LED_PIN;
 			display_mode(hs_rgb);
 		}
-		_delay_ms(500);
+		//_delay_ms(5);
 //		UDR1 = 'a';
 	
 #endif

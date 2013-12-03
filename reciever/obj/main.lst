@@ -217,8 +217,8 @@
  230 0020 60E0      		ldi r22,lo8(0)
  231 0022 AE01      		movw r20,r28
  232 0024 0E94 0000 		call hs_convert
- 233 0028 8FE1      		 ldi r24,lo8(19999)
- 234 002a 9EE4      	    ldi r25,hi8(19999)
+ 233 0028 8FE9      		 ldi r24,lo8(3999)
+ 234 002a 9FE0      	    ldi r25,hi8(3999)
  235 002c 0197      	    1:sbiw r24,1
  236 002e 01F4      	    brne 1b
  237 0030 00C0      		rjmp .
@@ -247,8 +247,8 @@
  260 005c 0E94 0000 		call ReadData
  261 0060 8B3C      		cpi r24,lo8(-53)
  262 0062 01F4      		brne .L19
- 263 0064 8FE1      		 ldi r24,lo8(19999)
- 264 0066 9EE4      	    ldi r25,hi8(19999)
+ 263 0064 8FE9      		 ldi r24,lo8(3999)
+ 264 0066 9FE0      	    ldi r25,hi8(3999)
  265 0068 0197      	    1:sbiw r24,1
  266 006a 01F4      	    brne 1b
  267 006c 00C0      		rjmp .
@@ -354,7 +354,7 @@
  369 0086 8AEB      		ldi r24,lo8(-70)
  370 0088 0E94 0000 		call PushData
  371               	/* #APP */
- 372               	 ;  173 "main.c" 1
+ 372               	 ;  178 "main.c" 1
  373 008c 7894      		sei
  374               	 ;  0 "" 2
  375               	/* #NOAPP */
@@ -365,40 +365,32 @@
  380 0096 9040      	    sbci r25,0
  381 0098 A040      	    sbci r26,0
  382 009a 01F4      	    brne 1b
- 383               	.L31:
- 384 009c 00C0      		rjmp .
- 385 009e 0000      		nop
+ 383 009c 00C0      		rjmp .
+ 384 009e 0000      		nop
+ 385               	.L33:
  386 00a0 0E94 0000 		call verify_buff
  387 00a4 8823      		tst r24
- 388 00a6 01F0      		breq .L28
+ 388 00a6 01F0      		breq .L33
  389 00a8 CE01      		movw r24,r28
  390 00aa 0196      		adiw r24,1
  391 00ac 0E94 0000 		call display_mode
- 392               	.L28:
- 393 00b0 8FEF      		 ldi r24,lo8(1599999)
- 394 00b2 99E6      	    ldi r25,hi8(1599999)
- 395 00b4 A8E1      	    ldi r26,hlo8(1599999)
- 396 00b6 8150      	    1:subi r24,1
- 397 00b8 9040      	    sbci r25,0
- 398 00ba A040      	    sbci r26,0
- 399 00bc 01F4      	    brne 1b
- 400 00be 00C0      		rjmp .L31
+ 392 00b0 00C0      		rjmp .L33
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccT3FmGD.s:2      *ABS*:0000003f __SREG__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccT3FmGD.s:3      *ABS*:0000003e __SP_H__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccT3FmGD.s:4      *ABS*:0000003d __SP_L__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccT3FmGD.s:5      *ABS*:00000034 __CCP__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccT3FmGD.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccT3FmGD.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccT3FmGD.s:13     .text.Setup_DDR:00000000 Setup_DDR
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccT3FmGD.s:26     .text.Fill_array:00000000 Fill_array
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccT3FmGD.s:46     .text.__vector_25:00000000 __vector_25
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccT3FmGD.s:110    .text.__vector_26:00000000 __vector_26
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccT3FmGD.s:146    .text.__vector_default:00000000 __vector_default
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccT3FmGD.s:175    .text.verify_buff:00000000 verify_buff
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccT3FmGD.s:211    .text.display_mode:00000000 display_mode
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccT3FmGD.s:307    .text.startup.main:00000000 main
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMGjv3.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMGjv3.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMGjv3.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMGjv3.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMGjv3.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMGjv3.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMGjv3.s:13     .text.Setup_DDR:00000000 Setup_DDR
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMGjv3.s:26     .text.Fill_array:00000000 Fill_array
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMGjv3.s:46     .text.__vector_25:00000000 __vector_25
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMGjv3.s:110    .text.__vector_26:00000000 __vector_26
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMGjv3.s:146    .text.__vector_default:00000000 __vector_default
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMGjv3.s:175    .text.verify_buff:00000000 verify_buff
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMGjv3.s:211    .text.display_mode:00000000 display_mode
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMGjv3.s:307    .text.startup.main:00000000 main
 
 UNDEFINED SYMBOLS
 __do_copy_data

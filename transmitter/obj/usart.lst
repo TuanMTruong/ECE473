@@ -1,0 +1,105 @@
+   1               		.file	"usart.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__ = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.section	.text.Setup_USARTC,"ax",@progbits
+  11               	.global	Setup_USARTC
+  13               	Setup_USARTC:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16               	/* stack size = 0 */
+  17               	.L__stack_usage = 0
+  18 0000 E0E4      		ldi r30,lo8(1600)
+  19 0002 F6E0      		ldi r31,hi8(1600)
+  20 0004 88E0      		ldi r24,lo8(8)
+  21 0006 8183      		std Z+1,r24
+  22 0008 84E0      		ldi r24,lo8(4)
+  23 000a 8283      		std Z+2,r24
+  24 000c E0EA      		ldi r30,lo8(2208)
+  25 000e F8E0      		ldi r31,hi8(2208)
+  26 0010 88E1      		ldi r24,lo8(24)
+  27 0012 8483      		std Z+4,r24
+  28 0014 83E0      		ldi r24,lo8(3)
+  29 0016 8583      		std Z+5,r24
+  30 0018 87E3      		ldi r24,lo8(55)
+  31 001a 8683      		std Z+6,r24
+  32 001c 84EB      		ldi r24,lo8(-76)
+  33 001e 8783      		std Z+7,r24
+  34               	/* epilogue start */
+  35 0020 0895      		ret
+  37               		.section	.text.usart_send_byte,"ax",@progbits
+  38               	.global	usart_send_byte
+  40               	usart_send_byte:
+  41               	/* prologue: function */
+  42               	/* frame size = 0 */
+  43               	/* stack size = 0 */
+  44               	.L__stack_usage = 0
+  45               	.L3:
+  46 0000 9091 A108 		lds r25,2209
+  47 0004 95FF      		sbrs r25,5
+  48 0006 00C0      		rjmp .L3
+  49 0008 8093 A008 		sts 2208,r24
+  50               	/* epilogue start */
+  51 000c 0895      		ret
+  53               		.section	.text.usart_send_string,"ax",@progbits
+  54               	.global	usart_send_string
+  56               	usart_send_string:
+  57 0000 EF92      		push r14
+  58 0002 FF92      		push r15
+  59 0004 0F93      		push r16
+  60 0006 1F93      		push r17
+  61 0008 CF93      		push r28
+  62 000a DF93      		push r29
+  63               	/* prologue: function */
+  64               	/* frame size = 0 */
+  65               	/* stack size = 6 */
+  66               	.L__stack_usage = 6
+  67 000c 7C01      		movw r14,r24
+  68 000e 00E0      		ldi r16,lo8(0)
+  69 0010 10E0      		ldi r17,hi8(0)
+  70 0012 C62F      		mov r28,r22
+  71 0014 D0E0      		ldi r29,lo8(0)
+  72 0016 00C0      		rjmp .L6
+  73               	.L7:
+  74 0018 F701      		movw r30,r14
+  75 001a 8191      		ld r24,Z+
+  76 001c 7F01      		movw r14,r30
+  77 001e 0E94 0000 		call usart_send_byte
+  78 0022 0F5F      		subi r16,lo8(-(1))
+  79 0024 1F4F      		sbci r17,hi8(-(1))
+  80               	.L6:
+  81 0026 0C17      		cp r16,r28
+  82 0028 1D07      		cpc r17,r29
+  83 002a 04F0      		brlt .L7
+  84               	/* epilogue start */
+  85 002c DF91      		pop r29
+  86 002e CF91      		pop r28
+  87 0030 1F91      		pop r17
+  88 0032 0F91      		pop r16
+  89 0034 FF90      		pop r15
+  90 0036 EF90      		pop r14
+  91 0038 0895      		ret
+  93               		.comm USART_BUFFER_PREC,26,1
+  94               		.comm USART_BUFFER_CURRENT,26,1
+DEFINED SYMBOLS
+                            *ABS*:00000000 usart.c
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:13     .text.Setup_USARTC:00000000 Setup_USARTC
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:40     .text.usart_send_byte:00000000 usart_send_byte
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:56     .text.usart_send_string:00000000 usart_send_string
+                            *COM*:0000001a USART_BUFFER_PREC
+                            *COM*:0000001a USART_BUFFER_CURRENT
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

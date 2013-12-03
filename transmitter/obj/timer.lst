@@ -1,0 +1,79 @@
+   1               		.file	"timer.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__ = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.section	.text.setClockTo32MHz,"ax",@progbits
+  11               	.global	setClockTo32MHz
+  13               	setClockTo32MHz:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16               	/* stack size = 0 */
+  17               	.L__stack_usage = 0
+  18 0000 88ED      		ldi r24,lo8(-40)
+  19 0002 84BF      		out 52-0,r24
+  20 0004 82E0      		ldi r24,lo8(2)
+  21 0006 8093 5000 		sts 80,r24
+  22               	.L2:
+  23 000a 8091 5100 		lds r24,81
+  24 000e 81FF      		sbrs r24,1
+  25 0010 00C0      		rjmp .L2
+  26 0012 88ED      		ldi r24,lo8(-40)
+  27 0014 84BF      		out 52-0,r24
+  28 0016 81E0      		ldi r24,lo8(1)
+  29 0018 8093 4000 		sts 64,r24
+  30               	/* epilogue start */
+  31 001c 0895      		ret
+  33               		.section	.text.Setup_PWM,"ax",@progbits
+  34               	.global	Setup_PWM
+  36               	Setup_PWM:
+  37               	/* prologue: function */
+  38               	/* frame size = 0 */
+  39               	/* stack size = 0 */
+  40               	.L__stack_usage = 0
+  41 0000 E0E0      		ldi r30,lo8(2560)
+  42 0002 FAE0      		ldi r31,hi8(2560)
+  43 0004 85E0      		ldi r24,lo8(5)
+  44 0006 8083      		st Z,r24
+  45 0008 83E1      		ldi r24,lo8(19)
+  46 000a 8183      		std Z+1,r24
+  47               	/* epilogue start */
+  48 000c 0895      		ret
+  50               		.section	.text.Setup_Timer,"ax",@progbits
+  51               	.global	Setup_Timer
+  53               	Setup_Timer:
+  54               	/* prologue: function */
+  55               	/* frame size = 0 */
+  56               	/* stack size = 0 */
+  57               	.L__stack_usage = 0
+  58               	/* epilogue start */
+  59 0000 0895      		ret
+  61               		.section	.text.Setup_32KHz,"ax",@progbits
+  62               	.global	Setup_32KHz
+  64               	Setup_32KHz:
+  65               	/* prologue: function */
+  66               	/* frame size = 0 */
+  67               	/* stack size = 0 */
+  68               	.L__stack_usage = 0
+  69               	/* epilogue start */
+  70 0000 0895      		ret
+DEFINED SYMBOLS
+                            *ABS*:00000000 timer.c
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVLIZCv.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVLIZCv.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVLIZCv.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVLIZCv.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVLIZCv.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVLIZCv.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVLIZCv.s:13     .text.setClockTo32MHz:00000000 setClockTo32MHz
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVLIZCv.s:36     .text.Setup_PWM:00000000 Setup_PWM
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVLIZCv.s:53     .text.Setup_Timer:00000000 Setup_Timer
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVLIZCv.s:64     .text.Setup_32KHz:00000000 Setup_32KHz
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

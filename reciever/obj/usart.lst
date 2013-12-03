@@ -107,20 +107,20 @@
  121               		.comm dataring,50,1
 DEFINED SYMBOLS
                             *ABS*:00000000 usart.c
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:2      *ABS*:0000003f __SREG__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:3      *ABS*:0000003e __SP_H__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:4      *ABS*:0000003d __SP_L__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:5      *ABS*:00000034 __CCP__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:13     .text.Setup_USART:00000000 Setup_USART
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:36     .text.PushData:00000000 PushData
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:119    .bss:00000000 ringcounter
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccr7HKKY.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccr7HKKY.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccr7HKKY.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccr7HKKY.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccr7HKKY.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccr7HKKY.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccr7HKKY.s:13     .text.Setup_USART:00000000 Setup_USART
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccr7HKKY.s:36     .text.PushData:00000000 PushData
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccr7HKKY.s:119    .bss:00000000 ringcounter
                             *COM*:00000032 dataring
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:60     .text.PopData:00000000 PopData
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:77     .text.ReadData:00000000 ReadData
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:93     .text.get_buff_location:00000000 get_buff_location
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRMNVgL.s:105    .text.set_buff_location:00000000 set_buff_location
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccr7HKKY.s:60     .text.PopData:00000000 PopData
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccr7HKKY.s:77     .text.ReadData:00000000 ReadData
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccr7HKKY.s:93     .text.get_buff_location:00000000 get_buff_location
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccr7HKKY.s:105    .text.set_buff_location:00000000 set_buff_location
 
 UNDEFINED SYMBOLS
 __do_copy_data

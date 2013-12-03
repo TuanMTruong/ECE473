@@ -7,15 +7,9 @@
 
 //the includes
 #include<avr/io.h>
+#include"spi.h"
+#include<util/delay.h>
 
-//macros
-#define SS_PIN		PIN4_bm
-#define MOSI_PIN 	PIN5_bm
-#define MISO_PIN	PIN6_bm
-#define SCK_PIN		PIN7_bm
-
-#define SHIFT_LOAD_PIN	PIN2_bm
-#define SHIFT_LATCH_PIN PIN3_bm
 
 //sets up the SPI on port C
 void Setup_SPIC(){
@@ -44,16 +38,25 @@ void Setup_SPID(){
 
 //read from SPIC which has the buttons and encoders on it via a shift register
 uint8_t Read_Buttons(){
-    //Pull SHIFT_LOAD low for >= 120 ns to load in button data
-    PORTE.OUTCLR = SHIFT_LOAD_PIN;
-    _delay_us(1);
-    //Pull SHIFT_LATCH low to send out serial data.
-    PORTE.OUTCLR = SHIFT_LATCH_PIN;
-    _delay_ms(5);
-    
-    //After data read and saved set SHIFT_LOAD and SHIFT_LATCH
-    PORTE.OUTSET = SHIFT_LATCH_PIN | SHIFT_LOAD_PIN;
-    return(SPIC.DATA);
+	uint8_t temp;
+
+	//Pull SHIFT_LOAD low for >= 120 ns to load in button data
+	PORTE.OUTCLR = SHIFT_LOAD_PIN;
+	//_delay_us(1);
+	PORTE.OUTSET = SHIFT_LOAD_PIN;
+
+	//Pull SHIFT_LATCH low to send out serial data.
+	PORTE.OUTCLR = SHIFT_LATCH_PIN;
+
+	//send dummy spi 
+	SPIC.DATA = 0x00;
+	while(!(SPIC.STATUS & SPI_IF_bm)){};
+	temp = SPIC.DATA;
+
+
+	//After data read and saved set SHIFT_LOAD and SHIFT_LATCH
+	PORTE.OUTSET = SHIFT_LATCH_PIN | SHIFT_LOAD_PIN;
+	return(temp);
 }
 
 

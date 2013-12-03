@@ -149,7 +149,7 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x4bc
+.text           0x00000000      0x4ae
  *(.vectors)
  .vectors       0x00000000       0xac /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avr5/crtm32u4.o
                 0x00000000                __vectors
@@ -266,40 +266,40 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a
                 0x000001e6       0xa4 obj/main.o
                 0x000001e6                display_mode
  .text.startup.main
-                0x0000028a       0xa8 obj/main.o
+                0x0000028a       0x9a obj/main.o
                 0x0000028a                main
  .text.Setup_USART
-                0x00000332       0x24 obj/usart.o
-                0x00000332                Setup_USART
+                0x00000324       0x24 obj/usart.o
+                0x00000324                Setup_USART
  .text.PushData
-                0x00000356       0x22 obj/usart.o
-                0x00000356                PushData
+                0x00000348       0x22 obj/usart.o
+                0x00000348                PushData
  .text.ReadData
-                0x00000378        0xc obj/usart.o
-                0x00000378                ReadData
+                0x0000036a        0xc obj/usart.o
+                0x0000036a                ReadData
  .text.get_buff_location
-                0x00000384        0x6 obj/usart.o
-                0x00000384                get_buff_location
+                0x00000376        0x6 obj/usart.o
+                0x00000376                get_buff_location
  .text.set_buff_location
-                0x0000038a        0x6 obj/usart.o
-                0x0000038a                set_buff_location
+                0x0000037c        0x6 obj/usart.o
+                0x0000037c                set_buff_location
  .text.Setup_SPI
-                0x00000390        0xe obj/spi.o
-                0x00000390                Setup_SPI
+                0x00000382        0xe obj/spi.o
+                0x00000382                Setup_SPI
  .text.Send_SPI_byte
-                0x0000039e        0xa obj/spi.o
-                0x0000039e                Send_SPI_byte
+                0x00000390        0xa obj/spi.o
+                0x00000390                Send_SPI_byte
  .text.Send_SPI_array
-                0x000003a8       0x5e obj/spi.o
-                0x000003a8                Send_SPI_array
+                0x0000039a       0x5e obj/spi.o
+                0x0000039a                Send_SPI_array
  .text.hs_convert
-                0x00000406       0xb2 obj/hs_converter.o
-                0x00000406                hs_convert
-                0x000004b8                . = ALIGN (0x2)
+                0x000003f8       0xb2 obj/hs_converter.o
+                0x000003f8                hs_convert
+                0x000004aa                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000004b8        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a(_exit.o)
-                0x000004b8                exit
-                0x000004b8                _exit
+ .fini9         0x000004aa        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a(_exit.o)
+                0x000004aa                exit
+                0x000004aa                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -318,11 +318,11 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000004b8        0x4 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a(_exit.o)
+ .fini0         0x000004aa        0x4 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a(_exit.o)
  *(.fini0)
-                0x000004bc                _etext = .
+                0x000004ae                _etext = .
 
-.data           0x00800100        0x0 load address 0x000004bc
+.data           0x00800100        0x0 load address 0x000004ae
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avr5/crtm32u4.o
@@ -351,8 +351,8 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a
  COMMON         0x00800101       0x32 obj/usart.o
                 0x00800101                dataring
                 0x00800133                PROVIDE (__bss_end, .)
-                0x000004bc                __data_load_start = LOADADDR (.data)
-                0x000004bc                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000004ae                __data_load_start = LOADADDR (.data)
+                0x000004ae                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800133        0x0
                 0x00800133                PROVIDE (__noinit_start, .)

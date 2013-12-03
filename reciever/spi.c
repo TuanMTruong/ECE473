@@ -16,7 +16,8 @@ void Setup_SPI(){
 	DDRB |= (1<< SS_PIN) | (1<< SCLK_PIN) | (1<< MOSI_PIN);
 	DDRB &= ~(1<<MISO_PIN);
 	//Set up SPI control register
-	SPCR = (1<<SPE) | (1<<MSTR) | (3<<SPR0);
+	SPCR = (1<<SPE) | (1<<MSTR) | (1<<SPR0);
+    //SPSR |= 1<<SPI2X;
 
 	return;
 }
