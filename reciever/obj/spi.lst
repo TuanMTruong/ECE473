@@ -1,0 +1,104 @@
+   1               		.file	"spi.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.section	.text.Setup_SPI,"ax",@progbits
+   8               	.global	Setup_SPI
+  10               	Setup_SPI:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13               	/* stack size = 0 */
+  14               	.L__stack_usage = 0
+  15 0000 84B1      		in r24,0x4
+  16 0002 8760      		ori r24,lo8(7)
+  17 0004 84B9      		out 0x4,r24
+  18 0006 2398      		cbi 0x4,3
+  19 0008 83E5      		ldi r24,lo8(83)
+  20 000a 8CBD      		out 0x2c,r24
+  21 000c 0895      		ret
+  23               		.section	.text.Send_SPI_byte,"ax",@progbits
+  24               	.global	Send_SPI_byte
+  26               	Send_SPI_byte:
+  27               	/* prologue: function */
+  28               	/* frame size = 0 */
+  29               	/* stack size = 0 */
+  30               	.L__stack_usage = 0
+  31 0000 8EBD      		out 0x2e,r24
+  32               	.L3:
+  33 0002 0DB4      		in __tmp_reg__,0x2d
+  34 0004 07FE      		sbrs __tmp_reg__,7
+  35 0006 00C0      		rjmp .L3
+  36               	/* epilogue start */
+  37 0008 0895      		ret
+  39               		.section	.text.Send_SPI_array,"ax",@progbits
+  40               	.global	Send_SPI_array
+  42               	Send_SPI_array:
+  43 0000 AF92      		push r10
+  44 0002 BF92      		push r11
+  45 0004 DF92      		push r13
+  46 0006 EF92      		push r14
+  47 0008 FF92      		push r15
+  48 000a 0F93      		push r16
+  49 000c 1F93      		push r17
+  50 000e CF93      		push r28
+  51 0010 DF93      		push r29
+  52 0012 1F92      		push __zero_reg__
+  53 0014 CDB7      		in r28,__SP_L__
+  54 0016 DEB7      		in r29,__SP_H__
+  55               	/* prologue: function */
+  56               	/* frame size = 1 */
+  57               	/* stack size = 10 */
+  58               	.L__stack_usage = 10
+  59 0018 D82E      		mov r13,r24
+  60 001a 8B01      		movw r16,r22
+  61 001c 7A01      		movw r14,r20
+  62 001e A82E      		mov r10,r24
+  63 0020 B92E      		mov r11,r25
+  64 0022 00C0      		rjmp .L6
+  65               	.L7:
+  66 0024 F501      		movw r30,r10
+  67 0026 8191      		ld r24,Z+
+  68 0028 5F01      		movw r10,r30
+  69 002a 2983      		std Y+1,r18
+  70 002c 0E94 0000 		call Send_SPI_byte
+  71 0030 F801      		movw r30,r16
+  72 0032 8191      		ld r24,Z+
+  73 0034 8F01      		movw r16,r30
+  74 0036 0E94 0000 		call Send_SPI_byte
+  75 003a F701      		movw r30,r14
+  76 003c 8191      		ld r24,Z+
+  77 003e 7F01      		movw r14,r30
+  78 0040 0E94 0000 		call Send_SPI_byte
+  79 0044 2981      		ldd r18,Y+1
+  80               	.L6:
+  81 0046 8A2D      		mov r24,r10
+  82 0048 8D19      		sub r24,r13
+  83 004a 8217      		cp r24,r18
+  84 004c 00F0      		brlo .L7
+  85               	/* epilogue start */
+  86 004e 0F90      		pop __tmp_reg__
+  87 0050 DF91      		pop r29
+  88 0052 CF91      		pop r28
+  89 0054 1F91      		pop r17
+  90 0056 0F91      		pop r16
+  91 0058 FF90      		pop r15
+  92 005a EF90      		pop r14
+  93 005c DF90      		pop r13
+  94 005e BF90      		pop r11
+  95 0060 AF90      		pop r10
+  96 0062 0895      		ret
+  98               		.ident	"GCC: (GNU) 4.7.2"
+DEFINED SYMBOLS
+                            *ABS*:00000000 spi.c
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cczoPx3d.s:2      *ABS*:0000003e __SP_H__
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cczoPx3d.s:3      *ABS*:0000003d __SP_L__
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cczoPx3d.s:4      *ABS*:0000003f __SREG__
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cczoPx3d.s:5      *ABS*:00000000 __tmp_reg__
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cczoPx3d.s:6      *ABS*:00000001 __zero_reg__
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cczoPx3d.s:10     .text.Setup_SPI:00000000 Setup_SPI
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cczoPx3d.s:26     .text.Send_SPI_byte:00000000 Send_SPI_byte
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cczoPx3d.s:42     .text.Send_SPI_array:00000000 Send_SPI_array
+
+NO UNDEFINED SYMBOLS

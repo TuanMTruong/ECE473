@@ -1,0 +1,206 @@
+   1               		.file	"main.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.section	.text.Setup_DDR,"ax",@progbits
+   8               	.global	Setup_DDR
+  10               	Setup_DDR:
+  11               	/* prologue: function */
+  12               	/* frame size = 0 */
+  13               	/* stack size = 0 */
+  14               	.L__stack_usage = 0
+  15 0000 80E4      		ldi r24,lo8(64)
+  16 0002 8AB9      		out 0xa,r24
+  17 0004 0895      		ret
+  19               		.section	.text.Fill_array,"ax",@progbits
+  20               	.global	Fill_array
+  22               	Fill_array:
+  23               	/* prologue: function */
+  24               	/* frame size = 0 */
+  25               	/* stack size = 0 */
+  26               	.L__stack_usage = 0
+  27 0000 FC01      		movw r30,r24
+  28 0002 00C0      		rjmp .L3
+  29               	.L4:
+  30 0004 4193      		st Z+,r20
+  31               	.L3:
+  32 0006 9E2F      		mov r25,r30
+  33 0008 981B      		sub r25,r24
+  34 000a 9617      		cp r25,r22
+  35 000c 00F0      		brlo .L4
+  36               	/* epilogue start */
+  37 000e 0895      		ret
+  39               		.section	.text.__vector_25,"ax",@progbits
+  40               	.global	__vector_25
+  42               	__vector_25:
+  43 0000 1F92      		push r1
+  44 0002 0F92      		push r0
+  45 0004 0FB6      		in r0,__SREG__
+  46 0006 0F92      		push r0
+  47 0008 1124      		clr __zero_reg__
+  48               	/* prologue: Signal */
+  49               	/* frame size = 0 */
+  50               	/* stack size = 3 */
+  51               	.L__stack_usage = 3
+  52               	/* epilogue start */
+  53 000a 0F90      		pop r0
+  54 000c 0FBE      		out __SREG__,r0
+  55 000e 0F90      		pop r0
+  56 0010 1F90      		pop r1
+  57 0012 1895      		reti
+  59               		.section	.text.__vector_default,"ax",@progbits
+  60               	.global	__vector_default
+  62               	__vector_default:
+  63 0000 1F92      		push r1
+  64 0002 0F92      		push r0
+  65 0004 0FB6      		in r0,__SREG__
+  66 0006 0F92      		push r0
+  67 0008 1124      		clr __zero_reg__
+  68               	/* prologue: Signal */
+  69               	/* frame size = 0 */
+  70               	/* stack size = 3 */
+  71               	.L__stack_usage = 3
+  72 000a 90E4      		ldi r25,lo8(64)
+  73               	.L7:
+  74 000c 8BB1      		in r24,0xb
+  75 000e 8927      		eor r24,r25
+  76 0010 8BB9      		out 0xb,r24
+  77 0012 2FEF      		ldi r18,lo8(639999)
+  78 0014 33EC      		ldi r19,hi8(639999)
+  79 0016 89E0      		ldi r24,hlo8(639999)
+  80 0018 2150      		1: subi r18,1
+  81 001a 3040      		sbci r19,0
+  82 001c 8040      		sbci r24,0
+  83 001e 01F4      		brne 1b
+  84 0020 00C0      		rjmp .
+  85 0022 0000      		nop
+  86 0024 00C0      		rjmp .L7
+  88               		.section	.text.startup.main,"ax",@progbits
+  89               	.global	main
+  91               	main:
+  92 0000 CF93      		push r28
+  93 0002 DF93      		push r29
+  94 0004 CDB7      		in r28,__SP_L__
+  95 0006 DEB7      		in r29,__SP_H__
+  96 0008 C959      		subi r28,-103
+  97 000a D109      		sbc r29,__zero_reg__
+  98 000c 0FB6      		in __tmp_reg__,__SREG__
+  99 000e F894      		cli
+ 100 0010 DEBF      		out __SP_H__,r29
+ 101 0012 0FBE      		out __SREG__,__tmp_reg__
+ 102 0014 CDBF      		out __SP_L__,r28
+ 103               	/* prologue: function */
+ 104               	/* frame size = 153 */
+ 105               	/* stack size = 155 */
+ 106               	.L__stack_usage = 155
+ 107 0016 80E8      		ldi r24,lo8(-128)
+ 108 0018 8093 6100 		sts 97,r24
+ 109 001c 1092 6100 		sts 97,__zero_reg__
+ 110 0020 80E4      		ldi r24,lo8(64)
+ 111 0022 8AB9      		out 0xa,r24
+ 112 0024 0E94 0000 		call Setup_SPI
+ 113 0028 0E94 0000 		call Setup_USART
+ 114 002c 2FEF      		ldi r18,lo8(639999)
+ 115 002e 83EC      		ldi r24,hi8(639999)
+ 116 0030 99E0      		ldi r25,hlo8(639999)
+ 117 0032 2150      		1: subi r18,1
+ 118 0034 8040      		sbci r24,0
+ 119 0036 9040      		sbci r25,0
+ 120 0038 01F4      		brne 1b
+ 121 003a 00C0      		rjmp .
+ 122 003c 0000      		nop
+ 123 003e 7E01      		movw r14,r28
+ 124 0040 25E6      		ldi r18,101
+ 125 0042 E20E      		add r14,r18
+ 126 0044 F11C      		adc r15,__zero_reg__
+ 127 0046 40E0      		ldi r20,0
+ 128 0048 60E2      		ldi r22,lo8(32)
+ 129 004a C701      		movw r24,r14
+ 130 004c 0E94 0000 		call Fill_array
+ 131 0050 6E01      		movw r12,r28
+ 132 0052 83E3      		ldi r24,51
+ 133 0054 C80E      		add r12,r24
+ 134 0056 D11C      		adc r13,__zero_reg__
+ 135 0058 40E0      		ldi r20,0
+ 136 005a 60E2      		ldi r22,lo8(32)
+ 137 005c C601      		movw r24,r12
+ 138 005e 0E94 0000 		call Fill_array
+ 139 0062 40E0      		ldi r20,0
+ 140 0064 60E2      		ldi r22,lo8(32)
+ 141 0066 8E01      		movw r16,r28
+ 142 0068 0F5F      		subi r16,-1
+ 143 006a 1F4F      		sbci r17,-1
+ 144 006c C801      		movw r24,r16
+ 145 006e 0E94 0000 		call Fill_array
+ 146 0072 B12C      		mov r11,__zero_reg__
+ 147 0074 80E4      		ldi r24,lo8(64)
+ 148 0076 A82E      		mov r10,r24
+ 149               	.L9:
+ 150 0078 8FE1      		ldi r24,lo8(19999)
+ 151 007a 9EE4      		ldi r25,hi8(19999)
+ 152 007c 0197      		1: sbiw r24,1
+ 153 007e 01F4      		brne 1b
+ 154 0080 00C0      		rjmp .
+ 155 0082 0000      		nop
+ 156 0084 20E2      		ldi r18,lo8(32)
+ 157 0086 30E0      		ldi r19,0
+ 158 0088 A601      		movw r20,r12
+ 159 008a B801      		movw r22,r16
+ 160 008c C701      		movw r24,r14
+ 161 008e 0E94 0000 		call Send_SPI_array
+ 162 0092 2BB1      		in r18,0xb
+ 163 0094 2A25      		eor r18,r10
+ 164 0096 2BB9      		out 0xb,r18
+ 165 0098 AE01      		movw r20,r28
+ 166 009a 4956      		subi r20,105
+ 167 009c 5F4F      		sbci r21,-1
+ 168 009e 60E0      		ldi r22,0
+ 169 00a0 8B2D      		mov r24,r11
+ 170 00a2 0E94 0000 		call hs_convert
+ 171 00a6 C956      		subi r28,lo8(-151)
+ 172 00a8 DF4F      		sbci r29,hi8(-151)
+ 173 00aa 4881      		ld r20,Y
+ 174 00ac C759      		subi r28,lo8(151)
+ 175 00ae D040      		sbci r29,hi8(151)
+ 176 00b0 60E2      		ldi r22,lo8(32)
+ 177 00b2 C701      		movw r24,r14
+ 178 00b4 0E94 0000 		call Fill_array
+ 179 00b8 C856      		subi r28,lo8(-152)
+ 180 00ba DF4F      		sbci r29,hi8(-152)
+ 181 00bc 4881      		ld r20,Y
+ 182 00be C859      		subi r28,lo8(152)
+ 183 00c0 D040      		sbci r29,hi8(152)
+ 184 00c2 60E2      		ldi r22,lo8(32)
+ 185 00c4 C801      		movw r24,r16
+ 186 00c6 0E94 0000 		call Fill_array
+ 187 00ca C756      		subi r28,lo8(-153)
+ 188 00cc DF4F      		sbci r29,hi8(-153)
+ 189 00ce 4881      		ld r20,Y
+ 190 00d0 C959      		subi r28,lo8(153)
+ 191 00d2 D040      		sbci r29,hi8(153)
+ 192 00d4 60E2      		ldi r22,lo8(32)
+ 193 00d6 C601      		movw r24,r12
+ 194 00d8 0E94 0000 		call Fill_array
+ 195 00dc B394      		inc r11
+ 196 00de 00C0      		rjmp .L9
+ 198               		.ident	"GCC: (GNU) 4.7.2"
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc5Nhvb3.s:2      *ABS*:0000003e __SP_H__
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc5Nhvb3.s:3      *ABS*:0000003d __SP_L__
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc5Nhvb3.s:4      *ABS*:0000003f __SREG__
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc5Nhvb3.s:5      *ABS*:00000000 __tmp_reg__
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc5Nhvb3.s:6      *ABS*:00000001 __zero_reg__
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc5Nhvb3.s:10     .text.Setup_DDR:00000000 Setup_DDR
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc5Nhvb3.s:22     .text.Fill_array:00000000 Fill_array
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc5Nhvb3.s:42     .text.__vector_25:00000000 __vector_25
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc5Nhvb3.s:62     .text.__vector_default:00000000 __vector_default
+/var/folders/ln/c7glznsd7wx_wx4bm67zgk_m0000gn/T//cc5Nhvb3.s:91     .text.startup.main:00000000 main
+
+UNDEFINED SYMBOLS
+Setup_SPI
+Setup_USART
+Send_SPI_array
+hs_convert

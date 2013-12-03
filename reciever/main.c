@@ -4,7 +4,7 @@
 // This is the source code for the reciever for the ECE473 project
 // The Reciever is supposed to:
 // - wait for incoming data from XBEE via USART
-// - parce data 
+// - parce data
 // - send data out via SPI to 6 RGB LEDs
 
 // Hardware description
@@ -19,136 +19,104 @@
 /****************************************************************/
 
 
-
+//define CPU clock
+#define F_CPU 16000000UL
 
 //includes
 #include<avr/io.h>
 #include<avr/interrupt.h>
 #include<util/delay.h>
+#include "spi.h"
+#include "usart.h"
+#include "hs_converter.h"
 
 // macros
-#define LEDPORT PORTD
-#define LED	6
-#define SS_PIN	0
-#define SCLK_PIN 1
-#define MOSI_PIN 2
-#define MISO_PIN 3
-#define RX_PIN	2
-#define TX_PIN	3
-
 #define CPU_PRESCALE(n) (CLKPR = 0x80, CLKPR = (n))
 #define CPU_16MHz 0x00
 #define CPU_4MHz 0x02
 
-#define buffersize 50
+#define LED_PIN 6
+#define LED_PORT PORTD
 
 
 
-//global variables
-uint8_t dataring[buffersize];
-uint8_t ringcounter= 0;
+
+
 
 //Set up Data Direction Registers for LEDs, enables, and latches
 void Setup_DDR(){
 	//1 = output, 0 = input
-	//on board LED 
-	DDRD = (1<<LED);
-	//set latch pins
-
-	//set enable pins
+	//on board LED
+	DDRD = (1<<LED_PIN);
 
 }
-//Sets up SPI as master with a prescale division of 4
-//The reason for the slow speed for placing slave further away, at a slower speed
-//there is a smaller chance so lost data.
-void Setup_SPI(){
-	//set up DDR for SPI, 1 = output, 0 = input
-	DDRB |= (1<< SS_PIN) | (1<< SCLK_PIN) | (1<< MOSI_PIN);
-	DDRB &= ~(1<<MISO_PIN);
-	//Set up SPI control register
-	SPCR = (1<<SPE) | (1<<MSTR) | (3<<SPR0);
 
-	return;
+void Fill_array(uint8_t *array, uint8_t lenght, uint8_t data){
+    uint8_t counter;
+    
+    for (counter =0; counter<lenght; counter++) {
+        *(array+counter) = data;
+    }
+    return;
 }
-
-//Send data via SPI
-void Send_SPI(uint8_t data){
-	//Send data
-	SPDR = data;
-	//wait for sending completion 
-	while(!(SPSR & (1<<SPIF)));
-	
-	return;
-}
-
-
-void Setup_USART(){
-	//set up DDR for USART, 1 = output, 0 = input
-	DDRD |= (1<<TX_PIN);
-	DDRD &= ~(1<<RX_PIN);
-	//By default USART is asynchronous, parity is disable, and 1 stop bit
-	UCSR1A = (1<<U2X1);
-	UCSR1B = (1<<RXEN1) | (1<<TXEN1);
-	//Setting USART data frame to 8bit
-	UCSR1C = (3<<UCSZ10);
-
-	//set baud rate to 38.4K
-	UBRR1 = 12;
-	return;
-}
-
 
 
 //USART receiving interrupt
 //When data is received it will be stored in a buffer waiting to be accessed
 ISR(USART1_RX_vect){
 	//Store data
+    
 	
 }
 
 //Bad interrupt catcher
 ISR(BADISR_vect){
 	while(1){
-		LEDPORT ^= (1<<LED);
+		LED_PORT ^= (1<<LED_PIN);
 		_delay_ms(200);
 	}
 }
 
-//functions that access data buffer
-void PushData(uint8_t data){
-	if(ringcounter >= buffersize){
-		ringcounter = 0;
-	}
-	dataring[ringcounter] = data;
-	ringcounter++;
-}
 
-uint8_t PopData(){
-	return dataring[ringcounter];
-}
 
-uint8_t ReadData(uint8_t location){
-	return dataring[location];
-}
 
 
 int main(){
 	//Set clock to 4 Mhz
-	CPU_PRESCALE(CPU_4MHz);
+	CPU_PRESCALE(CPU_16MHz);
 	Setup_DDR();
 	Setup_SPI();
 	Setup_USART();
+    
+    uint8_t hs_rgb[3];
 	
-
-
-
-
-
+    uint8_t red_array[50];
+    uint8_t blue_array[50];
+    uint8_t green_array[50];
+    
+    uint8_t temp=0;
+    
+    _delay_ms(200);
+    
+    
+    Fill_array(red_array, 32, 0x00);
+    Fill_array(blue_array, 32, 0x00);
+    Fill_array(green_array, 32, 0x00);
+    
 	while(1){
-
-
-
-
+        _delay_ms(5);
+        
+        
+        
+        Send_SPI_array(red_array, green_array, blue_array, 32);
+    
+        
+        LED_PORT ^= (1<<LED_PIN);
+        hs_convert(temp, 0, hs_rgb);
+        Fill_array(red_array, 32, *hs_rgb);
+        Fill_array(green_array, 32, *(hs_rgb+1));
+        Fill_array(blue_array, 32, *(hs_rgb+2));
+        temp++;
 
 
 
