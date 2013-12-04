@@ -18,15 +18,7 @@ Discarded input sections
 
  .bss           0x00000000        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avrxmega2/crtx32a4u.o
  .text          0x00000000        0x0 obj/main.o
- .bss           0x00000000        0x1 obj/main.o
- .text.Setup_TWIC
-                0x00000000        0x2 obj/main.o
- .text.pop_buffer
-                0x00000000        0xa obj/main.o
- .text.push_buffer
-                0x00000000        0xa obj/main.o
- .text.compare_buffer
-                0x00000000       0x18 obj/main.o
+ .bss           0x00000000        0x0 obj/main.o
  .text          0x00000000        0x0 obj/usart.o
  .bss           0x00000000        0x0 obj/usart.o
  COMMON         0x00000000       0x34 obj/usart.o
@@ -548,7 +540,6 @@ Setup_SPIC                                        obj/spi.o
                                                   obj/main.o
 Setup_SPID                                        obj/spi.o
                                                   obj/main.o
-Setup_TWIC                                        obj/main.o
 Setup_Timer                                       obj/timer.o
 Setup_USARTC                                      obj/usart.o
                                                   obj/main.o
@@ -703,14 +694,10 @@ __vector_default                                  /usr/local/CrossPack-AVR-20130
 __vectors                                         /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avrxmega2/crtx32a4u.o
 _exit                                             /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
 checkbutton                                       obj/main.o
-compare_buffer                                    obj/main.o
 exit                                              /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
                                                   /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avrxmega2/crtx32a4u.o
 main                                              obj/main.o
                                                   /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avrxmega2/crtx32a4u.o
-mode                                              obj/main.o
-pop_buffer                                        obj/main.o
-push_buffer                                       obj/main.o
 setClockTo32MHz                                   obj/timer.o
                                                   obj/main.o
 usart_send_byte                                   obj/usart.o

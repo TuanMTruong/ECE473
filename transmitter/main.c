@@ -44,7 +44,7 @@
 //
 //
 // Plan of Attack:
-// pretty much just wing it... 
+// pretty much just wing it...
 /******************************************************************/
 
 
@@ -58,45 +58,39 @@
 #include"spi.h"
 #include"usart.h"
 #include"timer.h"
+#include"twi.h"
 
 
 //macros
-#define SDA_PIN		PIN0_bm
-#define SCL_PIN		PIN1_bm
-
-#define LCD_SS_PIN	PIN0_bm
-#define LCD_RST_PIN	PIN1_bm
-#define LCD_SIG_PIN	PIN2_bm
-#define LCD_LIGHT_PIN	PIN3_bm
-
-
-
 #define AUD_IN_PIN	PIN1_bm
 #define AUD_VOL_PIN	PIN0_bm
-
 #define TEMP_PIN	PIN0_bm
 
-
-
+//used to start and end communication packet
 #define OPEN_COM 0xFF
 #define CLOSE_COM 0xBA
+
+//different color mode
 #define ADDR_MODE 0xCB
 #define COLOR_MODE 0x0C
 #define RAINBOW_MODE 0xAC
 
+//physical buttons pin (the color caps are removable so this is could be wrong)
 #define RED_BUTTON 5
 #define GREEN_BUTTON 7
 #define BLUE_BUTTON 4
 #define YELLOW_BUTTON 6
 
+//maximum LED for LED strip
 #define LED_NUM 32
 
-#define FULL_COLOR 0
 
+//debug & test modes
 #define SPECTRUM_TEST 0
 
 
-uint8_t mode = 0;
+//global variables
+uint8_t SendData_buffer[50];
 
 
 //set up Data Direction Register non-serial protocols
@@ -114,44 +108,6 @@ void Setup_DDR(){
 
 
 
-
-void Setup_TWIC(){
-
-}
-
-
-
-
-
-void Setup_ADC(){
-    
-    ADC.CTRLA =  ADC_DMASEL_CH01_gc;
-    
-    
-}
-
-//pop buffer
-uint8_t pop_buffer(uint8_t *buffer, uint8_t buffer_location){
-	return buffer[buffer_location];
-}
-
-void push_buffer(uint8_t *buffer, uint8_t buffer_location, uint8_t data){
-	*(buffer + buffer_location) = data;
-	return;
-}
-
-//return 1 if there is a different in the two buffer
-uint8_t compare_buffer(uint8_t *buffer1, uint8_t *buffer2){
-	uint8_t i =0;
-
-	while (*buffer1) {
-		if (*buffer1 != *buffer2) {
-			return 1;
-		}
-	}
-	return 0;
-
-}
 
 
 
