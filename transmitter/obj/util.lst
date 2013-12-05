@@ -1,0 +1,73 @@
+   1               		.file	"util.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__ = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.section	.text.pop_buffer,"ax",@progbits
+  11               	.global	pop_buffer
+  13               	pop_buffer:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16               	/* stack size = 0 */
+  17               	.L__stack_usage = 0
+  18 0000 FC01      		movw r30,r24
+  19 0002 E60F      		add r30,r22
+  20 0004 F11D      		adc r31,__zero_reg__
+  21 0006 8081      		ld r24,Z
+  22               	/* epilogue start */
+  23 0008 0895      		ret
+  25               		.section	.text.push_buffer,"ax",@progbits
+  26               	.global	push_buffer
+  28               	push_buffer:
+  29               	/* prologue: function */
+  30               	/* frame size = 0 */
+  31               	/* stack size = 0 */
+  32               	.L__stack_usage = 0
+  33 0000 FC01      		movw r30,r24
+  34 0002 E60F      		add r30,r22
+  35 0004 F11D      		adc r31,__zero_reg__
+  36 0006 4083      		st Z,r20
+  37               	/* epilogue start */
+  38 0008 0895      		ret
+  40               		.section	.text.compare_buffer,"ax",@progbits
+  41               	.global	compare_buffer
+  43               	compare_buffer:
+  44               	/* prologue: function */
+  45               	/* frame size = 0 */
+  46               	/* stack size = 0 */
+  47               	.L__stack_usage = 0
+  48 0000 FC01      		movw r30,r24
+  49 0002 8081      		ld r24,Z
+  50 0004 8823      		tst r24
+  51 0006 01F0      		breq .L6
+  52               	.L7:
+  53 0008 FB01      		movw r30,r22
+  54 000a 9081      		ld r25,Z
+  55 000c 8917      		cp r24,r25
+  56 000e 01F0      		breq .L7
+  57 0010 81E0      		ldi r24,lo8(1)
+  58 0012 0895      		ret
+  59               	.L6:
+  60 0014 80E0      		ldi r24,lo8(0)
+  61 0016 0895      		ret
+  63               		.comm encoders,2,1
+DEFINED SYMBOLS
+                            *ABS*:00000000 util.c
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRW4jDc.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRW4jDc.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRW4jDc.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRW4jDc.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRW4jDc.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRW4jDc.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRW4jDc.s:13     .text.pop_buffer:00000000 pop_buffer
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRW4jDc.s:28     .text.push_buffer:00000000 push_buffer
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRW4jDc.s:43     .text.compare_buffer:00000000 compare_buffer
+                            *COM*:00000002 encoders
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

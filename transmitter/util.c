@@ -4,7 +4,10 @@
 //
 /******************************************************************/
 
+#include<avr/io.h>
+#include<util.h>
 
+uint8_t encoders[2];
 
 
 //pop buffer
@@ -30,3 +33,4 @@ uint8_t compare_buffer(uint8_t *buffer1, uint8_t *buffer2){
 	return 0;
     
 }
+

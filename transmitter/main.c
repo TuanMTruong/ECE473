@@ -69,11 +69,14 @@
 //used to start and end communication packet
 #define OPEN_COM 0xFF
 #define CLOSE_COM 0xBA
+#define MODE 1
 
 //different color mode
 #define ADDR_MODE 0xCB
 #define COLOR_MODE 0x0C
 #define RAINBOW_MODE 0xAC
+#define TIME_MODE 0xEE
+#define TIME_MODE_2 0xAA
 
 //physical buttons pin (the color caps are removable so this is could be wrong)
 #define RED_BUTTON 5
@@ -87,14 +90,31 @@
 
 //debug & test modes
 #define SPECTRUM_TEST 0
+#define RTC_TEST 0
 
 
 //global variables
 uint8_t SendData_buffer[50];
 
+//encoder = [prev_E1, curr_E1, state_E1, prev_E2, curr_E2, state_E2]
+uint8_t Encoders[10];
+#define prev_E1 0
+#define curr_E1 1
+#define state_E1 2
+#define prev_E2 3
+#define curr_E2 4
+#define state_E2 5
+#define CW 0x0F
+#define CCW 0xF0
+
+//save data from button press
+//buttons = [prev_BN, curr_BN]
+uint8_t buttons[2];
+#define prev_BN 0
+#define curr_BN 1
 
 //set up Data Direction Register non-serial protocols
-void Setup_DDR(){
+void Setup_DDR(void){
 	//1 = output, 0 = input
 	PORTE.DIRSET = SHIFT_LATCH_PIN | SHIFT_LOAD_PIN | AUD_VOL_PIN;
 	PORTB.DIRSET = FQD_RST_PIN | FQD_AUDIO_PIN;
@@ -108,79 +128,188 @@ void Setup_DDR(){
 
 
 
+uint8_t set_mode(uint8_t mode){
+	SendData_buffer[MODE] = mode;
+	return(SendData_buffer[MODE]);
+}
 
-
-
-
-//reads buttons and figure what to do with it...
-void checkbutton(uint8_t *encoders, uint8_t *array){
-    uint8_t input =0;
-    uint8_t i =0;
-    input = Read_Buttons();
-    if(input & 0xF0){
-        if(input & (1<<RED_BUTTON)){
-            *(array+1) = COLOR_MODE;
-            *(array+2) = 35;
-        }
-        else if(input & (1<<GREEN_BUTTON)){
-            *(array+1) = COLOR_MODE;
-            *(array+2) = 108;
-        }
-        else if(input & (1<<BLUE_BUTTON)){
-            *(array+1) = COLOR_MODE;
-            *(array+2) = 180;
-        }
-        else if(input & (1<<YELLOW_BUTTON)){
-            
-            //mode = FULL_COLOR;
-            *(array+1) = RAINBOW_MODE;
-        
-           
-        }
-        
-        
-        usart_send_string(array, 4);
-        _delay_ms(10);
-        //while((Read_Buttons() & 0xF0));
-     
-    }
-    
-    
-    uint8_t *prev = encoders;
-    uint8_t *curr = encoders +1;
-    *curr = input & 0x03;
-    
-    if (((*prev &0x03) == 0x03) &&  ((*curr&0x03)==0x02)){
-        *(array+2) = *(array+2) +2;
-        if (*(array+2) > 252) {
-            *(array+2) = 252;
-            return;
-        }
-        usart_send_string(array, 4);
-        //_delay_ms(5);
-    }
-    else if (((*prev &0x03) == 0x03) &&  ((*curr&0x03)==0x01)){
-        *(array+2) = *(array+2) -2;
-        if (*(array+2) < 1) {
-            *(array+2) = 1;
-            return;
-        }
-        usart_send_string(array, 4);
-        //_delay_ms(5);
-
-    }
-    
-    
-    *prev = *curr;
-    
-
+uint8_t check_mode(void){
+	return(SendData_buffer[MODE]);
 }
 
 
 
 
 
-int main(){
+//reads buttons and figure what to do with it...
+/**
+void checkbutton(uint8_t *encoders, uint8_t *array){
+	uint8_t input =0;
+	uint8_t i =0;
+	input = Read_Buttons();
+	if(input & 0xF0){
+		if(input & (1<<RED_BUTTON)){
+			set_mode(COLOR_MODE);
+			*(array+2) = 35;
+		}
+		else if(input & (1<<GREEN_BUTTON)){
+			*(array+1) = COLOR_MODE;
+			*(array+2) = 108;
+		}
+		else if(input & (1<<BLUE_BUTTON)){
+			*(array+1) = COLOR_MODE;
+			*(array+2) = 180;
+		}
+		else if(input & (1<<YELLOW_BUTTON)){
+
+			//mode = FULL_COLOR;
+			*(array+1) = RAINBOW_MODE;
+
+
+		}
+
+
+		usart_send_string(array, 4);
+		_delay_ms(10);
+		//while((Read_Buttons() & 0xF0));
+
+	}
+
+
+	uint8_t *prev = encoders;
+	uint8_t *curr = encoders +1;
+	*curr = input & 0x03;
+
+	if (((*prev &0x03) == 0x03) &&  ((*curr&0x03)==0x02)){
+		*(array+2) = *(array+2) +2;
+		if (*(array+2) > 252) {
+			*(array+2) = 252;
+			return;
+		}
+		usart_send_string(array, 4);
+		//_delay_ms(5);
+	}
+	else if (((*prev &0x03) == 0x03) &&  ((*curr&0x03)==0x01)){
+		*(array+2) = *(array+2) -2;
+		if (*(array+2) < 1) {
+			*(array+2) = 1;
+			return;
+		}
+		usart_send_string(array, 4);
+		//_delay_ms(5);
+
+	}
+
+
+	*prev = *curr;
+
+
+}
+**/
+
+uint8_t check_buttons(uint8_t inputs){
+	buttons[curr_BN] = inputs & 0xF0;
+	if(buttons[curr_BN]){
+	
+		if(buttons[curr_BN] & (1<<RED_BUTTON)){
+			set_mode(COLOR_MODE);
+			SendData_buffer[2] = 30;
+		}
+		else if(buttons[curr_BN] & (1<<GREEN_BUTTON)){
+			set_mode(COLOR_MODE);
+			SendData_buffer[2] = 108; 
+		}
+		else if(buttons[curr_BN] & (1<<BLUE_BUTTON)){
+			set_mode(COLOR_MODE);
+			SendData_buffer[2] = 180;
+		}
+		else if(buttons[curr_BN] & (1<<YELLOW_BUTTON)){
+            if (check_mode() == RAINBOW_MODE){
+                set_mode(TIME_MODE);
+            }
+            else if (check_mode() == TIME_MODE){
+                set_mode(TIME_MODE_2);
+            }
+            else{
+			set_mode(RAINBOW_MODE);
+            }
+            SendData_buffer[2] = 10;
+            usart_send_string(SendData_buffer, 4);
+            _delay_ms(500);
+            return;
+			//SendData_buffer(2) = 30;
+		}
+
+		//usart_send_string(SendData_buffer, 4);
+	usart_send_string(SendData_buffer, 4);
+	_delay_ms(10);
+	}
+	buttons[prev_BN] =buttons[curr_BN];
+	_delay_ms(1);
+	return(SendData_buffer[MODE]);
+}
+
+uint8_t check_encoders(uint8_t inputs){
+	//check encoder 1 (on the left)
+	//save encoder data and clear all the other crap
+	Encoders[curr_E1] = inputs & 0x03;
+	
+	//have we got new data?
+	if (Encoders[curr_E1] != Encoders[prev_E1]){
+		if((Encoders[curr_E1] == (Encoders[prev_E1] ^ 0x01)) && (Encoders[curr_E1] == 0x01 || Encoders[curr_E1] == 0x02)){
+			Encoders[state_E1] = CW;
+
+			usart_send_byte('R');
+			SendData_buffer[2]+=2;
+		}
+		else if((Encoders[curr_E1] == (Encoders[prev_E1] ^ 0x01)) && (Encoders[curr_E1] == 0x00 || Encoders[curr_E1] == 0x03)){
+			Encoders[state_E1] = CCW;
+
+			usart_send_byte('L');
+			SendData_buffer[2]-=2;
+		}
+		else {
+			Encoders[state_E1] = 0x00;
+		}
+
+	
+	}
+	Encoders[prev_E1] = Encoders[curr_E1];
+
+	//check encoder 2 (on the right)
+	Encoders[curr_E2] = (inputs>>2) & 0x03;
+    
+    //have we got new data?
+	if (Encoders[curr_E2] != Encoders[prev_E2]){
+		if((Encoders[curr_E2] == (Encoders[prev_E2] ^ 0x01)) && (Encoders[curr_E2] == 0x01 || Encoders[curr_E2] == 0x02)){
+			Encoders[state_E2] = CW;
+            
+			usart_send_byte('R');
+			SendData_buffer[2] += 2;
+		}
+		else if((Encoders[curr_E2] == (Encoders[prev_E2] ^ 0x01)) && (Encoders[curr_E2] == 0x00 || Encoders[curr_E2] == 0x03)){
+			Encoders[state_E2] = CCW;
+            
+			usart_send_byte('L');
+			SendData_buffer[2]-=2;
+		}
+		else {
+			Encoders[state_E2] = 0x00;
+		}
+        
+        
+	}
+	Encoders[prev_E2] = Encoders[curr_E2];
+
+	
+	_delay_ms(1);
+	return(1);
+}
+
+
+
+
+int main(void){
 	//set 32MHz clock
 	setClockTo32MHz();
 
@@ -193,53 +322,69 @@ int main(){
 	Setup_USARTC();
 
 	//Setup_PWM();
-    //Setup_TWI();
-    //Setup_ADC();
+	//Setup_TWI();
+	//Setup_ADC();
 
-    //i am in no hurry...
+	//i am in no hurry...
 	_delay_ms(200);
-	_delay_ms(200);
-    
-    //some variables
-    uint8_t i =0;
-    uint8_t temp;
-	uint8_t encoders[2];
+
+	//some variables
+	uint8_t i =0;
+	uint8_t temp;
 	uint8_t array[50];
-    
+
 	array[0] = OPEN_COM;
 	array[1] = 0;
 	array[2] = 0x00;
 	array[3] = CLOSE_COM;
-    
-    //send a rainbow to start, i just wanna see if it works...
-    usart_send_byte(OPEN_COM);
-    _delay_ms(3);
-    usart_send_byte(ADDR_MODE);
-    _delay_ms(3);
-    for(i =0; i<LED_NUM; i++){
+
+	/**
+	//send a rainbow to start, i just wanna see if it works...
+	usart_send_byte(OPEN_COM);
+	_delay_ms(3);
+	usart_send_byte(ADDR_MODE);
+	_delay_ms(3);
+	for(i =0; i<LED_NUM; i++){
 		usart_send_byte((i+1) * 6);
-        _delay_ms(3);
+		_delay_ms(3);
 	}
-    usart_send_byte(CLOSE_COM);
-    
-    //lets take this slow shall we?
-    _delay_ms(500);
-	
-	
+	usart_send_byte(CLOSE_COM);
+	**/
+
+	//lets take this slow shall we?
+	_delay_ms(200);
+	SendData_buffer[0]= OPEN_COM;
+	SendData_buffer[1] = COLOR_MODE;
+	SendData_buffer[2] = 0;
+	SendData_buffer[3] = CLOSE_COM;
 	while(1){
 #if SPECTRUM_TEST
-        array[1] = COLOR_MODE;
-        array[2] = temp;
-        usart_send_string(array, 4);
-        _delay_ms(50);
-        temp++;
+		array[1] = COLOR_MODE;
+		array[2] = temp;
+		usart_send_string(array, 4);
+		_delay_ms(50);
+		temp++;
+
+
+        
+        
+
 #else
-        //_delay_ms(50);
-        checkbutton(encoders, array);
+
+		//_delay_ms(50);
+		temp = Read_Buttons();
+		check_buttons(temp);
+		check_encoders(temp);
+		//check_buttons();
+		
+		if(SendData_buffer[2] != SendData_buffer[4]){
+			usart_send_string(SendData_buffer, 4);
+			SendData_buffer[4] = SendData_buffer[2];
+		}
 #endif
-        
-        
-        
-    }
+
+
+
+	}
 
 }

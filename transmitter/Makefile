@@ -28,7 +28,9 @@ BOOTLOADER = BootloaderCDC
 SRC =	$(TARGET).c \
 	usart.c\
 	spi.c\
-	timer.c
+	timer.c\
+	twi.c\
+	util.c
 # MCU name, you MUST set this to match the board you are using
 # type "make clean" after changing this, so all files will be rebuilt
 MCU = atxmega32a4u

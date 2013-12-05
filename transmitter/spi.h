@@ -17,9 +17,9 @@
 #define FQD_AUDIO_PIN	PIN2_bm
 
 
-void Setup_SPIC();
-void Setup_SPID();
+void Setup_SPIC(void);
+void Setup_SPID(void);
 
-void Setup_SPIC();
-void Setup_SPID();
-uint8_t Read_Buttons();
+void Setup_SPIC(void);
+void Setup_SPID(void);
+uint8_t Read_Buttons(void);

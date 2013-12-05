@@ -88,15 +88,15 @@
   94               		.comm USART_BUFFER_CURRENT,26,1
 DEFINED SYMBOLS
                             *ABS*:00000000 usart.c
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:2      *ABS*:0000003f __SREG__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:3      *ABS*:0000003e __SP_H__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:4      *ABS*:0000003d __SP_L__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:5      *ABS*:00000034 __CCP__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:13     .text.Setup_USARTC:00000000 Setup_USARTC
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:40     .text.usart_send_byte:00000000 usart_send_byte
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccRNAVqH.s:56     .text.usart_send_string:00000000 usart_send_string
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccooNki6.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccooNki6.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccooNki6.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccooNki6.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccooNki6.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccooNki6.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccooNki6.s:13     .text.Setup_USARTC:00000000 Setup_USARTC
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccooNki6.s:40     .text.usart_send_byte:00000000 usart_send_byte
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccooNki6.s:56     .text.usart_send_string:00000000 usart_send_string
                             *COM*:0000001a USART_BUFFER_PREC
                             *COM*:0000001a USART_BUFFER_CURRENT
 

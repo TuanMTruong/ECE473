@@ -71,15 +71,15 @@
   76 0028 0895      		ret
 DEFINED SYMBOLS
                             *ABS*:00000000 spi.c
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:2      *ABS*:0000003f __SREG__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:3      *ABS*:0000003e __SP_H__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:4      *ABS*:0000003d __SP_L__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:5      *ABS*:00000034 __CCP__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:13     .text.Setup_SPIC:00000000 Setup_SPIC
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:32     .text.Setup_SPID:00000000 Setup_SPID
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cccwPa2Q.s:51     .text.Read_Buttons:00000000 Read_Buttons
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:13     .text.Setup_SPIC:00000000 Setup_SPIC
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:32     .text.Setup_SPID:00000000 Setup_SPID
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:51     .text.Read_Buttons:00000000 Read_Buttons
 
 UNDEFINED SYMBOLS
 __do_copy_data
