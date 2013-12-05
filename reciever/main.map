@@ -19,7 +19,6 @@ Discarded input sections
 
  .bss           0x00000000        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avr5/crtm32u4.o
  .text          0x00000000        0x0 obj/main.o
- .bss           0x00000000        0x1 obj/main.o
  .text.Setup_DDR
                 0x00000000        0x6 obj/main.o
  .text          0x00000000        0x0 obj/usart.o
@@ -154,7 +153,7 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x816
+.text           0x00000000      0x83e
  *(.vectors)
  .vectors       0x00000000       0xac /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avr5/crtm32u4.o
                 0x00000000                __vectors
@@ -270,51 +269,51 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a
                 0x000001f0       0x26 obj/main.o
                 0x000001f0                __vector_default
  .text.__vector_17
-                0x00000216       0x6e obj/main.o
+                0x00000216       0x78 obj/main.o
                 0x00000216                __vector_17
  .text.verify_buff
-                0x00000284       0x44 obj/main.o
-                0x00000284                verify_buff
+                0x0000028e       0x44 obj/main.o
+                0x0000028e                verify_buff
  .text.display_mode
-                0x000002c8      0x2ba obj/main.o
-                0x000002c8                display_mode
+                0x000002d2      0x2d8 obj/main.o
+                0x000002d2                display_mode
  .text.startup.main
-                0x00000582       0xf2 obj/main.o
-                0x00000582                main
+                0x000005aa       0xf2 obj/main.o
+                0x000005aa                main
  .text.Setup_USART
-                0x00000674       0x24 obj/usart.o
-                0x00000674                Setup_USART
+                0x0000069c       0x24 obj/usart.o
+                0x0000069c                Setup_USART
  .text.PushData
-                0x00000698       0x22 obj/usart.o
-                0x00000698                PushData
+                0x000006c0       0x22 obj/usart.o
+                0x000006c0                PushData
  .text.ReadData
-                0x000006ba        0xc obj/usart.o
-                0x000006ba                ReadData
+                0x000006e2        0xc obj/usart.o
+                0x000006e2                ReadData
  .text.get_buff_location
-                0x000006c6        0x6 obj/usart.o
-                0x000006c6                get_buff_location
+                0x000006ee        0x6 obj/usart.o
+                0x000006ee                get_buff_location
  .text.set_buff_location
-                0x000006cc        0x6 obj/usart.o
-                0x000006cc                set_buff_location
+                0x000006f4        0x6 obj/usart.o
+                0x000006f4                set_buff_location
  .text.Setup_SPI
-                0x000006d2        0xe obj/spi.o
-                0x000006d2                Setup_SPI
+                0x000006fa        0xe obj/spi.o
+                0x000006fa                Setup_SPI
  .text.Send_SPI_byte
-                0x000006e0        0xa obj/spi.o
-                0x000006e0                Send_SPI_byte
+                0x00000708        0xa obj/spi.o
+                0x00000708                Send_SPI_byte
  .text.Send_SPI_array
-                0x000006ea       0x5e obj/spi.o
-                0x000006ea                Send_SPI_array
+                0x00000712       0x5e obj/spi.o
+                0x00000712                Send_SPI_array
  .text.hs_convert
-                0x00000748       0xb2 obj/hs_converter.o
-                0x00000748                hs_convert
- .text.libgcc   0x000007fa       0x18 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a(_udivmodqi4.o)
-                0x000007fa                __udivmodqi4
-                0x00000812                . = ALIGN (0x2)
+                0x00000770       0xb2 obj/hs_converter.o
+                0x00000770                hs_convert
+ .text.libgcc   0x00000822       0x18 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a(_udivmodqi4.o)
+                0x00000822                __udivmodqi4
+                0x0000083a                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000812        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a(_exit.o)
-                0x00000812                exit
-                0x00000812                _exit
+ .fini9         0x0000083a        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a(_exit.o)
+                0x0000083a                exit
+                0x0000083a                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -333,11 +332,11 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000812        0x4 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a(_exit.o)
+ .fini0         0x0000083a        0x4 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a(_exit.o)
  *(.fini0)
-                0x00000816                _etext = .
+                0x0000083e                _etext = .
 
-.data           0x00800100        0x0 load address 0x00000816
+.data           0x00800100        0x0 load address 0x0000083e
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avr5/crtm32u4.o
@@ -357,27 +356,29 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avr5/libgcc.a
                 0x00800100                _edata = .
                 0x00800100                PROVIDE (__data_end, .)
 
-.bss            0x00800100       0x56
+.bss            0x00800100       0x57
                 0x00800100                PROVIDE (__bss_start, .)
  *(.bss)
- .bss           0x00800100        0x1 obj/usart.o
-                0x00800100                ringcounter
+ .bss           0x00800100        0x1 obj/main.o
+                0x00800100                flag
+ .bss           0x00800101        0x1 obj/usart.o
+                0x00800101                ringcounter
  *(.bss*)
  *(COMMON)
- COMMON         0x00800101       0x23 obj/main.o
-                0x00800101                time_array
- COMMON         0x00800124       0x32 obj/usart.o
-                0x00800124                dataring
-                0x00800156                PROVIDE (__bss_end, .)
-                0x00000816                __data_load_start = LOADADDR (.data)
-                0x00000816                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x00800102       0x23 obj/main.o
+                0x00800102                time_array
+ COMMON         0x00800125       0x32 obj/usart.o
+                0x00800125                dataring
+                0x00800157                PROVIDE (__bss_end, .)
+                0x0000083e                __data_load_start = LOADADDR (.data)
+                0x0000083e                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800156        0x0
-                0x00800156                PROVIDE (__noinit_start, .)
+.noinit         0x00800157        0x0
+                0x00800157                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800156                PROVIDE (__noinit_end, .)
-                0x00800156                _end = .
-                0x00800156                PROVIDE (__heap_start, .)
+                0x00800157                PROVIDE (__noinit_end, .)
+                0x00800157                _end = .
+                0x00800157                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)

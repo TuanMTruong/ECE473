@@ -227,9 +227,11 @@ uint8_t check_buttons(uint8_t inputs){
             if (check_mode() == RAINBOW_MODE){
                 set_mode(TIME_MODE);
             }
+            /**
             else if (check_mode() == TIME_MODE){
                 set_mode(TIME_MODE_2);
             }
+             **/
             else{
 			set_mode(RAINBOW_MODE);
             }

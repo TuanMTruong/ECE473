@@ -95,15 +95,15 @@
  100 0062 0895      		ret
 DEFINED SYMBOLS
                             *ABS*:00000000 spi.c
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccPHgUXL.s:2      *ABS*:0000003f __SREG__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccPHgUXL.s:3      *ABS*:0000003e __SP_H__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccPHgUXL.s:4      *ABS*:0000003d __SP_L__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccPHgUXL.s:5      *ABS*:00000034 __CCP__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccPHgUXL.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccPHgUXL.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccPHgUXL.s:13     .text.Setup_SPI:00000000 Setup_SPI
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccPHgUXL.s:30     .text.Send_SPI_byte:00000000 Send_SPI_byte
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccPHgUXL.s:46     .text.Send_SPI_array:00000000 Send_SPI_array
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccGakL6e.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccGakL6e.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccGakL6e.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccGakL6e.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccGakL6e.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccGakL6e.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccGakL6e.s:13     .text.Setup_SPI:00000000 Setup_SPI
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccGakL6e.s:30     .text.Send_SPI_byte:00000000 Send_SPI_byte
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccGakL6e.s:46     .text.Send_SPI_array:00000000 Send_SPI_array
 
 UNDEFINED SYMBOLS
 __do_copy_data

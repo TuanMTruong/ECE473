@@ -65,7 +65,7 @@ uint8_t flag = 0;
 /****************************************************************/
 
 //Set up Data Direction Registers for LEDs, enables, and latches
-void Setup_DDR(){
+void Setup_DDR(void){
 	//1 = output, 0 = input
 	//on board LED
 	DDRD = (1<<LED_PIN);
@@ -82,7 +82,7 @@ void Fill_array(uint8_t *array, uint8_t lenght, uint8_t data){
 	return;
 }
 
-void Setup_Timer(){
+void Setup_Timer(void){
     TCCR1A = 0;
     TCCR1B = (1<<WGM12) | (4<<CS10);
     TIMSK1 = 1<<OCIE1A;
@@ -168,12 +168,15 @@ ISR(TIMER1_COMPA_vect){
 
    
     time_array[t_sec]++;
-    if (time_array[t_sec] > 60) {
+    if (time_array[t_sec] > 59) {
         time_array[t_sec] =0;
         time_array[t_min]++;
-        if (time_array[t_min] > 60) {
+        if (time_array[t_min] > 59) {
             time_array[t_min] =0;
             time_array[t_hour]++;
+            if(time_array[t_hour]>12){
+                time_array[t_hour] = 1;
+            }
                 
         }
     }
@@ -185,7 +188,7 @@ ISR(TIMER1_COMPA_vect){
 
 /****************************************************************/
 
-uint8_t verify_buff(){
+uint8_t verify_buff(void){
     
 	if (ReadData(0) == OPEN_COM ){
 		if (ReadData(1) == COLOR_MODE || ReadData(1) == RAINBOW_MODE|| ReadData(1) == TIME_MODE || ReadData(1) ==TIME_MODE_2){
@@ -236,19 +239,20 @@ void display_mode(uint8_t *data, uint8_t *disp_buff){
 		}
     }
     else if (ReadData(1) == TIME_MODE) {
-        /**
+        
         if (flag == 0){
-        TCCR1B &= ~(7<<CS10);
-        TCCR1B |= (4<<CS10);
-            time_array[6] = 12;
-            time_array[7] = 11;
+        //TCCR1B &= ~(7<<CS10);
+        //TCCR1B |= (4<<CS10);
+            time_array[6] = 11;
+            time_array[7] = 19;
             time_array[t_sec] = 0;
+            /**
             for (i=0; i<96; i++) {
                 Send_SPI_byte(0x00);
-            }
+            }**/
             flag = 200;
         }
-         **/
+         
         *data = 0xff;
         *(data+1) = 0;
         file_time(time_array[6],time_array[7]);
@@ -346,7 +350,7 @@ void display_mode(uint8_t *data, uint8_t *disp_buff){
 }
 
 
-int main(){
+int main(void){
 	//Set clock to 16 Mhz
 	CPU_PRESCALE(CPU_16MHz);
 	Setup_DDR();
