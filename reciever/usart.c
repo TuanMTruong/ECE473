@@ -19,13 +19,13 @@ void Setup_USART(){
 	DDRD |= (1<<TX_PIN);
 	DDRD &= ~(1<<RX_PIN);
 	//By default USART is asynchronous, parity is disable, and 1 stop bit
-	UCSR1A = (1<<U2X1);
+	//UCSR1A = (1<<U2X1);
 	UCSR1B = (1<<RXEN1) | (1<<TXEN1) | (1<<RXCIE1);
 	//Setting USART data frame to 8bit
 	UCSR1C = (3<<UCSZ10);
 
 	//set baud rate to 57.6K
-	UBRR1 = 34;
+	UBRR1 = 16;
 	return;
 }
 

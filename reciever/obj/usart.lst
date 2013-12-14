@@ -16,111 +16,109 @@
   17               	.L__stack_usage = 0
   18 0000 539A      		sbi 42-32,3
   19 0002 5298      		cbi 42-32,2
-  20 0004 82E0      		ldi r24,lo8(2)
-  21 0006 8093 C800 		sts 200,r24
-  22 000a 88E9      		ldi r24,lo8(-104)
-  23 000c 8093 C900 		sts 201,r24
-  24 0010 86E0      		ldi r24,lo8(6)
-  25 0012 8093 CA00 		sts 202,r24
-  26 0016 82E2      		ldi r24,lo8(34)
-  27 0018 90E0      		ldi r25,hi8(34)
-  28 001a 9093 CD00 		sts 204+1,r25
-  29 001e 8093 CC00 		sts 204,r24
-  30               	/* epilogue start */
-  31 0022 0895      		ret
-  33               		.section	.text.PushData,"ax",@progbits
-  34               	.global	PushData
-  36               	PushData:
-  37               	/* prologue: function */
-  38               	/* frame size = 0 */
-  39               	/* stack size = 0 */
-  40               	.L__stack_usage = 0
-  41 0000 9091 0000 		lds r25,ringcounter
-  42 0004 9233      		cpi r25,lo8(50)
-  43 0006 00F0      		brlo .L3
-  44 0008 1092 0000 		sts ringcounter,__zero_reg__
-  45               	.L3:
-  46 000c 9091 0000 		lds r25,ringcounter
-  47 0010 E92F      		mov r30,r25
-  48 0012 F0E0      		ldi r31,lo8(0)
-  49 0014 E050      		subi r30,lo8(-(dataring))
-  50 0016 F040      		sbci r31,hi8(-(dataring))
-  51 0018 8083      		st Z,r24
-  52 001a 9F5F      		subi r25,lo8(-(1))
-  53 001c 9093 0000 		sts ringcounter,r25
-  54               	/* epilogue start */
-  55 0020 0895      		ret
-  57               		.section	.text.PopData,"ax",@progbits
-  58               	.global	PopData
-  60               	PopData:
-  61               	/* prologue: function */
-  62               	/* frame size = 0 */
-  63               	/* stack size = 0 */
-  64               	.L__stack_usage = 0
-  65 0000 8091 0000 		lds r24,ringcounter
-  66 0004 E0E0      		ldi r30,lo8(dataring)
-  67 0006 F0E0      		ldi r31,hi8(dataring)
-  68 0008 E80F      		add r30,r24
-  69 000a F11D      		adc r31,__zero_reg__
-  70 000c 8081      		ld r24,Z
-  71               	/* epilogue start */
-  72 000e 0895      		ret
-  74               		.section	.text.ReadData,"ax",@progbits
-  75               	.global	ReadData
-  77               	ReadData:
-  78               	/* prologue: function */
-  79               	/* frame size = 0 */
-  80               	/* stack size = 0 */
-  81               	.L__stack_usage = 0
-  82 0000 E0E0      		ldi r30,lo8(dataring)
-  83 0002 F0E0      		ldi r31,hi8(dataring)
-  84 0004 E80F      		add r30,r24
-  85 0006 F11D      		adc r31,__zero_reg__
-  86 0008 8081      		ld r24,Z
-  87               	/* epilogue start */
-  88 000a 0895      		ret
-  90               		.section	.text.get_buff_location,"ax",@progbits
-  91               	.global	get_buff_location
-  93               	get_buff_location:
-  94               	/* prologue: function */
-  95               	/* frame size = 0 */
-  96               	/* stack size = 0 */
-  97               	.L__stack_usage = 0
-  98 0000 8091 0000 		lds r24,ringcounter
-  99               	/* epilogue start */
- 100 0004 0895      		ret
- 102               		.section	.text.set_buff_location,"ax",@progbits
- 103               	.global	set_buff_location
- 105               	set_buff_location:
- 106               	/* prologue: function */
- 107               	/* frame size = 0 */
- 108               	/* stack size = 0 */
- 109               	.L__stack_usage = 0
- 110 0000 8093 0000 		sts ringcounter,r24
- 111               	/* epilogue start */
- 112 0004 0895      		ret
- 114               	.global	ringcounter
- 115               	.global	ringcounter
- 116               		.section .bss
- 119               	ringcounter:
- 120 0000 00        		.skip 1,0
- 121               		.comm dataring,50,1
+  20 0004 88E9      		ldi r24,lo8(-104)
+  21 0006 8093 C900 		sts 201,r24
+  22 000a 86E0      		ldi r24,lo8(6)
+  23 000c 8093 CA00 		sts 202,r24
+  24 0010 80E1      		ldi r24,lo8(16)
+  25 0012 90E0      		ldi r25,hi8(16)
+  26 0014 9093 CD00 		sts 204+1,r25
+  27 0018 8093 CC00 		sts 204,r24
+  28               	/* epilogue start */
+  29 001c 0895      		ret
+  31               		.section	.text.PushData,"ax",@progbits
+  32               	.global	PushData
+  34               	PushData:
+  35               	/* prologue: function */
+  36               	/* frame size = 0 */
+  37               	/* stack size = 0 */
+  38               	.L__stack_usage = 0
+  39 0000 9091 0000 		lds r25,ringcounter
+  40 0004 9233      		cpi r25,lo8(50)
+  41 0006 00F0      		brlo .L3
+  42 0008 1092 0000 		sts ringcounter,__zero_reg__
+  43               	.L3:
+  44 000c 9091 0000 		lds r25,ringcounter
+  45 0010 E92F      		mov r30,r25
+  46 0012 F0E0      		ldi r31,lo8(0)
+  47 0014 E050      		subi r30,lo8(-(dataring))
+  48 0016 F040      		sbci r31,hi8(-(dataring))
+  49 0018 8083      		st Z,r24
+  50 001a 9F5F      		subi r25,lo8(-(1))
+  51 001c 9093 0000 		sts ringcounter,r25
+  52               	/* epilogue start */
+  53 0020 0895      		ret
+  55               		.section	.text.PopData,"ax",@progbits
+  56               	.global	PopData
+  58               	PopData:
+  59               	/* prologue: function */
+  60               	/* frame size = 0 */
+  61               	/* stack size = 0 */
+  62               	.L__stack_usage = 0
+  63 0000 8091 0000 		lds r24,ringcounter
+  64 0004 E0E0      		ldi r30,lo8(dataring)
+  65 0006 F0E0      		ldi r31,hi8(dataring)
+  66 0008 E80F      		add r30,r24
+  67 000a F11D      		adc r31,__zero_reg__
+  68 000c 8081      		ld r24,Z
+  69               	/* epilogue start */
+  70 000e 0895      		ret
+  72               		.section	.text.ReadData,"ax",@progbits
+  73               	.global	ReadData
+  75               	ReadData:
+  76               	/* prologue: function */
+  77               	/* frame size = 0 */
+  78               	/* stack size = 0 */
+  79               	.L__stack_usage = 0
+  80 0000 E0E0      		ldi r30,lo8(dataring)
+  81 0002 F0E0      		ldi r31,hi8(dataring)
+  82 0004 E80F      		add r30,r24
+  83 0006 F11D      		adc r31,__zero_reg__
+  84 0008 8081      		ld r24,Z
+  85               	/* epilogue start */
+  86 000a 0895      		ret
+  88               		.section	.text.get_buff_location,"ax",@progbits
+  89               	.global	get_buff_location
+  91               	get_buff_location:
+  92               	/* prologue: function */
+  93               	/* frame size = 0 */
+  94               	/* stack size = 0 */
+  95               	.L__stack_usage = 0
+  96 0000 8091 0000 		lds r24,ringcounter
+  97               	/* epilogue start */
+  98 0004 0895      		ret
+ 100               		.section	.text.set_buff_location,"ax",@progbits
+ 101               	.global	set_buff_location
+ 103               	set_buff_location:
+ 104               	/* prologue: function */
+ 105               	/* frame size = 0 */
+ 106               	/* stack size = 0 */
+ 107               	.L__stack_usage = 0
+ 108 0000 8093 0000 		sts ringcounter,r24
+ 109               	/* epilogue start */
+ 110 0004 0895      		ret
+ 112               	.global	ringcounter
+ 113               	.global	ringcounter
+ 114               		.section .bss
+ 117               	ringcounter:
+ 118 0000 00        		.skip 1,0
+ 119               		.comm dataring,50,1
 DEFINED SYMBOLS
                             *ABS*:00000000 usart.c
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYCyZt8.s:2      *ABS*:0000003f __SREG__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYCyZt8.s:3      *ABS*:0000003e __SP_H__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYCyZt8.s:4      *ABS*:0000003d __SP_L__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYCyZt8.s:5      *ABS*:00000034 __CCP__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYCyZt8.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYCyZt8.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYCyZt8.s:13     .text.Setup_USART:00000000 Setup_USART
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYCyZt8.s:36     .text.PushData:00000000 PushData
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYCyZt8.s:119    .bss:00000000 ringcounter
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc7YgKFV.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc7YgKFV.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc7YgKFV.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc7YgKFV.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc7YgKFV.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc7YgKFV.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc7YgKFV.s:13     .text.Setup_USART:00000000 Setup_USART
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc7YgKFV.s:34     .text.PushData:00000000 PushData
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc7YgKFV.s:117    .bss:00000000 ringcounter
                             *COM*:00000032 dataring
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYCyZt8.s:60     .text.PopData:00000000 PopData
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYCyZt8.s:77     .text.ReadData:00000000 ReadData
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYCyZt8.s:93     .text.get_buff_location:00000000 get_buff_location
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYCyZt8.s:105    .text.set_buff_location:00000000 set_buff_location
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc7YgKFV.s:58     .text.PopData:00000000 PopData
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc7YgKFV.s:75     .text.ReadData:00000000 ReadData
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc7YgKFV.s:91     .text.get_buff_location:00000000 get_buff_location
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc7YgKFV.s:103    .text.set_buff_location:00000000 set_buff_location
 
 UNDEFINED SYMBOLS
 __do_copy_data

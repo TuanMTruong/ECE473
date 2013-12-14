@@ -120,12 +120,20 @@ void file_time(uint8_t hour, uint8_t min){
 ISR(USART1_RX_vect){
 	//Store data
 	uint8_t temp = UDR1;
+    
+    /**
 	if (temp == COLOR_MODE || temp == ADDR_MODE || temp == RAINBOW_MODE || temp == TIME_MODE || temp ==TIME_MODE_2){
 		if (ReadData(get_buff_location()-1) == OPEN_COM){
 			set_buff_location(0);
 			PushData(OPEN_COM);
 		}
 	}
+     **/
+    
+    if(temp == OPEN_COM){
+        set_buff_location(0);
+    }
+    
     
     //if data received is a start communication byte then wait for the second byte to confirm
     //mode byte
@@ -211,11 +219,11 @@ void display_mode(uint8_t *data, uint8_t *disp_buff){
 	
 	if (*(disp_buff+1)== COLOR_MODE){
 		hs_convert(*(disp_buff+2), 0, data);
-		_delay_ms(1);
+		_delay_ms(2);
 		for(i=0; i<LED_NUM; i++){
             //cli();
 			Send_SPI_array(data, (data+1), (data+2),1);
-            //            sei();
+            //sei();
 		}
 	}
 	else if (*(disp_buff+1) == ADDR_MODE){
@@ -443,14 +451,18 @@ int main(void){
 			LED_PORT ^= 1<<LED_PIN;
             //WIP: need to copy data from recieving buffer to a disaply buffer so data doesn't change
             //when recieving wireless data while in the middle of displaying data
-            for (i=0; i<50; i++) {
+            for (i=0; i<10; i++) {
                 disp_buff[i] = ReadData(i);
             }
-            
 			
             //speaking of displaying data.. display date
             //give 3 element array to store rgb temp data
             display_mode(hs_rgb, disp_buff);
+            
+            //set_buff_location(0);
+            //PushData(0x00);
+            
+            
 		}
         
 

@@ -236,18 +236,22 @@ uint8_t check_buttons(uint8_t inputs){
 			set_mode(RAINBOW_MODE);
             }
             SendData_buffer[2] = 10;
-            usart_send_string(SendData_buffer, 4);
-            _delay_ms(500);
-            return;
+            //usart_send_string(SendData_buffer, 4);
+            //_delay_ms(500);
+            //return 0;
 			//SendData_buffer(2) = 30;
 		}
 
 		//usart_send_string(SendData_buffer, 4);
-	usart_send_string(SendData_buffer, 4);
-	_delay_ms(10);
+        usart_send_string(SendData_buffer, 4);
+        //_delay_ms(10);
+        buttons[prev_BN] =buttons[curr_BN];
+        _delay_ms(1);
+        while (!(Read_Buttons()&0xF0) == (0x00)) {}
+        _delay_ms(1);
+        
 	}
-	buttons[prev_BN] =buttons[curr_BN];
-	_delay_ms(1);
+	
 	return(SendData_buffer[MODE]);
 }
 
@@ -261,13 +265,13 @@ uint8_t check_encoders(uint8_t inputs){
 		if((Encoders[curr_E1] == (Encoders[prev_E1] ^ 0x01)) && (Encoders[curr_E1] == 0x01 || Encoders[curr_E1] == 0x02)){
 			Encoders[state_E1] = CW;
 
-			usart_send_byte('R');
+			//usart_send_byte('R');
 			SendData_buffer[2]+=2;
 		}
 		else if((Encoders[curr_E1] == (Encoders[prev_E1] ^ 0x01)) && (Encoders[curr_E1] == 0x00 || Encoders[curr_E1] == 0x03)){
 			Encoders[state_E1] = CCW;
 
-			usart_send_byte('L');
+			//usart_send_byte('L');
 			SendData_buffer[2]-=2;
 		}
 		else {
@@ -286,13 +290,13 @@ uint8_t check_encoders(uint8_t inputs){
 		if((Encoders[curr_E2] == (Encoders[prev_E2] ^ 0x01)) && (Encoders[curr_E2] == 0x01 || Encoders[curr_E2] == 0x02)){
 			Encoders[state_E2] = CW;
             
-			usart_send_byte('R');
+			//usart_send_byte('R');
 			SendData_buffer[2] += 2;
 		}
 		else if((Encoders[curr_E2] == (Encoders[prev_E2] ^ 0x01)) && (Encoders[curr_E2] == 0x00 || Encoders[curr_E2] == 0x03)){
 			Encoders[state_E2] = CCW;
             
-			usart_send_byte('L');
+			//usart_send_byte('L');
 			SendData_buffer[2]-=2;
 		}
 		else {
@@ -304,7 +308,7 @@ uint8_t check_encoders(uint8_t inputs){
 	Encoders[prev_E2] = Encoders[curr_E2];
 
 	
-	_delay_ms(1);
+	//_delay_ms(1);
 	return(1);
 }
 
@@ -379,10 +383,12 @@ int main(void){
 		check_encoders(temp);
 		//check_buttons();
 		
+        
 		if(SendData_buffer[2] != SendData_buffer[4]){
 			usart_send_string(SendData_buffer, 4);
 			SendData_buffer[4] = SendData_buffer[2];
 		}
+         
 #endif
 
 

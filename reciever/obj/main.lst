@@ -107,756 +107,739 @@
  116               	/* stack size = 16 */
  117               	.L__stack_usage = 16
  118 0024 C091 CE00 		lds r28,206
- 119 0028 CC30      		cpi r28,lo8(12)
- 120 002a 01F0      		breq .L8
- 121 002c CB3C      		cpi r28,lo8(-53)
- 122 002e 01F0      		breq .L8
- 123 0030 CC3A      		cpi r28,lo8(-84)
- 124 0032 01F0      		breq .L8
- 125 0034 CE3E      		cpi r28,lo8(-18)
- 126 0036 01F0      		breq .L8
- 127 0038 CA3A      		cpi r28,lo8(-86)
- 128 003a 01F4      		brne .L9
- 129               	.L8:
- 130 003c 0E94 0000 		call get_buff_location
- 131 0040 8150      		subi r24,lo8(-(-1))
- 132 0042 0E94 0000 		call ReadData
- 133 0046 8F3F      		cpi r24,lo8(-1)
- 134 0048 01F4      		brne .L9
- 135 004a 80E0      		ldi r24,lo8(0)
- 136 004c 0E94 0000 		call set_buff_location
- 137 0050 8FEF      		ldi r24,lo8(-1)
- 138 0052 0E94 0000 		call PushData
- 139               	.L9:
- 140 0056 8C2F      		mov r24,r28
- 141 0058 0E94 0000 		call PushData
- 142               	/* epilogue start */
- 143 005c FF91      		pop r31
- 144 005e EF91      		pop r30
- 145 0060 CF91      		pop r28
- 146 0062 BF91      		pop r27
- 147 0064 AF91      		pop r26
- 148 0066 9F91      		pop r25
- 149 0068 8F91      		pop r24
- 150 006a 7F91      		pop r23
- 151 006c 6F91      		pop r22
- 152 006e 5F91      		pop r21
- 153 0070 4F91      		pop r20
- 154 0072 3F91      		pop r19
- 155 0074 2F91      		pop r18
- 156 0076 0F90      		pop r0
- 157 0078 0FBE      		out __SREG__,r0
- 158 007a 0F90      		pop r0
- 159 007c 1F90      		pop r1
- 160 007e 1895      		reti
- 162               		.section	.text.__vector_26,"ax",@progbits
- 163               	.global	__vector_26
- 165               	__vector_26:
- 166 0000 1F92      		push r1
- 167 0002 0F92      		push r0
- 168 0004 0FB6      		in r0,__SREG__
- 169 0006 0F92      		push r0
- 170 0008 1124      		clr __zero_reg__
- 171 000a 8F93      		push r24
- 172 000c 9F93      		push r25
- 173               	/* prologue: Signal */
- 174               	/* frame size = 0 */
- 175               	/* stack size = 5 */
- 176               	.L__stack_usage = 5
- 177 000e 8BB1      		in r24,43-32
- 178 0010 90E4      		ldi r25,lo8(64)
- 179 0012 8927      		eor r24,r25
- 180 0014 8BB9      		out 43-32,r24
- 181 0016 81E6      		ldi r24,lo8(97)
- 182 0018 8093 CE00 		sts 206,r24
- 183 001c 8FE9      		 ldi r24,lo8(3999)
- 184 001e 9FE0      	    ldi r25,hi8(3999)
- 185 0020 0197      	    1:sbiw r24,1
- 186 0022 01F4      	    brne 1b
- 187 0024 00C0      		rjmp .
- 188 0026 0000      		nop
- 189               	/* epilogue start */
- 190 0028 9F91      		pop r25
- 191 002a 8F91      		pop r24
- 192 002c 0F90      		pop r0
- 193 002e 0FBE      		out __SREG__,r0
- 194 0030 0F90      		pop r0
- 195 0032 1F90      		pop r1
- 196 0034 1895      		reti
- 198               		.section	.text.__vector_default,"ax",@progbits
- 199               	.global	__vector_default
- 201               	__vector_default:
- 202 0000 1F92      		push r1
- 203 0002 0F92      		push r0
- 204 0004 0FB6      		in r0,__SREG__
- 205 0006 0F92      		push r0
- 206 0008 1124      		clr __zero_reg__
- 207               	/* prologue: Signal */
- 208               	/* frame size = 0 */
- 209               	/* stack size = 3 */
- 210               	.L__stack_usage = 3
- 211 000a 90E4      		ldi r25,lo8(64)
- 212               	.L12:
- 213 000c 8BB1      		in r24,43-32
- 214 000e 8927      		eor r24,r25
- 215 0010 8BB9      		out 43-32,r24
- 216 0012 2FEF      		 ldi r18,lo8(319999)
- 217 0014 31EE      	    ldi r19,hi8(319999)
- 218 0016 44E0      	    ldi r20,hlo8(319999)
- 219 0018 2150      	    1:subi r18,1
- 220 001a 3040      	    sbci r19,0
- 221 001c 4040      	    sbci r20,0
- 222 001e 01F4      	    brne 1b
- 223 0020 00C0      		rjmp .
- 224 0022 0000      		nop
- 225 0024 00C0      		rjmp .L12
- 227               		.section	.text.__vector_17,"ax",@progbits
- 228               	.global	__vector_17
- 230               	__vector_17:
- 231 0000 1F92      		push r1
- 232 0002 0F92      		push r0
- 233 0004 0FB6      		in r0,__SREG__
- 234 0006 0F92      		push r0
- 235 0008 1124      		clr __zero_reg__
- 236 000a 8F93      		push r24
- 237 000c 9F93      		push r25
- 238               	/* prologue: Signal */
- 239               	/* frame size = 0 */
- 240               	/* stack size = 5 */
- 241               	.L__stack_usage = 5
- 242 000e 8BB1      		in r24,43-32
- 243 0010 90E4      		ldi r25,lo8(64)
- 244 0012 8927      		eor r24,r25
- 245 0014 8BB9      		out 43-32,r24
- 246 0016 8091 0000 		lds r24,time_array+16
- 247 001a 8095      		com r24
- 248 001c 8093 0000 		sts time_array+16,r24
- 249 0020 8091 0000 		lds r24,time_array+17
- 250 0024 8095      		com r24
- 251 0026 8093 0000 		sts time_array+17,r24
- 252 002a 8091 0000 		lds r24,time_array+8
- 253 002e 8F5F      		subi r24,lo8(-(1))
- 254 0030 8093 0000 		sts time_array+8,r24
- 255 0034 8C33      		cpi r24,lo8(60)
- 256 0036 00F0      		brlo .L14
- 257 0038 1092 0000 		sts time_array+8,__zero_reg__
- 258 003c 8091 0000 		lds r24,time_array+7
- 259 0040 8F5F      		subi r24,lo8(-(1))
- 260 0042 8093 0000 		sts time_array+7,r24
- 261 0046 8C33      		cpi r24,lo8(60)
- 262 0048 00F0      		brlo .L14
- 263 004a 1092 0000 		sts time_array+7,__zero_reg__
- 264 004e 8091 0000 		lds r24,time_array+6
- 265 0052 8F5F      		subi r24,lo8(-(1))
- 266 0054 8093 0000 		sts time_array+6,r24
- 267 0058 8D30      		cpi r24,lo8(13)
- 268 005a 00F0      		brlo .L14
- 269 005c 81E0      		ldi r24,lo8(1)
- 270 005e 8093 0000 		sts time_array+6,r24
- 271               	.L14:
- 272 0062 1092 8500 		sts 132+1,__zero_reg__
- 273 0066 1092 8400 		sts 132,__zero_reg__
- 274               	/* epilogue start */
- 275 006a 9F91      		pop r25
- 276 006c 8F91      		pop r24
- 277 006e 0F90      		pop r0
- 278 0070 0FBE      		out __SREG__,r0
- 279 0072 0F90      		pop r0
- 280 0074 1F90      		pop r1
- 281 0076 1895      		reti
- 283               		.section	.text.verify_buff,"ax",@progbits
- 284               	.global	verify_buff
- 286               	verify_buff:
- 287               	/* prologue: function */
- 288               	/* frame size = 0 */
- 289               	/* stack size = 0 */
- 290               	.L__stack_usage = 0
- 291 0000 80E0      		ldi r24,lo8(0)
- 292 0002 0E94 0000 		call ReadData
- 293 0006 8F3F      		cpi r24,lo8(-1)
- 294 0008 01F4      		brne .L22
- 295 000a 81E0      		ldi r24,lo8(1)
- 296 000c 0E94 0000 		call ReadData
- 297 0010 8C30      		cpi r24,lo8(12)
- 298 0012 01F0      		breq .L17
- 299 0014 81E0      		ldi r24,lo8(1)
- 300 0016 0E94 0000 		call ReadData
- 301 001a 8C3A      		cpi r24,lo8(-84)
- 302 001c 01F0      		breq .L17
- 303 001e 81E0      		ldi r24,lo8(1)
- 304 0020 0E94 0000 		call ReadData
- 305 0024 8E3E      		cpi r24,lo8(-18)
- 306 0026 01F0      		breq .L17
- 307 0028 81E0      		ldi r24,lo8(1)
- 308 002a 0E94 0000 		call ReadData
- 309 002e 8A3A      		cpi r24,lo8(-86)
- 310 0030 01F4      		brne .L18
- 311               	.L17:
- 312 0032 83E0      		ldi r24,lo8(3)
- 313 0034 00C0      		rjmp .L23
- 314               	.L18:
- 315 0036 81E0      		ldi r24,lo8(1)
- 316 0038 0E94 0000 		call ReadData
- 317 003c 8B3C      		cpi r24,lo8(-53)
- 318 003e 01F4      		brne .L22
- 319 0040 82E2      		ldi r24,lo8(34)
- 320               	.L23:
- 321 0042 0E94 0000 		call ReadData
- 322 0046 91E0      		ldi r25,lo8(1)
- 323 0048 8A3B      		cpi r24,lo8(-70)
- 324 004a 01F0      		breq .L16
- 325               	.L22:
- 326 004c 90E0      		ldi r25,lo8(0)
- 327               	.L16:
- 328 004e 892F      		mov r24,r25
- 329               	/* epilogue start */
- 330 0050 0895      		ret
- 332               		.section	.text.display_mode,"ax",@progbits
- 333               	.global	display_mode
- 335               	display_mode:
- 336 0000 AF92      		push r10
- 337 0002 BF92      		push r11
- 338 0004 CF92      		push r12
- 339 0006 DF92      		push r13
- 340 0008 EF92      		push r14
- 341 000a FF92      		push r15
- 342 000c 0F93      		push r16
- 343 000e 1F93      		push r17
- 344 0010 CF93      		push r28
- 345 0012 DF93      		push r29
- 346 0014 0F92      		push __tmp_reg__
- 347 0016 CDB7      		in r28,__SP_L__
- 348 0018 DEB7      		in r29,__SP_H__
- 349               	/* prologue: function */
- 350               	/* frame size = 1 */
- 351               	/* stack size = 11 */
- 352               	.L__stack_usage = 11
- 353 001a 8C01      		movw r16,r24
- 354 001c FB01      		movw r30,r22
- 355 001e 8181      		ldd r24,Z+1
- 356 0020 8C30      		cpi r24,lo8(12)
- 357 0022 01F4      		brne .L25
- 358 0024 8281      		ldd r24,Z+2
- 359 0026 60E0      		ldi r22,lo8(0)
- 360 0028 A801      		movw r20,r16
- 361 002a 0E94 0000 		call hs_convert
- 362 002e 8FE9      		 ldi r24,lo8(3999)
- 363 0030 9FE0      	    ldi r25,hi8(3999)
- 364 0032 0197      	    1:sbiw r24,1
- 365 0034 01F4      	    brne 1b
- 366 0036 00C0      		rjmp .
- 367 0038 0000      		nop
- 368 003a 70E2      		ldi r23,lo8(32)
- 369 003c A72E      		mov r10,r23
- 370 003e 7801      		movw r14,r16
- 371 0040 0894      		sec
- 372 0042 E11C      		adc r14,__zero_reg__
- 373 0044 F11C      		adc r15,__zero_reg__
- 374 0046 A2E0      		ldi r26,lo8(2)
- 375 0048 CA2E      		mov r12,r26
- 376 004a D12C      		mov r13,__zero_reg__
- 377 004c C00E      		add r12,r16
- 378 004e D11E      		adc r13,r17
- 379               	.L26:
- 380 0050 C801      		movw r24,r16
- 381 0052 B701      		movw r22,r14
- 382 0054 A601      		movw r20,r12
- 383 0056 21E0      		ldi r18,lo8(1)
- 384 0058 0E94 0000 		call Send_SPI_array
- 385 005c AA94      		dec r10
- 386 005e 01F4      		brne .L26
- 387 0060 00C0      		rjmp .L24
- 388               	.L25:
- 389 0062 8B3C      		cpi r24,lo8(-53)
- 390 0064 01F4      		brne .L28
- 391 0066 8FE9      		 ldi r24,lo8(3999)
- 392 0068 9FE0      	    ldi r25,hi8(3999)
- 393 006a 0197      	    1:sbiw r24,1
- 394 006c 01F4      	    brne 1b
- 395 006e 00C0      		rjmp .
- 396 0070 0000      		nop
- 397 0072 52E0      		ldi r21,lo8(2)
- 398 0074 A52E      		mov r10,r21
- 399 0076 B12C      		mov r11,__zero_reg__
- 400 0078 A60E      		add r10,r22
- 401 007a B71E      		adc r11,r23
- 402 007c 30E0      		ldi r19,lo8(0)
- 403 007e 7801      		movw r14,r16
- 404 0080 0894      		sec
- 405 0082 E11C      		adc r14,__zero_reg__
- 406 0084 F11C      		adc r15,__zero_reg__
- 407 0086 62E0      		ldi r22,lo8(2)
- 408 0088 C62E      		mov r12,r22
- 409 008a D12C      		mov r13,__zero_reg__
- 410 008c C00E      		add r12,r16
- 411 008e D11E      		adc r13,r17
- 412               	.L29:
- 413 0090 F501      		movw r30,r10
- 414 0092 8191      		ld r24,Z+
- 415 0094 5F01      		movw r10,r30
- 416 0096 60E0      		ldi r22,lo8(0)
- 417 0098 A801      		movw r20,r16
- 418 009a 3983      		std Y+1,r19
- 419 009c 0E94 0000 		call hs_convert
- 420 00a0 C801      		movw r24,r16
- 421 00a2 B701      		movw r22,r14
- 422 00a4 A601      		movw r20,r12
- 423 00a6 21E0      		ldi r18,lo8(1)
- 424 00a8 0E94 0000 		call Send_SPI_array
- 425 00ac 3981      		ldd r19,Y+1
- 426 00ae 3F5F      		subi r19,lo8(-(1))
- 427 00b0 3032      		cpi r19,lo8(32)
- 428 00b2 01F4      		brne .L29
- 429 00b4 00C0      		rjmp .L24
- 430               	.L28:
- 431 00b6 81E0      		ldi r24,lo8(1)
- 432 00b8 0E94 0000 		call ReadData
- 433 00bc 8C3A      		cpi r24,lo8(-84)
- 434 00be 01F4      		brne .L30
- 435 00c0 8FE9      		 ldi r24,lo8(3999)
- 436 00c2 9FE0      	    ldi r25,hi8(3999)
- 437 00c4 0197      	    1:sbiw r24,1
- 438 00c6 01F4      	    brne 1b
- 439 00c8 00C0      		rjmp .
- 440 00ca 0000      		nop
- 441 00cc 37E0      		ldi r19,lo8(7)
- 442 00ce 7801      		movw r14,r16
- 443 00d0 0894      		sec
- 444 00d2 E11C      		adc r14,__zero_reg__
- 445 00d4 F11C      		adc r15,__zero_reg__
- 446 00d6 42E0      		ldi r20,lo8(2)
- 447 00d8 C42E      		mov r12,r20
- 448 00da D12C      		mov r13,__zero_reg__
- 449 00dc C00E      		add r12,r16
- 450 00de D11E      		adc r13,r17
- 451               	.L31:
- 452 00e0 832F      		mov r24,r19
- 453 00e2 60E0      		ldi r22,lo8(0)
- 454 00e4 A801      		movw r20,r16
- 455 00e6 3983      		std Y+1,r19
- 456 00e8 0E94 0000 		call hs_convert
- 457 00ec C801      		movw r24,r16
- 458 00ee B701      		movw r22,r14
- 459 00f0 A601      		movw r20,r12
- 460 00f2 21E0      		ldi r18,lo8(1)
- 461 00f4 0E94 0000 		call Send_SPI_array
- 462 00f8 3981      		ldd r19,Y+1
- 463 00fa 395F      		subi r19,lo8(-(7))
- 464 00fc 373E      		cpi r19,lo8(-25)
- 465 00fe 01F4      		brne .L31
- 466 0100 00C0      		rjmp .L24
- 467               	.L30:
- 468 0102 81E0      		ldi r24,lo8(1)
- 469 0104 0E94 0000 		call ReadData
- 470 0108 8E3E      		cpi r24,lo8(-18)
- 471 010a 01F0      		breq .+2
- 472 010c 00C0      		rjmp .L24
- 473 010e 8091 0000 		lds r24,flag
- 474 0112 8823      		tst r24
- 475 0114 01F4      		brne .L32
- 476 0116 8BE0      		ldi r24,lo8(11)
- 477 0118 8093 0000 		sts time_array+6,r24
- 478 011c 83E1      		ldi r24,lo8(19)
- 479 011e 8093 0000 		sts time_array+7,r24
- 480 0122 1092 0000 		sts time_array+8,__zero_reg__
- 481 0126 88EC      		ldi r24,lo8(-56)
- 482 0128 8093 0000 		sts flag,r24
- 483               	.L32:
- 484 012c 8FEF      		ldi r24,lo8(-1)
- 485 012e F801      		movw r30,r16
- 486 0130 8083      		st Z,r24
- 487 0132 1182      		std Z+1,__zero_reg__
- 488 0134 8091 0000 		lds r24,time_array+6
- 489 0138 6091 0000 		lds r22,time_array+7
- 490 013c 0E94 0000 		call file_time
- 491 0140 8FE9      		 ldi r24,lo8(3999)
- 492 0142 9FE0      	    ldi r25,hi8(3999)
- 493 0144 0197      	    1:sbiw r24,1
- 494 0146 01F4      	    brne 1b
- 495 0148 00C0      		rjmp .
- 496 014a 0000      		nop
- 497 014c 37E0      		ldi r19,lo8(7)
- 498 014e E32E      		mov r14,r19
- 499 0150 F12C      		mov r15,__zero_reg__
- 500 0152 6801      		movw r12,r16
- 501 0154 0894      		sec
- 502 0156 C11C      		adc r12,__zero_reg__
- 503 0158 D11C      		adc r13,__zero_reg__
- 504               	.L35:
- 505 015a 8091 0000 		lds r24,time_array+2
- 506 015e 90E0      		ldi r25,lo8(0)
- 507 0160 0E2C      		mov r0,r14
- 508 0162 00C0      		rjmp 2f
- 509 0164 9595      	1:	asr r25
- 510 0166 8795      		ror r24
- 511 0168 0A94      	2:	dec r0
- 512 016a 02F4      		brpl 1b
- 513 016c 80FF      		sbrs r24,0
- 514 016e 00C0      		rjmp .L33
- 515 0170 C801      		movw r24,r16
- 516 0172 00C0      		rjmp .L52
- 517               	.L33:
- 518 0174 C601      		movw r24,r12
- 519               	.L52:
- 520 0176 B601      		movw r22,r12
- 521 0178 A601      		movw r20,r12
- 522 017a 21E0      		ldi r18,lo8(1)
- 523 017c 0E94 0000 		call Send_SPI_array
- 524 0180 0894      		sec
- 525 0182 E108      		sbc r14,__zero_reg__
- 526 0184 F108      		sbc r15,__zero_reg__
- 527 0186 91E0      		ldi r25,lo8(1)
- 528 0188 E916      		cp r14,r25
- 529 018a F104      		cpc r15,__zero_reg__
- 530 018c 01F4      		brne .L35
- 531 018e 8FEF      		ldi r24,lo8(-1)
- 532 0190 0E94 0000 		call Send_SPI_byte
- 533 0194 8FEF      		ldi r24,lo8(-1)
- 534 0196 0E94 0000 		call Send_SPI_byte
- 535 019a 8FEF      		ldi r24,lo8(-1)
- 536 019c 0E94 0000 		call Send_SPI_byte
- 537 01a0 80E0      		ldi r24,lo8(0)
- 538 01a2 0E94 0000 		call Send_SPI_byte
- 539 01a6 80E0      		ldi r24,lo8(0)
- 540 01a8 0E94 0000 		call Send_SPI_byte
- 541 01ac 80E0      		ldi r24,lo8(0)
- 542 01ae 0E94 0000 		call Send_SPI_byte
- 543 01b2 27E0      		ldi r18,lo8(7)
- 544 01b4 E22E      		mov r14,r18
- 545 01b6 F12C      		mov r15,__zero_reg__
- 546 01b8 6801      		movw r12,r16
- 547 01ba 0894      		sec
- 548 01bc C11C      		adc r12,__zero_reg__
- 549 01be D11C      		adc r13,__zero_reg__
- 550               	.L38:
- 551 01c0 8091 0000 		lds r24,time_array+3
- 552 01c4 90E0      		ldi r25,lo8(0)
- 553 01c6 0E2C      		mov r0,r14
- 554 01c8 00C0      		rjmp 2f
- 555 01ca 9595      	1:	asr r25
- 556 01cc 8795      		ror r24
- 557 01ce 0A94      	2:	dec r0
- 558 01d0 02F4      		brpl 1b
- 559 01d2 80FF      		sbrs r24,0
- 560 01d4 00C0      		rjmp .L36
- 561 01d6 C601      		movw r24,r12
- 562 01d8 B801      		movw r22,r16
- 563 01da 00C0      		rjmp .L53
- 564               	.L36:
- 565 01dc C601      		movw r24,r12
- 566 01de B601      		movw r22,r12
- 567               	.L53:
- 568 01e0 A601      		movw r20,r12
- 569 01e2 21E0      		ldi r18,lo8(1)
- 570 01e4 0E94 0000 		call Send_SPI_array
- 571 01e8 0894      		sec
- 572 01ea E108      		sbc r14,__zero_reg__
- 573 01ec F108      		sbc r15,__zero_reg__
- 574 01ee E3E0      		ldi r30,lo8(3)
- 575 01f0 EE16      		cp r14,r30
- 576 01f2 F104      		cpc r15,__zero_reg__
- 577 01f4 01F4      		brne .L38
- 578 01f6 8FEF      		ldi r24,lo8(-1)
- 579 01f8 0E94 0000 		call Send_SPI_byte
- 580 01fc 8FEF      		ldi r24,lo8(-1)
- 581 01fe 0E94 0000 		call Send_SPI_byte
- 582 0202 8FEF      		ldi r24,lo8(-1)
- 583 0204 0E94 0000 		call Send_SPI_byte
- 584 0208 80E0      		ldi r24,lo8(0)
- 585 020a 0E94 0000 		call Send_SPI_byte
- 586 020e 80E0      		ldi r24,lo8(0)
- 587 0210 0E94 0000 		call Send_SPI_byte
- 588 0214 80E0      		ldi r24,lo8(0)
- 589 0216 0E94 0000 		call Send_SPI_byte
- 590 021a 8091 0000 		lds r24,time_array+16
- 591 021e 0E94 0000 		call Send_SPI_byte
- 592 0222 80E0      		ldi r24,lo8(0)
- 593 0224 0E94 0000 		call Send_SPI_byte
- 594 0228 80E0      		ldi r24,lo8(0)
- 595 022a 0E94 0000 		call Send_SPI_byte
- 596 022e 8091 0000 		lds r24,time_array+16
- 597 0232 0E94 0000 		call Send_SPI_byte
- 598 0236 80E0      		ldi r24,lo8(0)
- 599 0238 0E94 0000 		call Send_SPI_byte
- 600 023c 80E0      		ldi r24,lo8(0)
- 601 023e 0E94 0000 		call Send_SPI_byte
- 602 0242 96E0      		ldi r25,lo8(6)
- 603 0244 E92E      		mov r14,r25
- 604 0246 F12C      		mov r15,__zero_reg__
- 605 0248 6801      		movw r12,r16
- 606 024a 0894      		sec
- 607 024c C11C      		adc r12,__zero_reg__
- 608 024e D11C      		adc r13,__zero_reg__
- 609               	.L41:
- 610 0250 8091 0000 		lds r24,time_array+4
- 611 0254 90E0      		ldi r25,lo8(0)
- 612 0256 0E2C      		mov r0,r14
- 613 0258 00C0      		rjmp 2f
- 614 025a 9595      	1:	asr r25
- 615 025c 8795      		ror r24
- 616 025e 0A94      	2:	dec r0
- 617 0260 02F4      		brpl 1b
- 618 0262 80FF      		sbrs r24,0
- 619 0264 00C0      		rjmp .L39
- 620 0266 C601      		movw r24,r12
- 621 0268 B601      		movw r22,r12
- 622 026a A801      		movw r20,r16
- 623 026c 00C0      		rjmp .L54
- 624               	.L39:
- 625 026e C601      		movw r24,r12
- 626 0270 B601      		movw r22,r12
- 627 0272 A601      		movw r20,r12
- 628               	.L54:
- 629 0274 21E0      		ldi r18,lo8(1)
- 630 0276 0E94 0000 		call Send_SPI_array
- 631 027a 0894      		sec
- 632 027c E108      		sbc r14,__zero_reg__
- 633 027e F108      		sbc r15,__zero_reg__
- 634 0280 FFEF      		ldi r31,lo8(-1)
- 635 0282 EF16      		cp r14,r31
- 636 0284 FFEF      		ldi r31,hi8(-1)
- 637 0286 FF06      		cpc r15,r31
- 638 0288 01F4      		brne .L41
- 639 028a 8FEF      		ldi r24,lo8(-1)
- 640 028c 0E94 0000 		call Send_SPI_byte
- 641 0290 8FEF      		ldi r24,lo8(-1)
- 642 0292 0E94 0000 		call Send_SPI_byte
- 643 0296 8FEF      		ldi r24,lo8(-1)
- 644 0298 0E94 0000 		call Send_SPI_byte
- 645 029c 80E0      		ldi r24,lo8(0)
- 646 029e 0E94 0000 		call Send_SPI_byte
- 647 02a2 80E0      		ldi r24,lo8(0)
- 648 02a4 0E94 0000 		call Send_SPI_byte
- 649 02a8 80E0      		ldi r24,lo8(0)
- 650 02aa 0E94 0000 		call Send_SPI_byte
- 651 02ae 86E0      		ldi r24,lo8(6)
- 652 02b0 E82E      		mov r14,r24
- 653 02b2 F12C      		mov r15,__zero_reg__
- 654 02b4 6801      		movw r12,r16
- 655 02b6 0894      		sec
- 656 02b8 C11C      		adc r12,__zero_reg__
- 657 02ba D11C      		adc r13,__zero_reg__
- 658               	.L44:
- 659 02bc 8091 0000 		lds r24,time_array+5
- 660 02c0 90E0      		ldi r25,lo8(0)
- 661 02c2 0E2C      		mov r0,r14
- 662 02c4 00C0      		rjmp 2f
- 663 02c6 9595      	1:	asr r25
- 664 02c8 8795      		ror r24
- 665 02ca 0A94      	2:	dec r0
- 666 02cc 02F4      		brpl 1b
- 667 02ce 80FF      		sbrs r24,0
- 668 02d0 00C0      		rjmp .L42
- 669 02d2 C801      		movw r24,r16
- 670 02d4 B801      		movw r22,r16
- 671 02d6 00C0      		rjmp .L55
- 672               	.L42:
- 673 02d8 C601      		movw r24,r12
- 674 02da B601      		movw r22,r12
- 675               	.L55:
- 676 02dc A601      		movw r20,r12
- 677 02de 21E0      		ldi r18,lo8(1)
- 678 02e0 0E94 0000 		call Send_SPI_array
- 679 02e4 0894      		sec
- 680 02e6 E108      		sbc r14,__zero_reg__
- 681 02e8 F108      		sbc r15,__zero_reg__
- 682 02ea 81E0      		ldi r24,lo8(1)
- 683 02ec E816      		cp r14,r24
- 684 02ee F104      		cpc r15,__zero_reg__
- 685 02f0 01F4      		brne .L44
- 686 02f2 8FEF      		ldi r24,lo8(-1)
- 687 02f4 0E94 0000 		call Send_SPI_byte
- 688 02f8 8FEF      		ldi r24,lo8(-1)
- 689 02fa 0E94 0000 		call Send_SPI_byte
- 690 02fe 8FEF      		ldi r24,lo8(-1)
- 691 0300 0E94 0000 		call Send_SPI_byte
- 692 0304 80E0      		ldi r24,lo8(0)
- 693 0306 0E94 0000 		call Send_SPI_byte
- 694 030a 80E0      		ldi r24,lo8(0)
- 695 030c 0E94 0000 		call Send_SPI_byte
- 696 0310 80E0      		ldi r24,lo8(0)
- 697 0312 0E94 0000 		call Send_SPI_byte
- 698               	.L24:
- 699               	/* epilogue start */
- 700 0316 0F90      		pop __tmp_reg__
- 701 0318 DF91      		pop r29
- 702 031a CF91      		pop r28
- 703 031c 1F91      		pop r17
- 704 031e 0F91      		pop r16
- 705 0320 FF90      		pop r15
- 706 0322 EF90      		pop r14
- 707 0324 DF90      		pop r13
- 708 0326 CF90      		pop r12
- 709 0328 BF90      		pop r11
- 710 032a AF90      		pop r10
- 711 032c 0895      		ret
- 713               		.section	.text.startup.main,"ax",@progbits
- 714               	.global	main
- 716               	main:
- 717 0000 CF93      		push r28
- 718 0002 DF93      		push r29
- 719 0004 CDB7      		in r28,__SP_L__
- 720 0006 DEB7      		in r29,__SP_H__
- 721 0008 CC5C      		subi r28,lo8(-(-204))
- 722 000a D040      		sbci r29,hi8(-(-204))
- 723 000c 0FB6      		in __tmp_reg__,__SREG__
- 724 000e F894      		cli
- 725 0010 DEBF      		out __SP_H__,r29
- 726 0012 0FBE      		out __SREG__,__tmp_reg__
- 727 0014 CDBF      		out __SP_L__,r28
- 728               	/* prologue: function */
- 729               	/* frame size = 204 */
- 730               	/* stack size = 206 */
- 731               	.L__stack_usage = 206
- 732 0016 80E8      		ldi r24,lo8(-128)
- 733 0018 8093 6100 		sts 97,r24
- 734 001c 1092 6100 		sts 97,__zero_reg__
- 735 0020 80E4      		ldi r24,lo8(64)
- 736 0022 8AB9      		out 42-32,r24
- 737 0024 0E94 0000 		call Setup_SPI
- 738 0028 0E94 0000 		call Setup_USART
- 739 002c 0E94 0000 		call Setup_Timer
- 740 0030 8FEF      		 ldi r24,lo8(639999)
- 741 0032 93EC      	    ldi r25,hi8(639999)
- 742 0034 A9E0      	    ldi r26,hlo8(639999)
- 743 0036 8150      	    1:subi r24,1
- 744 0038 9040      	    sbci r25,0
- 745 003a A040      	    sbci r26,0
- 746 003c 01F4      	    brne 1b
- 747 003e 00C0      		rjmp .
- 748 0040 0000      		nop
- 749 0042 CE01      		movw r24,r28
- 750 0044 8859      		subi r24,lo8(-(104))
- 751 0046 9F4F      		sbci r25,hi8(-(104))
- 752 0048 60E2      		ldi r22,lo8(32)
- 753 004a 40E0      		ldi r20,lo8(0)
- 754 004c 0E94 0000 		call Fill_array
- 755 0050 CE01      		movw r24,r28
- 756 0052 C696      		adiw r24,54
- 757 0054 60E2      		ldi r22,lo8(32)
- 758 0056 40E0      		ldi r20,lo8(0)
- 759 0058 0E94 0000 		call Fill_array
- 760 005c CE01      		movw r24,r28
- 761 005e 0496      		adiw r24,4
- 762 0060 60E2      		ldi r22,lo8(32)
- 763 0062 40E0      		ldi r20,lo8(0)
- 764 0064 0E94 0000 		call Fill_array
- 765 0068 80E0      		ldi r24,lo8(0)
- 766 006a 0E94 0000 		call set_buff_location
- 767 006e 8FEF      		ldi r24,lo8(-1)
- 768 0070 0E94 0000 		call PushData
- 769 0074 8CE0      		ldi r24,lo8(12)
- 770 0076 0E94 0000 		call PushData
- 771 007a 07E0      		ldi r16,lo8(7)
- 772               	.L57:
- 773 007c 802F      		mov r24,r16
- 774 007e 0E94 0000 		call PushData
- 775 0082 095F      		subi r16,lo8(-(7))
- 776 0084 073E      		cpi r16,lo8(-25)
- 777 0086 01F4      		brne .L57
- 778 0088 8AEB      		ldi r24,lo8(-70)
- 779 008a 0E94 0000 		call PushData
- 780               	/* #APP */
- 781               	 ;  397 "main.c" 1
- 782 008e 7894      		sei
- 783               	 ;  0 "" 2
- 784               	/* #NOAPP */
- 785 0090 8FEF      		 ldi r24,lo8(639999)
- 786 0092 93EC      	    ldi r25,hi8(639999)
- 787 0094 A9E0      	    ldi r26,hlo8(639999)
- 788 0096 8150      	    1:subi r24,1
- 789 0098 9040      	    sbci r25,0
- 790 009a A040      	    sbci r26,0
- 791 009c 01F4      	    brne 1b
- 792 009e 00C0      		rjmp .
- 793 00a0 0000      		nop
- 794 00a2 E0E0      		ldi r30,lo8(time_array+2)
- 795 00a4 F0E0      		ldi r31,hi8(time_array+2)
- 796 00a6 80E2      		ldi r24,lo8(32)
- 797               	.L58:
- 798 00a8 1192      		st Z+,__zero_reg__
- 799 00aa 8150      		subi r24,lo8(-(-1))
- 800 00ac 01F4      		brne .L58
- 801 00ae 8CE0      		ldi r24,lo8(12)
- 802 00b0 8093 0000 		sts time_array+6,r24
- 803 00b4 8BE0      		ldi r24,lo8(11)
- 804 00b6 8093 0000 		sts time_array+7,r24
- 805 00ba 1092 0000 		sts time_array+8,__zero_reg__
- 806 00be B0E4      		ldi r27,lo8(64)
- 807 00c0 FB2E      		mov r15,r27
- 808               	.L67:
- 809 00c2 0E94 0000 		call verify_buff
- 810 00c6 8823      		tst r24
- 811 00c8 01F0      		breq .L67
- 812 00ca 8BB1      		in r24,43-32
- 813 00cc 8F25      		eor r24,r15
- 814 00ce 8BB9      		out 43-32,r24
- 815 00d0 8E01      		movw r16,r28
- 816 00d2 0656      		subi r16,lo8(-(154))
- 817 00d4 1F4F      		sbci r17,hi8(-(154))
- 818 00d6 90E0      		ldi r25,lo8(0)
- 819               	.L60:
- 820 00d8 892F      		mov r24,r25
- 821 00da C453      		subi r28,lo8(-204)
- 822 00dc DF4F      		sbci r29,hi8(-204)
- 823 00de 9883      		st Y,r25
- 824 00e0 CC5C      		subi r28,lo8(204)
- 825 00e2 D040      		sbci r29,hi8(204)
- 826 00e4 0E94 0000 		call ReadData
- 827 00e8 D801      		movw r26,r16
- 828 00ea 8D93      		st X+,r24
- 829 00ec 8D01      		movw r16,r26
- 830 00ee C453      		subi r28,lo8(-204)
- 831 00f0 DF4F      		sbci r29,hi8(-204)
- 832 00f2 9881      		ld r25,Y
- 833 00f4 CC5C      		subi r28,lo8(204)
- 834 00f6 D040      		sbci r29,hi8(204)
- 835 00f8 9F5F      		subi r25,lo8(-(1))
- 836 00fa 9233      		cpi r25,lo8(50)
- 837 00fc 01F4      		brne .L60
- 838 00fe CE01      		movw r24,r28
- 839 0100 0196      		adiw r24,1
- 840 0102 BE01      		movw r22,r28
- 841 0104 6656      		subi r22,lo8(-(154))
- 842 0106 7F4F      		sbci r23,hi8(-(154))
- 843 0108 0E94 0000 		call display_mode
- 844 010c 00C0      		rjmp .L67
- 846               	.global	flag
- 847               	.global	flag
- 848               		.section .bss
- 851               	flag:
- 852 0000 00        		.skip 1,0
- 853               		.comm time_array,35,1
+ 119 0028 CF3F      		cpi r28,lo8(-1)
+ 120 002a 01F4      		brne .L8
+ 121 002c 80E0      		ldi r24,lo8(0)
+ 122 002e 0E94 0000 		call set_buff_location
+ 123               	.L8:
+ 124 0032 8C2F      		mov r24,r28
+ 125 0034 0E94 0000 		call PushData
+ 126               	/* epilogue start */
+ 127 0038 FF91      		pop r31
+ 128 003a EF91      		pop r30
+ 129 003c CF91      		pop r28
+ 130 003e BF91      		pop r27
+ 131 0040 AF91      		pop r26
+ 132 0042 9F91      		pop r25
+ 133 0044 8F91      		pop r24
+ 134 0046 7F91      		pop r23
+ 135 0048 6F91      		pop r22
+ 136 004a 5F91      		pop r21
+ 137 004c 4F91      		pop r20
+ 138 004e 3F91      		pop r19
+ 139 0050 2F91      		pop r18
+ 140 0052 0F90      		pop r0
+ 141 0054 0FBE      		out __SREG__,r0
+ 142 0056 0F90      		pop r0
+ 143 0058 1F90      		pop r1
+ 144 005a 1895      		reti
+ 146               		.section	.text.__vector_26,"ax",@progbits
+ 147               	.global	__vector_26
+ 149               	__vector_26:
+ 150 0000 1F92      		push r1
+ 151 0002 0F92      		push r0
+ 152 0004 0FB6      		in r0,__SREG__
+ 153 0006 0F92      		push r0
+ 154 0008 1124      		clr __zero_reg__
+ 155 000a 8F93      		push r24
+ 156 000c 9F93      		push r25
+ 157               	/* prologue: Signal */
+ 158               	/* frame size = 0 */
+ 159               	/* stack size = 5 */
+ 160               	.L__stack_usage = 5
+ 161 000e 8BB1      		in r24,43-32
+ 162 0010 90E4      		ldi r25,lo8(64)
+ 163 0012 8927      		eor r24,r25
+ 164 0014 8BB9      		out 43-32,r24
+ 165 0016 81E6      		ldi r24,lo8(97)
+ 166 0018 8093 CE00 		sts 206,r24
+ 167 001c 8FE9      		 ldi r24,lo8(3999)
+ 168 001e 9FE0      	    ldi r25,hi8(3999)
+ 169 0020 0197      	    1:sbiw r24,1
+ 170 0022 01F4      	    brne 1b
+ 171 0024 00C0      		rjmp .
+ 172 0026 0000      		nop
+ 173               	/* epilogue start */
+ 174 0028 9F91      		pop r25
+ 175 002a 8F91      		pop r24
+ 176 002c 0F90      		pop r0
+ 177 002e 0FBE      		out __SREG__,r0
+ 178 0030 0F90      		pop r0
+ 179 0032 1F90      		pop r1
+ 180 0034 1895      		reti
+ 182               		.section	.text.__vector_default,"ax",@progbits
+ 183               	.global	__vector_default
+ 185               	__vector_default:
+ 186 0000 1F92      		push r1
+ 187 0002 0F92      		push r0
+ 188 0004 0FB6      		in r0,__SREG__
+ 189 0006 0F92      		push r0
+ 190 0008 1124      		clr __zero_reg__
+ 191               	/* prologue: Signal */
+ 192               	/* frame size = 0 */
+ 193               	/* stack size = 3 */
+ 194               	.L__stack_usage = 3
+ 195 000a 90E4      		ldi r25,lo8(64)
+ 196               	.L11:
+ 197 000c 8BB1      		in r24,43-32
+ 198 000e 8927      		eor r24,r25
+ 199 0010 8BB9      		out 43-32,r24
+ 200 0012 2FEF      		 ldi r18,lo8(319999)
+ 201 0014 31EE      	    ldi r19,hi8(319999)
+ 202 0016 44E0      	    ldi r20,hlo8(319999)
+ 203 0018 2150      	    1:subi r18,1
+ 204 001a 3040      	    sbci r19,0
+ 205 001c 4040      	    sbci r20,0
+ 206 001e 01F4      	    brne 1b
+ 207 0020 00C0      		rjmp .
+ 208 0022 0000      		nop
+ 209 0024 00C0      		rjmp .L11
+ 211               		.section	.text.__vector_17,"ax",@progbits
+ 212               	.global	__vector_17
+ 214               	__vector_17:
+ 215 0000 1F92      		push r1
+ 216 0002 0F92      		push r0
+ 217 0004 0FB6      		in r0,__SREG__
+ 218 0006 0F92      		push r0
+ 219 0008 1124      		clr __zero_reg__
+ 220 000a 8F93      		push r24
+ 221 000c 9F93      		push r25
+ 222               	/* prologue: Signal */
+ 223               	/* frame size = 0 */
+ 224               	/* stack size = 5 */
+ 225               	.L__stack_usage = 5
+ 226 000e 8BB1      		in r24,43-32
+ 227 0010 90E4      		ldi r25,lo8(64)
+ 228 0012 8927      		eor r24,r25
+ 229 0014 8BB9      		out 43-32,r24
+ 230 0016 8091 0000 		lds r24,time_array+16
+ 231 001a 8095      		com r24
+ 232 001c 8093 0000 		sts time_array+16,r24
+ 233 0020 8091 0000 		lds r24,time_array+17
+ 234 0024 8095      		com r24
+ 235 0026 8093 0000 		sts time_array+17,r24
+ 236 002a 8091 0000 		lds r24,time_array+8
+ 237 002e 8F5F      		subi r24,lo8(-(1))
+ 238 0030 8093 0000 		sts time_array+8,r24
+ 239 0034 8C33      		cpi r24,lo8(60)
+ 240 0036 00F0      		brlo .L13
+ 241 0038 1092 0000 		sts time_array+8,__zero_reg__
+ 242 003c 8091 0000 		lds r24,time_array+7
+ 243 0040 8F5F      		subi r24,lo8(-(1))
+ 244 0042 8093 0000 		sts time_array+7,r24
+ 245 0046 8C33      		cpi r24,lo8(60)
+ 246 0048 00F0      		brlo .L13
+ 247 004a 1092 0000 		sts time_array+7,__zero_reg__
+ 248 004e 8091 0000 		lds r24,time_array+6
+ 249 0052 8F5F      		subi r24,lo8(-(1))
+ 250 0054 8093 0000 		sts time_array+6,r24
+ 251 0058 8D30      		cpi r24,lo8(13)
+ 252 005a 00F0      		brlo .L13
+ 253 005c 81E0      		ldi r24,lo8(1)
+ 254 005e 8093 0000 		sts time_array+6,r24
+ 255               	.L13:
+ 256 0062 1092 8500 		sts 132+1,__zero_reg__
+ 257 0066 1092 8400 		sts 132,__zero_reg__
+ 258               	/* epilogue start */
+ 259 006a 9F91      		pop r25
+ 260 006c 8F91      		pop r24
+ 261 006e 0F90      		pop r0
+ 262 0070 0FBE      		out __SREG__,r0
+ 263 0072 0F90      		pop r0
+ 264 0074 1F90      		pop r1
+ 265 0076 1895      		reti
+ 267               		.section	.text.verify_buff,"ax",@progbits
+ 268               	.global	verify_buff
+ 270               	verify_buff:
+ 271               	/* prologue: function */
+ 272               	/* frame size = 0 */
+ 273               	/* stack size = 0 */
+ 274               	.L__stack_usage = 0
+ 275 0000 80E0      		ldi r24,lo8(0)
+ 276 0002 0E94 0000 		call ReadData
+ 277 0006 8F3F      		cpi r24,lo8(-1)
+ 278 0008 01F4      		brne .L21
+ 279 000a 81E0      		ldi r24,lo8(1)
+ 280 000c 0E94 0000 		call ReadData
+ 281 0010 8C30      		cpi r24,lo8(12)
+ 282 0012 01F0      		breq .L16
+ 283 0014 81E0      		ldi r24,lo8(1)
+ 284 0016 0E94 0000 		call ReadData
+ 285 001a 8C3A      		cpi r24,lo8(-84)
+ 286 001c 01F0      		breq .L16
+ 287 001e 81E0      		ldi r24,lo8(1)
+ 288 0020 0E94 0000 		call ReadData
+ 289 0024 8E3E      		cpi r24,lo8(-18)
+ 290 0026 01F0      		breq .L16
+ 291 0028 81E0      		ldi r24,lo8(1)
+ 292 002a 0E94 0000 		call ReadData
+ 293 002e 8A3A      		cpi r24,lo8(-86)
+ 294 0030 01F4      		brne .L17
+ 295               	.L16:
+ 296 0032 83E0      		ldi r24,lo8(3)
+ 297 0034 00C0      		rjmp .L22
+ 298               	.L17:
+ 299 0036 81E0      		ldi r24,lo8(1)
+ 300 0038 0E94 0000 		call ReadData
+ 301 003c 8B3C      		cpi r24,lo8(-53)
+ 302 003e 01F4      		brne .L21
+ 303 0040 82E2      		ldi r24,lo8(34)
+ 304               	.L22:
+ 305 0042 0E94 0000 		call ReadData
+ 306 0046 91E0      		ldi r25,lo8(1)
+ 307 0048 8A3B      		cpi r24,lo8(-70)
+ 308 004a 01F0      		breq .L15
+ 309               	.L21:
+ 310 004c 90E0      		ldi r25,lo8(0)
+ 311               	.L15:
+ 312 004e 892F      		mov r24,r25
+ 313               	/* epilogue start */
+ 314 0050 0895      		ret
+ 316               		.section	.text.display_mode,"ax",@progbits
+ 317               	.global	display_mode
+ 319               	display_mode:
+ 320 0000 AF92      		push r10
+ 321 0002 BF92      		push r11
+ 322 0004 CF92      		push r12
+ 323 0006 DF92      		push r13
+ 324 0008 EF92      		push r14
+ 325 000a FF92      		push r15
+ 326 000c 0F93      		push r16
+ 327 000e 1F93      		push r17
+ 328 0010 CF93      		push r28
+ 329 0012 DF93      		push r29
+ 330 0014 0F92      		push __tmp_reg__
+ 331 0016 CDB7      		in r28,__SP_L__
+ 332 0018 DEB7      		in r29,__SP_H__
+ 333               	/* prologue: function */
+ 334               	/* frame size = 1 */
+ 335               	/* stack size = 11 */
+ 336               	.L__stack_usage = 11
+ 337 001a 8C01      		movw r16,r24
+ 338 001c FB01      		movw r30,r22
+ 339 001e 8181      		ldd r24,Z+1
+ 340 0020 8C30      		cpi r24,lo8(12)
+ 341 0022 01F4      		brne .L24
+ 342 0024 8281      		ldd r24,Z+2
+ 343 0026 60E0      		ldi r22,lo8(0)
+ 344 0028 A801      		movw r20,r16
+ 345 002a 0E94 0000 		call hs_convert
+ 346 002e 8FE3      		 ldi r24,lo8(7999)
+ 347 0030 9FE1      	    ldi r25,hi8(7999)
+ 348 0032 0197      	    1:sbiw r24,1
+ 349 0034 01F4      	    brne 1b
+ 350 0036 00C0      		rjmp .
+ 351 0038 0000      		nop
+ 352 003a 70E2      		ldi r23,lo8(32)
+ 353 003c A72E      		mov r10,r23
+ 354 003e 7801      		movw r14,r16
+ 355 0040 0894      		sec
+ 356 0042 E11C      		adc r14,__zero_reg__
+ 357 0044 F11C      		adc r15,__zero_reg__
+ 358 0046 A2E0      		ldi r26,lo8(2)
+ 359 0048 CA2E      		mov r12,r26
+ 360 004a D12C      		mov r13,__zero_reg__
+ 361 004c C00E      		add r12,r16
+ 362 004e D11E      		adc r13,r17
+ 363               	.L25:
+ 364 0050 C801      		movw r24,r16
+ 365 0052 B701      		movw r22,r14
+ 366 0054 A601      		movw r20,r12
+ 367 0056 21E0      		ldi r18,lo8(1)
+ 368 0058 0E94 0000 		call Send_SPI_array
+ 369 005c AA94      		dec r10
+ 370 005e 01F4      		brne .L25
+ 371 0060 00C0      		rjmp .L23
+ 372               	.L24:
+ 373 0062 8B3C      		cpi r24,lo8(-53)
+ 374 0064 01F4      		brne .L27
+ 375 0066 8FE9      		 ldi r24,lo8(3999)
+ 376 0068 9FE0      	    ldi r25,hi8(3999)
+ 377 006a 0197      	    1:sbiw r24,1
+ 378 006c 01F4      	    brne 1b
+ 379 006e 00C0      		rjmp .
+ 380 0070 0000      		nop
+ 381 0072 52E0      		ldi r21,lo8(2)
+ 382 0074 A52E      		mov r10,r21
+ 383 0076 B12C      		mov r11,__zero_reg__
+ 384 0078 A60E      		add r10,r22
+ 385 007a B71E      		adc r11,r23
+ 386 007c 30E0      		ldi r19,lo8(0)
+ 387 007e 7801      		movw r14,r16
+ 388 0080 0894      		sec
+ 389 0082 E11C      		adc r14,__zero_reg__
+ 390 0084 F11C      		adc r15,__zero_reg__
+ 391 0086 62E0      		ldi r22,lo8(2)
+ 392 0088 C62E      		mov r12,r22
+ 393 008a D12C      		mov r13,__zero_reg__
+ 394 008c C00E      		add r12,r16
+ 395 008e D11E      		adc r13,r17
+ 396               	.L28:
+ 397 0090 F501      		movw r30,r10
+ 398 0092 8191      		ld r24,Z+
+ 399 0094 5F01      		movw r10,r30
+ 400 0096 60E0      		ldi r22,lo8(0)
+ 401 0098 A801      		movw r20,r16
+ 402 009a 3983      		std Y+1,r19
+ 403 009c 0E94 0000 		call hs_convert
+ 404 00a0 C801      		movw r24,r16
+ 405 00a2 B701      		movw r22,r14
+ 406 00a4 A601      		movw r20,r12
+ 407 00a6 21E0      		ldi r18,lo8(1)
+ 408 00a8 0E94 0000 		call Send_SPI_array
+ 409 00ac 3981      		ldd r19,Y+1
+ 410 00ae 3F5F      		subi r19,lo8(-(1))
+ 411 00b0 3032      		cpi r19,lo8(32)
+ 412 00b2 01F4      		brne .L28
+ 413 00b4 00C0      		rjmp .L23
+ 414               	.L27:
+ 415 00b6 81E0      		ldi r24,lo8(1)
+ 416 00b8 0E94 0000 		call ReadData
+ 417 00bc 8C3A      		cpi r24,lo8(-84)
+ 418 00be 01F4      		brne .L29
+ 419 00c0 8FE9      		 ldi r24,lo8(3999)
+ 420 00c2 9FE0      	    ldi r25,hi8(3999)
+ 421 00c4 0197      	    1:sbiw r24,1
+ 422 00c6 01F4      	    brne 1b
+ 423 00c8 00C0      		rjmp .
+ 424 00ca 0000      		nop
+ 425 00cc 37E0      		ldi r19,lo8(7)
+ 426 00ce 7801      		movw r14,r16
+ 427 00d0 0894      		sec
+ 428 00d2 E11C      		adc r14,__zero_reg__
+ 429 00d4 F11C      		adc r15,__zero_reg__
+ 430 00d6 42E0      		ldi r20,lo8(2)
+ 431 00d8 C42E      		mov r12,r20
+ 432 00da D12C      		mov r13,__zero_reg__
+ 433 00dc C00E      		add r12,r16
+ 434 00de D11E      		adc r13,r17
+ 435               	.L30:
+ 436 00e0 832F      		mov r24,r19
+ 437 00e2 60E0      		ldi r22,lo8(0)
+ 438 00e4 A801      		movw r20,r16
+ 439 00e6 3983      		std Y+1,r19
+ 440 00e8 0E94 0000 		call hs_convert
+ 441 00ec C801      		movw r24,r16
+ 442 00ee B701      		movw r22,r14
+ 443 00f0 A601      		movw r20,r12
+ 444 00f2 21E0      		ldi r18,lo8(1)
+ 445 00f4 0E94 0000 		call Send_SPI_array
+ 446 00f8 3981      		ldd r19,Y+1
+ 447 00fa 395F      		subi r19,lo8(-(7))
+ 448 00fc 373E      		cpi r19,lo8(-25)
+ 449 00fe 01F4      		brne .L30
+ 450 0100 00C0      		rjmp .L23
+ 451               	.L29:
+ 452 0102 81E0      		ldi r24,lo8(1)
+ 453 0104 0E94 0000 		call ReadData
+ 454 0108 8E3E      		cpi r24,lo8(-18)
+ 455 010a 01F0      		breq .+2
+ 456 010c 00C0      		rjmp .L23
+ 457 010e 8091 0000 		lds r24,flag
+ 458 0112 8823      		tst r24
+ 459 0114 01F4      		brne .L31
+ 460 0116 8BE0      		ldi r24,lo8(11)
+ 461 0118 8093 0000 		sts time_array+6,r24
+ 462 011c 83E1      		ldi r24,lo8(19)
+ 463 011e 8093 0000 		sts time_array+7,r24
+ 464 0122 1092 0000 		sts time_array+8,__zero_reg__
+ 465 0126 88EC      		ldi r24,lo8(-56)
+ 466 0128 8093 0000 		sts flag,r24
+ 467               	.L31:
+ 468 012c 8FEF      		ldi r24,lo8(-1)
+ 469 012e F801      		movw r30,r16
+ 470 0130 8083      		st Z,r24
+ 471 0132 1182      		std Z+1,__zero_reg__
+ 472 0134 8091 0000 		lds r24,time_array+6
+ 473 0138 6091 0000 		lds r22,time_array+7
+ 474 013c 0E94 0000 		call file_time
+ 475 0140 8FE9      		 ldi r24,lo8(3999)
+ 476 0142 9FE0      	    ldi r25,hi8(3999)
+ 477 0144 0197      	    1:sbiw r24,1
+ 478 0146 01F4      	    brne 1b
+ 479 0148 00C0      		rjmp .
+ 480 014a 0000      		nop
+ 481 014c 37E0      		ldi r19,lo8(7)
+ 482 014e E32E      		mov r14,r19
+ 483 0150 F12C      		mov r15,__zero_reg__
+ 484 0152 6801      		movw r12,r16
+ 485 0154 0894      		sec
+ 486 0156 C11C      		adc r12,__zero_reg__
+ 487 0158 D11C      		adc r13,__zero_reg__
+ 488               	.L34:
+ 489 015a 8091 0000 		lds r24,time_array+2
+ 490 015e 90E0      		ldi r25,lo8(0)
+ 491 0160 0E2C      		mov r0,r14
+ 492 0162 00C0      		rjmp 2f
+ 493 0164 9595      	1:	asr r25
+ 494 0166 8795      		ror r24
+ 495 0168 0A94      	2:	dec r0
+ 496 016a 02F4      		brpl 1b
+ 497 016c 80FF      		sbrs r24,0
+ 498 016e 00C0      		rjmp .L32
+ 499 0170 C801      		movw r24,r16
+ 500 0172 00C0      		rjmp .L51
+ 501               	.L32:
+ 502 0174 C601      		movw r24,r12
+ 503               	.L51:
+ 504 0176 B601      		movw r22,r12
+ 505 0178 A601      		movw r20,r12
+ 506 017a 21E0      		ldi r18,lo8(1)
+ 507 017c 0E94 0000 		call Send_SPI_array
+ 508 0180 0894      		sec
+ 509 0182 E108      		sbc r14,__zero_reg__
+ 510 0184 F108      		sbc r15,__zero_reg__
+ 511 0186 91E0      		ldi r25,lo8(1)
+ 512 0188 E916      		cp r14,r25
+ 513 018a F104      		cpc r15,__zero_reg__
+ 514 018c 01F4      		brne .L34
+ 515 018e 8FEF      		ldi r24,lo8(-1)
+ 516 0190 0E94 0000 		call Send_SPI_byte
+ 517 0194 8FEF      		ldi r24,lo8(-1)
+ 518 0196 0E94 0000 		call Send_SPI_byte
+ 519 019a 8FEF      		ldi r24,lo8(-1)
+ 520 019c 0E94 0000 		call Send_SPI_byte
+ 521 01a0 80E0      		ldi r24,lo8(0)
+ 522 01a2 0E94 0000 		call Send_SPI_byte
+ 523 01a6 80E0      		ldi r24,lo8(0)
+ 524 01a8 0E94 0000 		call Send_SPI_byte
+ 525 01ac 80E0      		ldi r24,lo8(0)
+ 526 01ae 0E94 0000 		call Send_SPI_byte
+ 527 01b2 27E0      		ldi r18,lo8(7)
+ 528 01b4 E22E      		mov r14,r18
+ 529 01b6 F12C      		mov r15,__zero_reg__
+ 530 01b8 6801      		movw r12,r16
+ 531 01ba 0894      		sec
+ 532 01bc C11C      		adc r12,__zero_reg__
+ 533 01be D11C      		adc r13,__zero_reg__
+ 534               	.L37:
+ 535 01c0 8091 0000 		lds r24,time_array+3
+ 536 01c4 90E0      		ldi r25,lo8(0)
+ 537 01c6 0E2C      		mov r0,r14
+ 538 01c8 00C0      		rjmp 2f
+ 539 01ca 9595      	1:	asr r25
+ 540 01cc 8795      		ror r24
+ 541 01ce 0A94      	2:	dec r0
+ 542 01d0 02F4      		brpl 1b
+ 543 01d2 80FF      		sbrs r24,0
+ 544 01d4 00C0      		rjmp .L35
+ 545 01d6 C601      		movw r24,r12
+ 546 01d8 B801      		movw r22,r16
+ 547 01da 00C0      		rjmp .L52
+ 548               	.L35:
+ 549 01dc C601      		movw r24,r12
+ 550 01de B601      		movw r22,r12
+ 551               	.L52:
+ 552 01e0 A601      		movw r20,r12
+ 553 01e2 21E0      		ldi r18,lo8(1)
+ 554 01e4 0E94 0000 		call Send_SPI_array
+ 555 01e8 0894      		sec
+ 556 01ea E108      		sbc r14,__zero_reg__
+ 557 01ec F108      		sbc r15,__zero_reg__
+ 558 01ee E3E0      		ldi r30,lo8(3)
+ 559 01f0 EE16      		cp r14,r30
+ 560 01f2 F104      		cpc r15,__zero_reg__
+ 561 01f4 01F4      		brne .L37
+ 562 01f6 8FEF      		ldi r24,lo8(-1)
+ 563 01f8 0E94 0000 		call Send_SPI_byte
+ 564 01fc 8FEF      		ldi r24,lo8(-1)
+ 565 01fe 0E94 0000 		call Send_SPI_byte
+ 566 0202 8FEF      		ldi r24,lo8(-1)
+ 567 0204 0E94 0000 		call Send_SPI_byte
+ 568 0208 80E0      		ldi r24,lo8(0)
+ 569 020a 0E94 0000 		call Send_SPI_byte
+ 570 020e 80E0      		ldi r24,lo8(0)
+ 571 0210 0E94 0000 		call Send_SPI_byte
+ 572 0214 80E0      		ldi r24,lo8(0)
+ 573 0216 0E94 0000 		call Send_SPI_byte
+ 574 021a 8091 0000 		lds r24,time_array+16
+ 575 021e 0E94 0000 		call Send_SPI_byte
+ 576 0222 80E0      		ldi r24,lo8(0)
+ 577 0224 0E94 0000 		call Send_SPI_byte
+ 578 0228 80E0      		ldi r24,lo8(0)
+ 579 022a 0E94 0000 		call Send_SPI_byte
+ 580 022e 8091 0000 		lds r24,time_array+16
+ 581 0232 0E94 0000 		call Send_SPI_byte
+ 582 0236 80E0      		ldi r24,lo8(0)
+ 583 0238 0E94 0000 		call Send_SPI_byte
+ 584 023c 80E0      		ldi r24,lo8(0)
+ 585 023e 0E94 0000 		call Send_SPI_byte
+ 586 0242 96E0      		ldi r25,lo8(6)
+ 587 0244 E92E      		mov r14,r25
+ 588 0246 F12C      		mov r15,__zero_reg__
+ 589 0248 6801      		movw r12,r16
+ 590 024a 0894      		sec
+ 591 024c C11C      		adc r12,__zero_reg__
+ 592 024e D11C      		adc r13,__zero_reg__
+ 593               	.L40:
+ 594 0250 8091 0000 		lds r24,time_array+4
+ 595 0254 90E0      		ldi r25,lo8(0)
+ 596 0256 0E2C      		mov r0,r14
+ 597 0258 00C0      		rjmp 2f
+ 598 025a 9595      	1:	asr r25
+ 599 025c 8795      		ror r24
+ 600 025e 0A94      	2:	dec r0
+ 601 0260 02F4      		brpl 1b
+ 602 0262 80FF      		sbrs r24,0
+ 603 0264 00C0      		rjmp .L38
+ 604 0266 C601      		movw r24,r12
+ 605 0268 B601      		movw r22,r12
+ 606 026a A801      		movw r20,r16
+ 607 026c 00C0      		rjmp .L53
+ 608               	.L38:
+ 609 026e C601      		movw r24,r12
+ 610 0270 B601      		movw r22,r12
+ 611 0272 A601      		movw r20,r12
+ 612               	.L53:
+ 613 0274 21E0      		ldi r18,lo8(1)
+ 614 0276 0E94 0000 		call Send_SPI_array
+ 615 027a 0894      		sec
+ 616 027c E108      		sbc r14,__zero_reg__
+ 617 027e F108      		sbc r15,__zero_reg__
+ 618 0280 FFEF      		ldi r31,lo8(-1)
+ 619 0282 EF16      		cp r14,r31
+ 620 0284 FFEF      		ldi r31,hi8(-1)
+ 621 0286 FF06      		cpc r15,r31
+ 622 0288 01F4      		brne .L40
+ 623 028a 8FEF      		ldi r24,lo8(-1)
+ 624 028c 0E94 0000 		call Send_SPI_byte
+ 625 0290 8FEF      		ldi r24,lo8(-1)
+ 626 0292 0E94 0000 		call Send_SPI_byte
+ 627 0296 8FEF      		ldi r24,lo8(-1)
+ 628 0298 0E94 0000 		call Send_SPI_byte
+ 629 029c 80E0      		ldi r24,lo8(0)
+ 630 029e 0E94 0000 		call Send_SPI_byte
+ 631 02a2 80E0      		ldi r24,lo8(0)
+ 632 02a4 0E94 0000 		call Send_SPI_byte
+ 633 02a8 80E0      		ldi r24,lo8(0)
+ 634 02aa 0E94 0000 		call Send_SPI_byte
+ 635 02ae 86E0      		ldi r24,lo8(6)
+ 636 02b0 E82E      		mov r14,r24
+ 637 02b2 F12C      		mov r15,__zero_reg__
+ 638 02b4 6801      		movw r12,r16
+ 639 02b6 0894      		sec
+ 640 02b8 C11C      		adc r12,__zero_reg__
+ 641 02ba D11C      		adc r13,__zero_reg__
+ 642               	.L43:
+ 643 02bc 8091 0000 		lds r24,time_array+5
+ 644 02c0 90E0      		ldi r25,lo8(0)
+ 645 02c2 0E2C      		mov r0,r14
+ 646 02c4 00C0      		rjmp 2f
+ 647 02c6 9595      	1:	asr r25
+ 648 02c8 8795      		ror r24
+ 649 02ca 0A94      	2:	dec r0
+ 650 02cc 02F4      		brpl 1b
+ 651 02ce 80FF      		sbrs r24,0
+ 652 02d0 00C0      		rjmp .L41
+ 653 02d2 C801      		movw r24,r16
+ 654 02d4 B801      		movw r22,r16
+ 655 02d6 00C0      		rjmp .L54
+ 656               	.L41:
+ 657 02d8 C601      		movw r24,r12
+ 658 02da B601      		movw r22,r12
+ 659               	.L54:
+ 660 02dc A601      		movw r20,r12
+ 661 02de 21E0      		ldi r18,lo8(1)
+ 662 02e0 0E94 0000 		call Send_SPI_array
+ 663 02e4 0894      		sec
+ 664 02e6 E108      		sbc r14,__zero_reg__
+ 665 02e8 F108      		sbc r15,__zero_reg__
+ 666 02ea 81E0      		ldi r24,lo8(1)
+ 667 02ec E816      		cp r14,r24
+ 668 02ee F104      		cpc r15,__zero_reg__
+ 669 02f0 01F4      		brne .L43
+ 670 02f2 8FEF      		ldi r24,lo8(-1)
+ 671 02f4 0E94 0000 		call Send_SPI_byte
+ 672 02f8 8FEF      		ldi r24,lo8(-1)
+ 673 02fa 0E94 0000 		call Send_SPI_byte
+ 674 02fe 8FEF      		ldi r24,lo8(-1)
+ 675 0300 0E94 0000 		call Send_SPI_byte
+ 676 0304 80E0      		ldi r24,lo8(0)
+ 677 0306 0E94 0000 		call Send_SPI_byte
+ 678 030a 80E0      		ldi r24,lo8(0)
+ 679 030c 0E94 0000 		call Send_SPI_byte
+ 680 0310 80E0      		ldi r24,lo8(0)
+ 681 0312 0E94 0000 		call Send_SPI_byte
+ 682               	.L23:
+ 683               	/* epilogue start */
+ 684 0316 0F90      		pop __tmp_reg__
+ 685 0318 DF91      		pop r29
+ 686 031a CF91      		pop r28
+ 687 031c 1F91      		pop r17
+ 688 031e 0F91      		pop r16
+ 689 0320 FF90      		pop r15
+ 690 0322 EF90      		pop r14
+ 691 0324 DF90      		pop r13
+ 692 0326 CF90      		pop r12
+ 693 0328 BF90      		pop r11
+ 694 032a AF90      		pop r10
+ 695 032c 0895      		ret
+ 697               		.section	.text.startup.main,"ax",@progbits
+ 698               	.global	main
+ 700               	main:
+ 701 0000 CF93      		push r28
+ 702 0002 DF93      		push r29
+ 703 0004 CDB7      		in r28,__SP_L__
+ 704 0006 DEB7      		in r29,__SP_H__
+ 705 0008 CC5C      		subi r28,lo8(-(-204))
+ 706 000a D040      		sbci r29,hi8(-(-204))
+ 707 000c 0FB6      		in __tmp_reg__,__SREG__
+ 708 000e F894      		cli
+ 709 0010 DEBF      		out __SP_H__,r29
+ 710 0012 0FBE      		out __SREG__,__tmp_reg__
+ 711 0014 CDBF      		out __SP_L__,r28
+ 712               	/* prologue: function */
+ 713               	/* frame size = 204 */
+ 714               	/* stack size = 206 */
+ 715               	.L__stack_usage = 206
+ 716 0016 80E8      		ldi r24,lo8(-128)
+ 717 0018 8093 6100 		sts 97,r24
+ 718 001c 1092 6100 		sts 97,__zero_reg__
+ 719 0020 80E4      		ldi r24,lo8(64)
+ 720 0022 8AB9      		out 42-32,r24
+ 721 0024 0E94 0000 		call Setup_SPI
+ 722 0028 0E94 0000 		call Setup_USART
+ 723 002c 0E94 0000 		call Setup_Timer
+ 724 0030 8FEF      		 ldi r24,lo8(639999)
+ 725 0032 93EC      	    ldi r25,hi8(639999)
+ 726 0034 A9E0      	    ldi r26,hlo8(639999)
+ 727 0036 8150      	    1:subi r24,1
+ 728 0038 9040      	    sbci r25,0
+ 729 003a A040      	    sbci r26,0
+ 730 003c 01F4      	    brne 1b
+ 731 003e 00C0      		rjmp .
+ 732 0040 0000      		nop
+ 733 0042 CE01      		movw r24,r28
+ 734 0044 8859      		subi r24,lo8(-(104))
+ 735 0046 9F4F      		sbci r25,hi8(-(104))
+ 736 0048 60E2      		ldi r22,lo8(32)
+ 737 004a 40E0      		ldi r20,lo8(0)
+ 738 004c 0E94 0000 		call Fill_array
+ 739 0050 CE01      		movw r24,r28
+ 740 0052 C696      		adiw r24,54
+ 741 0054 60E2      		ldi r22,lo8(32)
+ 742 0056 40E0      		ldi r20,lo8(0)
+ 743 0058 0E94 0000 		call Fill_array
+ 744 005c CE01      		movw r24,r28
+ 745 005e 0496      		adiw r24,4
+ 746 0060 60E2      		ldi r22,lo8(32)
+ 747 0062 40E0      		ldi r20,lo8(0)
+ 748 0064 0E94 0000 		call Fill_array
+ 749 0068 80E0      		ldi r24,lo8(0)
+ 750 006a 0E94 0000 		call set_buff_location
+ 751 006e 8FEF      		ldi r24,lo8(-1)
+ 752 0070 0E94 0000 		call PushData
+ 753 0074 8CE0      		ldi r24,lo8(12)
+ 754 0076 0E94 0000 		call PushData
+ 755 007a 07E0      		ldi r16,lo8(7)
+ 756               	.L56:
+ 757 007c 802F      		mov r24,r16
+ 758 007e 0E94 0000 		call PushData
+ 759 0082 095F      		subi r16,lo8(-(7))
+ 760 0084 073E      		cpi r16,lo8(-25)
+ 761 0086 01F4      		brne .L56
+ 762 0088 8AEB      		ldi r24,lo8(-70)
+ 763 008a 0E94 0000 		call PushData
+ 764               	/* #APP */
+ 765               	 ;  405 "main.c" 1
+ 766 008e 7894      		sei
+ 767               	 ;  0 "" 2
+ 768               	/* #NOAPP */
+ 769 0090 8FEF      		 ldi r24,lo8(639999)
+ 770 0092 93EC      	    ldi r25,hi8(639999)
+ 771 0094 A9E0      	    ldi r26,hlo8(639999)
+ 772 0096 8150      	    1:subi r24,1
+ 773 0098 9040      	    sbci r25,0
+ 774 009a A040      	    sbci r26,0
+ 775 009c 01F4      	    brne 1b
+ 776 009e 00C0      		rjmp .
+ 777 00a0 0000      		nop
+ 778 00a2 E0E0      		ldi r30,lo8(time_array+2)
+ 779 00a4 F0E0      		ldi r31,hi8(time_array+2)
+ 780 00a6 80E2      		ldi r24,lo8(32)
+ 781               	.L57:
+ 782 00a8 1192      		st Z+,__zero_reg__
+ 783 00aa 8150      		subi r24,lo8(-(-1))
+ 784 00ac 01F4      		brne .L57
+ 785 00ae 8CE0      		ldi r24,lo8(12)
+ 786 00b0 8093 0000 		sts time_array+6,r24
+ 787 00b4 8BE0      		ldi r24,lo8(11)
+ 788 00b6 8093 0000 		sts time_array+7,r24
+ 789 00ba 1092 0000 		sts time_array+8,__zero_reg__
+ 790 00be B0E4      		ldi r27,lo8(64)
+ 791 00c0 FB2E      		mov r15,r27
+ 792               	.L66:
+ 793 00c2 0E94 0000 		call verify_buff
+ 794 00c6 8823      		tst r24
+ 795 00c8 01F0      		breq .L66
+ 796 00ca 8BB1      		in r24,43-32
+ 797 00cc 8F25      		eor r24,r15
+ 798 00ce 8BB9      		out 43-32,r24
+ 799 00d0 8E01      		movw r16,r28
+ 800 00d2 0656      		subi r16,lo8(-(154))
+ 801 00d4 1F4F      		sbci r17,hi8(-(154))
+ 802 00d6 90E0      		ldi r25,lo8(0)
+ 803               	.L59:
+ 804 00d8 892F      		mov r24,r25
+ 805 00da C453      		subi r28,lo8(-204)
+ 806 00dc DF4F      		sbci r29,hi8(-204)
+ 807 00de 9883      		st Y,r25
+ 808 00e0 CC5C      		subi r28,lo8(204)
+ 809 00e2 D040      		sbci r29,hi8(204)
+ 810 00e4 0E94 0000 		call ReadData
+ 811 00e8 D801      		movw r26,r16
+ 812 00ea 8D93      		st X+,r24
+ 813 00ec 8D01      		movw r16,r26
+ 814 00ee C453      		subi r28,lo8(-204)
+ 815 00f0 DF4F      		sbci r29,hi8(-204)
+ 816 00f2 9881      		ld r25,Y
+ 817 00f4 CC5C      		subi r28,lo8(204)
+ 818 00f6 D040      		sbci r29,hi8(204)
+ 819 00f8 9F5F      		subi r25,lo8(-(1))
+ 820 00fa 9A30      		cpi r25,lo8(10)
+ 821 00fc 01F4      		brne .L59
+ 822 00fe CE01      		movw r24,r28
+ 823 0100 0196      		adiw r24,1
+ 824 0102 BE01      		movw r22,r28
+ 825 0104 6656      		subi r22,lo8(-(154))
+ 826 0106 7F4F      		sbci r23,hi8(-(154))
+ 827 0108 0E94 0000 		call display_mode
+ 828 010c 00C0      		rjmp .L66
+ 830               	.global	flag
+ 831               	.global	flag
+ 832               		.section .bss
+ 835               	flag:
+ 836 0000 00        		.skip 1,0
+ 837               		.comm time_array,35,1
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:2      *ABS*:0000003f __SREG__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:3      *ABS*:0000003e __SP_H__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:4      *ABS*:0000003d __SP_L__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:5      *ABS*:00000034 __CCP__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:13     .text.Setup_DDR:00000000 Setup_DDR
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:26     .text.Fill_array:00000000 Fill_array
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:46     .text.Setup_Timer:00000000 Setup_Timer
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:68     .text.file_time:00000000 file_time
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:13     .text.Setup_DDR:00000000 Setup_DDR
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:26     .text.Fill_array:00000000 Fill_array
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:46     .text.Setup_Timer:00000000 Setup_Timer
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:68     .text.file_time:00000000 file_time
                             *COM*:00000023 time_array
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:95     .text.__vector_25:00000000 __vector_25
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:165    .text.__vector_26:00000000 __vector_26
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:201    .text.__vector_default:00000000 __vector_default
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:230    .text.__vector_17:00000000 __vector_17
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:286    .text.verify_buff:00000000 verify_buff
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:335    .text.display_mode:00000000 display_mode
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:851    .bss:00000000 flag
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccFNgBLA.s:716    .text.startup.main:00000000 main
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:95     .text.__vector_25:00000000 __vector_25
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:149    .text.__vector_26:00000000 __vector_26
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:185    .text.__vector_default:00000000 __vector_default
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:214    .text.__vector_17:00000000 __vector_17
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:270    .text.verify_buff:00000000 verify_buff
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:319    .text.display_mode:00000000 display_mode
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:835    .bss:00000000 flag
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccVst4oJ.s:700    .text.startup.main:00000000 main
 
 UNDEFINED SYMBOLS
 __do_copy_data
 __do_clear_bss
 __udivmodqi4
-get_buff_location
-ReadData
 set_buff_location
 PushData
+ReadData
 hs_convert
 Send_SPI_array
 Send_SPI_byte

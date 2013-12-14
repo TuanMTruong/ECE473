@@ -7,7 +7,7 @@
 //the includes
 #include<avr/io.h>
 #include"usart.h"
-
+//#include<util/delay.h>
 //global variables
 uint8_t USART_BUFFER_CURRENT[26];
 uint8_t USART_BUFFER_PREC[26];
@@ -37,6 +37,7 @@ void Setup_USARTC(){
 void usart_send_byte(uint8_t data){
 	while(!(USARTC0.STATUS &USART_DREIF_bm)){}
 	USARTC0.DATA = data;
+    //_delay_ms(1);
 	return;
 }
 
