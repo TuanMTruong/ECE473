@@ -261,33 +261,66 @@
  272 0050 01F4      		brne .L29
  273 0052 8AEB      		ldi r24,lo8(-70)
  274 0054 0E94 0000 		call usart_send_byte
- 275 0058 E0E4      		ldi r30,lo8(1600)
- 276 005a F6E0      		ldi r31,hi8(1600)
- 277 005c 88E3      		ldi r24,lo8(56)
- 278 005e 808B      		std Z+16,r24
- 279 0060 818B      		std Z+17,r24
- 280               	.L30:
- 281 0062 00C0      		rjmp .L30
- 283               		.comm buttons,2,1
- 284               		.comm Encoders,10,1
- 285               		.comm SendData_buffer,50,1
+ 275 0058 8FEF      		 ldi r24,lo8(1279999)
+ 276 005a 97E8      	    ldi r25,hi8(1279999)
+ 277 005c A3E1      	    ldi r26,hlo8(1279999)
+ 278 005e 8150      	    1:subi r24,1
+ 279 0060 9040      	    sbci r25,0
+ 280 0062 A040      	    sbci r26,0
+ 281 0064 01F4      	    brne 1b
+ 282 0066 00C0      		rjmp .
+ 283 0068 0000      		nop
+ 284 006a 8FEF      		ldi r24,lo8(-1)
+ 285 006c 0E94 0000 		call usart_send_byte
+ 286 0070 8DEA      		ldi r24,lo8(-83)
+ 287 0072 0E94 0000 		call usart_send_byte
+ 288 0076 80E0      		ldi r24,lo8(0)
+ 289 0078 0E94 0000 		call usart_send_byte
+ 290 007c 8AEB      		ldi r24,lo8(-70)
+ 291 007e 0E94 0000 		call usart_send_byte
+ 292 0082 88E0      		ldi r24,lo8(8)
+ 293 0084 E0E6      		ldi r30,lo8(1632)
+ 294 0086 F6E0      		ldi r31,hi8(1632)
+ 295 0088 8583      		std Z+5,r24
+ 296 008a 0E94 0000 		call Setup_LCD
+ 297 008e 0E94 0000 		call LCD_update
+ 298               	.L35:
+ 299 0092 0E94 0000 		call Read_Buttons
+ 300 0096 C82F      		mov r28,r24
+ 301 0098 0E94 0000 		call check_buttons
+ 302 009c 8C2F      		mov r24,r28
+ 303 009e 0E94 0000 		call check_encoders
+ 304 00a2 9091 0000 		lds r25,SendData_buffer+2
+ 305 00a6 8091 0000 		lds r24,SendData_buffer+4
+ 306 00aa 9817      		cp r25,r24
+ 307 00ac 01F0      		breq .L35
+ 308 00ae 80E0      		ldi r24,lo8(SendData_buffer)
+ 309 00b0 90E0      		ldi r25,hi8(SendData_buffer)
+ 310 00b2 64E0      		ldi r22,lo8(4)
+ 311 00b4 0E94 0000 		call usart_send_string
+ 312 00b8 8091 0000 		lds r24,SendData_buffer+2
+ 313 00bc 8093 0000 		sts SendData_buffer+4,r24
+ 314 00c0 00C0      		rjmp .L35
+ 316               		.comm buttons,2,1
+ 317               		.comm Encoders,10,1
+ 318               		.comm SendData_buffer,50,1
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccI2bO9Z.s:2      *ABS*:0000003f __SREG__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccI2bO9Z.s:3      *ABS*:0000003e __SP_H__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccI2bO9Z.s:4      *ABS*:0000003d __SP_L__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccI2bO9Z.s:5      *ABS*:00000034 __CCP__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccI2bO9Z.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccI2bO9Z.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccI2bO9Z.s:13     .text.Setup_DDR:00000000 Setup_DDR
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccI2bO9Z.s:40     .text.set_mode:00000000 set_mode
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYEech5.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYEech5.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYEech5.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYEech5.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYEech5.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYEech5.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYEech5.s:13     .text.Setup_DDR:00000000 Setup_DDR
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYEech5.s:40     .text.set_mode:00000000 set_mode
                             *COM*:00000032 SendData_buffer
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccI2bO9Z.s:60     .text.check_mode:00000000 check_mode
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccI2bO9Z.s:72     .text.check_buttons:00000000 check_buttons
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYEech5.s:60     .text.check_mode:00000000 check_mode
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYEech5.s:72     .text.check_buttons:00000000 check_buttons
                             *COM*:00000002 buttons
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccI2bO9Z.s:147    .text.check_encoders:00000000 check_encoders
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYEech5.s:147    .text.check_encoders:00000000 check_encoders
                             *COM*:0000000a Encoders
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccI2bO9Z.s:234    .text.startup.main:00000000 main
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccYEech5.s:234    .text.startup.main:00000000 main
 
 UNDEFINED SYMBOLS
 __do_copy_data
@@ -299,3 +332,5 @@ Setup_SPIC
 Setup_SPID
 Setup_USARTC
 usart_send_byte
+Setup_LCD
+LCD_update

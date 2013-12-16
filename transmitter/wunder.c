@@ -178,8 +178,8 @@ void lcd_update(uint8_t (*fb)[y_size])
 	{
 		PORTD &= ~(1<<LCD_A0); // Set A0 to Low (Default)
 		SPI_MasterTransmit(0xB0 | i);
-		SPI_MasterTransmit(0x10);
-		SPI_MasterTransmit(0x04);
+		SPI_MasterTransmit(0x1F);
+		SPI_MasterTransmit(0x0F);
 		PORTD |= 1<<LCD_A0; // Set A0 to High 
 		for (j=128;j>0;j--)
 			SPI_MasterTransmit(fb[i][j-1]);

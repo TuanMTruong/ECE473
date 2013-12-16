@@ -20,6 +20,7 @@ ISR(TWI_vect){
 
     //switching between twi states
     //looks at the status regiter to figure out the state
+    
     switch (TWSR){
             
     //START States

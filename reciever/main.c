@@ -50,13 +50,14 @@
 #define RAINBOW2_MODE 	0xCA	//set operational mode to rainbow 2 mode
 #define TIME_MODE 	0xEE	//set operational to show time on LED
 #define TIME_MODE_2 	0xAA	//originally intended to speed up time
+#define RTC_REQUEST 0xAD
 
 #define LED_NUM 	32	//number of LED per strip
 
 #define HS_TESTING 	0	//Display full hue and saturation spectrum
-#define COLOR_TESTING 	0	//Full operational mode (does everything)
+#define COLOR_TESTING 	1	//Full operational mode (does everything)
 #define TIME_TESTING 	0	//Display time more on led 
-#define RTC_TEST 	1	//send rtc data over usart for debug of twi
+#define RTC_TEST 	0	//send rtc data over usart for debug of twi
 
 #define T_SEC 		8	
 #define T_MIN 		7
@@ -114,10 +115,10 @@ void Setup_Timer(void){
 void fill_time(uint8_t hour, uint8_t min){
 	uint8_t i =0;
 
-	uint8_t hour_1 = (hour / 10)<<2;
-	uint8_t hour_0 = (hour % 10)<<4;
-	uint8_t min_1 = (min /10);
-	uint8_t min_0 = (min % 10)<<2;
+	uint8_t hour_1 = (rtc_array[3] & 0x10)<<2;
+	uint8_t hour_0 = (rtc_array[3] & 0x0F)<<4;
+	uint8_t min_1 = (rtc_array[2] & 0xF0)>>4;
+	uint8_t min_0 = (rtc_array[2] & 0x0F)<<2;
 
 
 	time_array[2] = hour_1;
@@ -140,10 +141,11 @@ void rtc_write(uint8_t addr, uint8_t data){
 }
 
 void rtc_read(){
-    uint8_t send_array[2];
-    send_array[0] = 0x00;
-    twi_write(RTC_ADDR, send_array, 1);
-    twi_read(RTC_ADDR, rtc_array, 8);
+    //uint8_t send_array[2];
+    //send_array[0] = 0x00;
+   // twi_write(RTC_ADDR, send_array, 1);
+   // twi_read(RTC_ADDR, rtc_array, 8);
+    twi_read(RTC_ADDR, (rtc_array+1), 8);
     
 }
 
@@ -193,7 +195,14 @@ ISR(TIMER1_COMPA_vect){
 	if (time_array[T_SEC] > 59) {
 		time_array[T_SEC] =0;
 		time_array[T_MIN]++;
-		if (time_array[T_MIN] > 59) {
+        set_buff_location(0);
+        PushData(OPEN_COM);
+        PushData(RTC_REQUEST);
+        PushData(0x1E);
+        PushData(CLOSE_COM);
+        
+        /**
+      	if (time_array[T_MIN] > 59) {
 			time_array[T_MIN] =0;
 			time_array[T_HOUR]++;
 			if(time_array[T_HOUR]>12){
@@ -201,8 +210,10 @@ ISR(TIMER1_COMPA_vect){
 			}
 
 		}
+         **/
 	}
-
+    
+    
 
 	TCNT1=0;
 
@@ -215,7 +226,7 @@ ISR(TIMER1_COMPA_vect){
 uint8_t verify_buff(void){
 
 	if (ReadData(0) == OPEN_COM ){
-		if (ReadData(1) == COLOR_MODE || ReadData(1) == RAINBOW_MODE|| ReadData(1) == TIME_MODE || ReadData(1) ==TIME_MODE_2){
+		if (ReadData(1) == COLOR_MODE || ReadData(1) == RAINBOW_MODE|| ReadData(1) == TIME_MODE || ReadData(1) ==TIME_MODE_2 ||ReadData(1) == RTC_REQUEST){
 			if (ReadData(3) == CLOSE_COM){
 				return 1;
 			}
@@ -251,14 +262,14 @@ void display_mode(uint8_t *data, uint8_t *disp_buff){
 			Send_SPI_array(data, (data+1), (data+2),1);
 		}
 	}
-	else if (ReadData(1) == RAINBOW_MODE){
+	else if (*(disp_buff+1) == RAINBOW_MODE){
 		_delay_ms(1);
 		for(i=0; i<LED_NUM; i++){
 			hs_convert((i+1)*7, 0, data);
 			Send_SPI_array(data, (data+1), (data+2),1);
 		}
 	}
-	else if (ReadData(1) == TIME_MODE) {
+	else if (*(disp_buff+1) == TIME_MODE) {
 
 		if (flag == 0){
 			time_array[6] = 11;
@@ -351,6 +362,25 @@ void display_mode(uint8_t *data, uint8_t *disp_buff){
 		Send_SPI_byte(0x00);
 
 	}
+    
+    else if (*(disp_buff+1) == RTC_REQUEST) {
+        
+        twi_write(RTC_ADDR, rtc_array, 1);
+        _delay_ms(2);
+        rtc_read();
+		//send_byte_usart(0xff);
+        send_string_usart(rtc_array+1, 8);
+		_delay_ms(200);
+        
+        set_buff_location(0);
+        PushData(OPEN_COM);
+        PushData(TIME_MODE);
+        PushData(0x1E);
+        PushData(CLOSE_COM);
+
+
+        
+    }
 
 
 }
@@ -388,8 +418,8 @@ int main(void){
 
     time_array[6] = 12;
 	time_array[7] = 11;
-	
-	
+
+    //twi_write(RTC_ADDR, rtc_array, 1);
 	while(1){
 
 #if COLOR_TESTING
@@ -416,14 +446,14 @@ int main(void){
 
 #if RTC_TEST
 		//twi_write(0xD0, rtc_array, 1);
-		//twi_read(0xD0, (rtc_array+1), 1);
+		//twi_read(0xD0, (rtc_array+1), 8);
 		//send_byte_usart(rtc_array[1]);
 		//send_byte_usart(twi_array[2]);
         rtc_read();
-		//send_byte_usart('\n');
-        send_string_usart(rtc_array, 8);
+		//send_byte_usart(0xff);
+        send_string_usart(rtc_array+1, 8);
 		_delay_ms(200);
-
+        twi_write(RTC_ADDR, rtc_array, 1);
 #endif
 
 	}

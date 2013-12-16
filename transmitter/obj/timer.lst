@@ -35,44 +35,56 @@
   38               	/* frame size = 0 */
   39               	/* stack size = 0 */
   40               	.L__stack_usage = 0
-  41 0000 E0E0      		ldi r30,lo8(2560)
-  42 0002 FAE0      		ldi r31,hi8(2560)
+  41 0000 E0E0      		ldi r30,lo8(2304)
+  42 0002 F9E0      		ldi r31,hi8(2304)
   43 0004 85E0      		ldi r24,lo8(5)
   44 0006 8083      		st Z,r24
-  45 0008 83E1      		ldi r24,lo8(19)
+  45 0008 83E8      		ldi r24,lo8(-125)
   46 000a 8183      		std Z+1,r24
-  47               	/* epilogue start */
-  48 000c 0895      		ret
-  50               		.section	.text.Setup_Timer,"ax",@progbits
-  51               	.global	Setup_Timer
-  53               	Setup_Timer:
-  54               	/* prologue: function */
-  55               	/* frame size = 0 */
-  56               	/* stack size = 0 */
-  57               	.L__stack_usage = 0
-  58               	/* epilogue start */
-  59 0000 0895      		ret
-  61               		.section	.text.Setup_32KHz,"ax",@progbits
-  62               	.global	Setup_32KHz
-  64               	Setup_32KHz:
-  65               	/* prologue: function */
-  66               	/* frame size = 0 */
-  67               	/* stack size = 0 */
-  68               	.L__stack_usage = 0
-  69               	/* epilogue start */
-  70 0000 0895      		ret
+  47 000c 80E0      		ldi r24,lo8(1024)
+  48 000e 94E0      		ldi r25,hi8(1024)
+  49 0010 86A3      		std Z+38,r24
+  50 0012 97A3      		std Z+39,r25
+  51 0014 84EF      		ldi r24,lo8(500)
+  52 0016 91E0      		ldi r25,hi8(500)
+  53 0018 80A7      		std Z+40,r24
+  54 001a 91A7      		std Z+41,r25
+  55 001c 82A7      		std Z+42,r24
+  56 001e 93A7      		std Z+43,r25
+  57 0020 10A2      		std Z+32,__zero_reg__
+  58 0022 11A2      		std Z+33,__zero_reg__
+  59               	/* epilogue start */
+  60 0024 0895      		ret
+  62               		.section	.text.Setup_Timer,"ax",@progbits
+  63               	.global	Setup_Timer
+  65               	Setup_Timer:
+  66               	/* prologue: function */
+  67               	/* frame size = 0 */
+  68               	/* stack size = 0 */
+  69               	.L__stack_usage = 0
+  70               	/* epilogue start */
+  71 0000 0895      		ret
+  73               		.section	.text.Setup_32KHz,"ax",@progbits
+  74               	.global	Setup_32KHz
+  76               	Setup_32KHz:
+  77               	/* prologue: function */
+  78               	/* frame size = 0 */
+  79               	/* stack size = 0 */
+  80               	.L__stack_usage = 0
+  81               	/* epilogue start */
+  82 0000 0895      		ret
 DEFINED SYMBOLS
                             *ABS*:00000000 timer.c
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc2WFitL.s:2      *ABS*:0000003f __SREG__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc2WFitL.s:3      *ABS*:0000003e __SP_H__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc2WFitL.s:4      *ABS*:0000003d __SP_L__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc2WFitL.s:5      *ABS*:00000034 __CCP__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc2WFitL.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc2WFitL.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc2WFitL.s:13     .text.setClockTo32MHz:00000000 setClockTo32MHz
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc2WFitL.s:36     .text.Setup_PWM:00000000 Setup_PWM
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc2WFitL.s:53     .text.Setup_Timer:00000000 Setup_Timer
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc2WFitL.s:64     .text.Setup_32KHz:00000000 Setup_32KHz
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccZgEsFo.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccZgEsFo.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccZgEsFo.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccZgEsFo.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccZgEsFo.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccZgEsFo.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccZgEsFo.s:13     .text.setClockTo32MHz:00000000 setClockTo32MHz
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccZgEsFo.s:36     .text.Setup_PWM:00000000 Setup_PWM
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccZgEsFo.s:65     .text.Setup_Timer:00000000 Setup_Timer
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccZgEsFo.s:76     .text.Setup_32KHz:00000000 Setup_32KHz
 
 UNDEFINED SYMBOLS
 __do_copy_data

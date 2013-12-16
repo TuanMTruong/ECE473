@@ -23,28 +23,17 @@ Discarded input sections
  .bss           0x00000000        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avrxmega2/crtx32a4u.o
  .text          0x00000000        0x0 obj/main.o
  .bss           0x00000000        0x0 obj/main.o
- .text.set_mode
-                0x00000000       0x18 obj/main.o
  .text.check_mode
                 0x00000000        0x6 obj/main.o
- .text.check_buttons
-                0x00000000       0x88 obj/main.o
- .text.check_encoders
-                0x00000000       0xa8 obj/main.o
- COMMON         0x00000000       0x3e obj/main.o
  .text          0x00000000        0x0 obj/usart.o
  .bss           0x00000000        0x0 obj/usart.o
- .text.usart_send_string
-                0x00000000       0x3a obj/usart.o
  COMMON         0x00000000       0x34 obj/usart.o
  .text          0x00000000        0x0 obj/spi.o
  .bss           0x00000000        0x0 obj/spi.o
- .text.Read_Buttons
-                0x00000000       0x2a obj/spi.o
  .text          0x00000000        0x0 obj/timer.o
  .bss           0x00000000        0x0 obj/timer.o
  .text.Setup_PWM
-                0x00000000        0xe obj/timer.o
+                0x00000000       0x26 obj/timer.o
  .text.Setup_Timer
                 0x00000000        0x2 obj/timer.o
  .text.Setup_32KHz
@@ -187,7 +176,7 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x322
+.text           0x00000000      0x64a
  *(.vectors)
  .vectors       0x00000000      0x1fc /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avrxmega2/crtx32a4u.o
                 0x00000000                __vectors
@@ -375,29 +364,53 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a
  .text.Setup_DDR
                 0x00000234       0x22 obj/main.o
                 0x00000234                Setup_DDR
+ .text.set_mode
+                0x00000256       0x18 obj/main.o
+                0x00000256                set_mode
+ .text.check_buttons
+                0x0000026e       0x7c obj/main.o
+                0x0000026e                check_buttons
+ .text.check_encoders
+                0x000002ea       0xa8 obj/main.o
+                0x000002ea                check_encoders
  .text.startup.main
-                0x00000256       0x52 obj/main.o
-                0x00000256                main
+                0x00000392       0x9c obj/main.o
+                0x00000392                main
  .text.Setup_USARTC
-                0x000002a8       0x22 obj/usart.o
-                0x000002a8                Setup_USARTC
+                0x0000042e       0x22 obj/usart.o
+                0x0000042e                Setup_USARTC
  .text.usart_send_byte
-                0x000002ca        0xe obj/usart.o
-                0x000002ca                usart_send_byte
+                0x00000450        0xe obj/usart.o
+                0x00000450                usart_send_byte
+ .text.usart_send_string
+                0x0000045e       0x38 obj/usart.o
+                0x0000045e                usart_send_string
  .text.Setup_SPIC
-                0x000002d8       0x14 obj/spi.o
-                0x000002d8                Setup_SPIC
+                0x00000496       0x14 obj/spi.o
+                0x00000496                Setup_SPIC
  .text.Setup_SPID
-                0x000002ec       0x14 obj/spi.o
-                0x000002ec                Setup_SPID
+                0x000004aa       0x14 obj/spi.o
+                0x000004aa                Setup_SPID
+ .text.LCD_send_byte
+                0x000004be       0x20 obj/spi.o
+                0x000004be                LCD_send_byte
+ .text.Setup_LCD
+                0x000004de       0xba obj/spi.o
+                0x000004de                Setup_LCD
+ .text.LCD_update
+                0x00000598       0x66 obj/spi.o
+                0x00000598                LCD_update
+ .text.Read_Buttons
+                0x000005fe       0x2a obj/spi.o
+                0x000005fe                Read_Buttons
  .text.setClockTo32MHz
-                0x00000300       0x1e obj/timer.o
-                0x00000300                setClockTo32MHz
-                0x0000031e                . = ALIGN (0x2)
+                0x00000628       0x1e obj/timer.o
+                0x00000628                setClockTo32MHz
+                0x00000646                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000031e        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
-                0x0000031e                exit
-                0x0000031e                _exit
+ .fini9         0x00000646        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
+                0x00000646                exit
+                0x00000646                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -416,11 +429,11 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000031e        0x4 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
+ .fini0         0x00000646        0x4 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a(_exit.o)
  *(.fini0)
-                0x00000322                _etext = .
+                0x0000064a                _etext = .
 
-.data           0x00802000        0x0 load address 0x00000322
+.data           0x00802000        0x0 load address 0x0000064a
                 0x00802000                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00802000        0x0 /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/../../../../avr/lib/avrxmega2/crtx32a4u.o
@@ -441,21 +454,25 @@ LOAD /usr/local/CrossPack-AVR-20130212/lib/gcc/avr/4.6.2/avrxmega2/libgcc.a
                 0x00802000                _edata = .
                 0x00802000                PROVIDE (__data_end, .)
 
-.bss            0x00802000        0x0
+.bss            0x00802000       0x3e
                 0x00802000                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  *(COMMON)
-                0x00802000                PROVIDE (__bss_end, .)
-                0x00000322                __data_load_start = LOADADDR (.data)
-                0x00000322                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x00802000       0x3e obj/main.o
+                0x00802000                Encoders
+                0x0080200a                buttons
+                0x0080200c                SendData_buffer
+                0x0080203e                PROVIDE (__bss_end, .)
+                0x0000064a                __data_load_start = LOADADDR (.data)
+                0x0000064a                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00802000        0x0
-                0x00802000                PROVIDE (__noinit_start, .)
+.noinit         0x0080203e        0x0
+                0x0080203e                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00802000                PROVIDE (__noinit_end, .)
-                0x00802000                _end = .
-                0x00802000                PROVIDE (__heap_start, .)
+                0x0080203e                PROVIDE (__noinit_end, .)
+                0x0080203e                _end = .
+                0x0080203e                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -557,11 +574,16 @@ Cross Reference Table
 
 Symbol                                            File
 Encoders                                          obj/main.o
+LCD_send_byte                                     obj/spi.o
+LCD_update                                        obj/spi.o
+                                                  obj/main.o
 Read_Buttons                                      obj/spi.o
                                                   obj/main.o
 SendData_buffer                                   obj/main.o
 Setup_32KHz                                       obj/timer.o
 Setup_DDR                                         obj/main.o
+Setup_LCD                                         obj/spi.o
+                                                  obj/main.o
 Setup_PWM                                         obj/timer.o
 Setup_SPIC                                        obj/spi.o
                                                   obj/main.o

@@ -20,11 +20,15 @@ void setClockTo32MHz() {
 //Set up the PWM on PE0 (timer TCE0) to control the gain of mic amplifier
 void Setup_PWM(){
 	//Set up TCE0 CLKSEL clk/64
-	TCE0.CTRLA = TC_CLKSEL_DIV64_gc; //needs to be adjusted for RC value to create stable DC voltage
+	TCD0.CTRLA = TC_CLKSEL_DIV64_gc; //needs to be adjusted for RC value to create stable DC voltage
 	//Enable output compare on channel 0A for timmer
 	//Set up single slope PWM mode
-	TCE0.CTRLB = TC0_CCAEN_bm | TC_WGMODE_SINGLESLOPE_gc;
+	TCD0.CTRLB = TC0_CCDEN_bm | TC_WGMODE_SINGLESLOPE_gc;
 	//enable interrupt
+    TCD0.PER = 1024;
+    TCD0.CCA = 500;
+    TCD0.CCB = 500;
+    TCD0.CNT = 0;
     
     
 	return;

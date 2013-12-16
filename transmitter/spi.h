@@ -20,7 +20,7 @@
 #define LCD_RST_PIN	PIN1_bm
 #define LCD_SIG_PIN	PIN2_bm
 #define LCD_LIGHT_PIN	PIN3_bm
-
+#define LCD_E_PIN	PIN4_bm
 
 
 void Setup_SPIC(void);
@@ -29,3 +29,6 @@ void Setup_SPID(void);
 void Setup_SPIC(void);
 void Setup_SPID(void);
 uint8_t Read_Buttons(void);
+void LCD_send_byte(uint8_t data);
+void Setup_LCD(void);
+void LCD_update(void);

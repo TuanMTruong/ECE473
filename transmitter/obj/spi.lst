@@ -41,45 +41,234 @@
   44 000e 8093 C009 		sts 2496,r24
   45               	/* epilogue start */
   46 0012 0895      		ret
-  48               		.section	.text.Read_Buttons,"ax",@progbits
-  49               	.global	Read_Buttons
-  51               	Read_Buttons:
+  48               		.section	.text.LCD_send_byte,"ax",@progbits
+  49               	.global	LCD_send_byte
+  51               	LCD_send_byte:
   52               	/* prologue: function */
   53               	/* frame size = 0 */
   54               	/* stack size = 0 */
   55               	.L__stack_usage = 0
-  56 0000 E0E8      		ldi r30,lo8(1664)
-  57 0002 F6E0      		ldi r31,hi8(1664)
-  58 0004 84E0      		ldi r24,lo8(4)
-  59 0006 8683      		std Z+6,r24
-  60 0008 8583      		std Z+5,r24
-  61 000a 88E0      		ldi r24,lo8(8)
-  62 000c 8683      		std Z+6,r24
-  63 000e E0EC      		ldi r30,lo8(2240)
-  64 0010 F8E0      		ldi r31,hi8(2240)
-  65 0012 1382      		std Z+3,__zero_reg__
-  66               	.L4:
-  67 0014 8091 C208 		lds r24,2242
-  68 0018 87FF      		sbrs r24,7
-  69 001a 00C0      		rjmp .L4
-  70 001c 8091 C308 		lds r24,2243
-  71 0020 9CE0      		ldi r25,lo8(12)
-  72 0022 E0E8      		ldi r30,lo8(1664)
-  73 0024 F6E0      		ldi r31,hi8(1664)
-  74 0026 9583      		std Z+5,r25
-  75               	/* epilogue start */
-  76 0028 0895      		ret
+  56 0000 91E0      		ldi r25,lo8(1)
+  57 0002 E0E6      		ldi r30,lo8(1632)
+  58 0004 F6E0      		ldi r31,hi8(1632)
+  59 0006 9683      		std Z+6,r25
+  60 0008 E0EC      		ldi r30,lo8(2496)
+  61 000a F9E0      		ldi r31,hi8(2496)
+  62 000c 8383      		std Z+3,r24
+  63               	.L4:
+  64 000e 8091 C209 		lds r24,2498
+  65 0012 87FF      		sbrs r24,7
+  66 0014 00C0      		rjmp .L4
+  67 0016 81E0      		ldi r24,lo8(1)
+  68 0018 E0E6      		ldi r30,lo8(1632)
+  69 001a F6E0      		ldi r31,hi8(1632)
+  70 001c 8583      		std Z+5,r24
+  71               	/* epilogue start */
+  72 001e 0895      		ret
+  74               		.section	.text.Setup_LCD,"ax",@progbits
+  75               	.global	Setup_LCD
+  77               	Setup_LCD:
+  78 0000 CF93      		push r28
+  79 0002 DF93      		push r29
+  80               	/* prologue: function */
+  81               	/* frame size = 0 */
+  82               	/* stack size = 2 */
+  83               	.L__stack_usage = 2
+  84 0004 C0E6      		ldi r28,lo8(1632)
+  85 0006 D6E0      		ldi r29,hi8(1632)
+  86 0008 8FE0      		ldi r24,lo8(15)
+  87 000a 8983      		std Y+1,r24
+  88 000c E0E0      		ldi r30,lo8(1536)
+  89 000e F6E0      		ldi r31,hi8(1536)
+  90 0010 80E1      		ldi r24,lo8(16)
+  91 0012 8183      		std Z+1,r24
+  92 0014 98E0      		ldi r25,lo8(8)
+  93 0016 9583      		std Z+5,r25
+  94 0018 8E83      		std Y+6,r24
+  95 001a 8583      		std Z+5,r24
+  96 001c 82E0      		ldi r24,lo8(2)
+  97 001e 8D83      		std Y+5,r24
+  98 0020 84E0      		ldi r24,lo8(4)
+  99 0022 8E83      		std Y+6,r24
+ 100 0024 8FE3      		 ldi r24,lo8(-25537)
+ 101 0026 9CE9      	    ldi r25,hi8(-25537)
+ 102 0028 0197      	    1:sbiw r24,1
+ 103 002a 01F4      	    brne 1b
+ 104 002c 00C0      		rjmp .
+ 105 002e 0000      		nop
+ 106 0030 82EA      		ldi r24,lo8(-94)
+ 107 0032 0E94 0000 		call LCD_send_byte
+ 108 0036 92E0      		 ldi r25,lo8(2)
+ 109 0038 9A95      	    1:dec r25
+ 110 003a 01F4      	    brne 1b
+ 111 003c 00C0      		rjmp .
+ 112 003e 81EA      		ldi r24,lo8(-95)
+ 113 0040 0E94 0000 		call LCD_send_byte
+ 114 0044 82E0      		 ldi r24,lo8(2)
+ 115 0046 8A95      	    1:dec r24
+ 116 0048 01F4      	    brne 1b
+ 117 004a 00C0      		rjmp .
+ 118 004c 88EC      		ldi r24,lo8(-56)
+ 119 004e 0E94 0000 		call LCD_send_byte
+ 120 0052 92E0      		 ldi r25,lo8(2)
+ 121 0054 9A95      	    1:dec r25
+ 122 0056 01F4      	    brne 1b
+ 123 0058 00C0      		rjmp .
+ 124 005a 84EA      		ldi r24,lo8(-92)
+ 125 005c 0E94 0000 		call LCD_send_byte
+ 126 0060 82E0      		 ldi r24,lo8(2)
+ 127 0062 8A95      	    1:dec r24
+ 128 0064 01F4      	    brne 1b
+ 129 0066 00C0      		rjmp .
+ 130 0068 80E4      		ldi r24,lo8(64)
+ 131 006a 0E94 0000 		call LCD_send_byte
+ 132 006e 92E0      		 ldi r25,lo8(2)
+ 133 0070 9A95      	    1:dec r25
+ 134 0072 01F4      	    brne 1b
+ 135 0074 00C0      		rjmp .
+ 136 0076 85E2      		ldi r24,lo8(37)
+ 137 0078 0E94 0000 		call LCD_send_byte
+ 138 007c 82E0      		 ldi r24,lo8(2)
+ 139 007e 8A95      	    1:dec r24
+ 140 0080 01F4      	    brne 1b
+ 141 0082 00C0      		rjmp .
+ 142 0084 81E8      		ldi r24,lo8(-127)
+ 143 0086 0E94 0000 		call LCD_send_byte
+ 144 008a 92E0      		 ldi r25,lo8(2)
+ 145 008c 9A95      	    1:dec r25
+ 146 008e 01F4      	    brne 1b
+ 147 0090 00C0      		rjmp .
+ 148 0092 8FE6      		ldi r24,lo8(111)
+ 149 0094 0E94 0000 		call LCD_send_byte
+ 150 0098 82E0      		 ldi r24,lo8(2)
+ 151 009a 8A95      	    1:dec r24
+ 152 009c 01F4      	    brne 1b
+ 153 009e 00C0      		rjmp .
+ 154 00a0 8FE2      		ldi r24,lo8(47)
+ 155 00a2 0E94 0000 		call LCD_send_byte
+ 156 00a6 92E0      		 ldi r25,lo8(2)
+ 157 00a8 9A95      	    1:dec r25
+ 158 00aa 01F4      	    brne 1b
+ 159 00ac 00C0      		rjmp .
+ 160 00ae 8FEA      		ldi r24,lo8(-81)
+ 161 00b0 0E94 0000 		call LCD_send_byte
+ 162 00b4 82E0      		 ldi r24,lo8(2)
+ 163 00b6 8A95      	    1:dec r24
+ 164 00b8 01F4      	    brne 1b
+ 165 00ba 00C0      		rjmp .
+ 166 00bc 92E0      		 ldi r25,lo8(2)
+ 167 00be 9A95      	    1:dec r25
+ 168 00c0 01F4      	    brne 1b
+ 169 00c2 00C0      		rjmp .
+ 170 00c4 81E0      		ldi r24,lo8(1)
+ 171 00c6 8D83      		std Y+5,r24
+ 172               	/* epilogue start */
+ 173 00c8 DF91      		pop r29
+ 174 00ca CF91      		pop r28
+ 175 00cc 0895      		ret
+ 177               		.section	.text.LCD_update,"ax",@progbits
+ 178               	.global	LCD_update
+ 180               	LCD_update:
+ 181 0000 EF92      		push r14
+ 182 0002 FF92      		push r15
+ 183 0004 0F93      		push r16
+ 184 0006 1F93      		push r17
+ 185 0008 CF93      		push r28
+ 186 000a DF93      		push r29
+ 187               	/* prologue: function */
+ 188               	/* frame size = 0 */
+ 189               	/* stack size = 6 */
+ 190               	.L__stack_usage = 6
+ 191 000c 80E1      		ldi r24,lo8(16)
+ 192 000e E0E6      		ldi r30,lo8(1632)
+ 193 0010 F6E0      		ldi r31,hi8(1632)
+ 194 0012 8683      		std Z+6,r24
+ 195 0014 10E0      		ldi r17,lo8(0)
+ 196 0016 C0E6      		ldi r28,lo8(1632)
+ 197 0018 D6E0      		ldi r29,hi8(1632)
+ 198 001a 84E0      		ldi r24,lo8(4)
+ 199 001c E82E      		mov r14,r24
+ 200 001e 94E0      		ldi r25,lo8(4)
+ 201 0020 F92E      		mov r15,r25
+ 202               	.L9:
+ 203 0022 FE82      		std Y+6,r15
+ 204 0024 812F      		mov r24,r17
+ 205 0026 806B      		ori r24,lo8(-80)
+ 206 0028 0E94 0000 		call LCD_send_byte
+ 207 002c 80E1      		ldi r24,lo8(16)
+ 208 002e 0E94 0000 		call LCD_send_byte
+ 209 0032 80E0      		ldi r24,lo8(0)
+ 210 0034 0E94 0000 		call LCD_send_byte
+ 211 0038 ED82      		std Y+5,r14
+ 212 003a 08E0      		ldi r16,lo8(8)
+ 213               	.L8:
+ 214 003c 8FEF      		ldi r24,lo8(-1)
+ 215 003e 0E94 0000 		call LCD_send_byte
+ 216 0042 0150      		subi r16,lo8(-(-1))
+ 217 0044 01F4      		brne .L8
+ 218 0046 1F5F      		subi r17,lo8(-(1))
+ 219 0048 1830      		cpi r17,lo8(8)
+ 220 004a 01F4      		brne .L9
+ 221 004c 84E0      		ldi r24,lo8(4)
+ 222 004e E0E6      		ldi r30,lo8(1632)
+ 223 0050 F6E0      		ldi r31,hi8(1632)
+ 224 0052 8683      		std Z+6,r24
+ 225 0054 8FEA      		ldi r24,lo8(-81)
+ 226 0056 0E94 0000 		call LCD_send_byte
+ 227 005a 82E0      		 ldi r24,lo8(2)
+ 228 005c 8A95      	    1:dec r24
+ 229 005e 01F4      	    brne 1b
+ 230 0060 00C0      		rjmp .
+ 231               	/* epilogue start */
+ 232 0062 DF91      		pop r29
+ 233 0064 CF91      		pop r28
+ 234 0066 1F91      		pop r17
+ 235 0068 0F91      		pop r16
+ 236 006a FF90      		pop r15
+ 237 006c EF90      		pop r14
+ 238 006e 0895      		ret
+ 240               		.section	.text.Read_Buttons,"ax",@progbits
+ 241               	.global	Read_Buttons
+ 243               	Read_Buttons:
+ 244               	/* prologue: function */
+ 245               	/* frame size = 0 */
+ 246               	/* stack size = 0 */
+ 247               	.L__stack_usage = 0
+ 248 0000 E0E8      		ldi r30,lo8(1664)
+ 249 0002 F6E0      		ldi r31,hi8(1664)
+ 250 0004 84E0      		ldi r24,lo8(4)
+ 251 0006 8683      		std Z+6,r24
+ 252 0008 8583      		std Z+5,r24
+ 253 000a 88E0      		ldi r24,lo8(8)
+ 254 000c 8683      		std Z+6,r24
+ 255 000e E0EC      		ldi r30,lo8(2240)
+ 256 0010 F8E0      		ldi r31,hi8(2240)
+ 257 0012 1382      		std Z+3,__zero_reg__
+ 258               	.L13:
+ 259 0014 8091 C208 		lds r24,2242
+ 260 0018 87FF      		sbrs r24,7
+ 261 001a 00C0      		rjmp .L13
+ 262 001c 8091 C308 		lds r24,2243
+ 263 0020 9CE0      		ldi r25,lo8(12)
+ 264 0022 E0E8      		ldi r30,lo8(1664)
+ 265 0024 F6E0      		ldi r31,hi8(1664)
+ 266 0026 9583      		std Z+5,r25
+ 267               	/* epilogue start */
+ 268 0028 0895      		ret
 DEFINED SYMBOLS
                             *ABS*:00000000 spi.c
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:2      *ABS*:0000003f __SREG__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:3      *ABS*:0000003e __SP_H__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:4      *ABS*:0000003d __SP_L__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:5      *ABS*:00000034 __CCP__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:7      *ABS*:00000001 __zero_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:13     .text.Setup_SPIC:00000000 Setup_SPIC
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:32     .text.Setup_SPID:00000000 Setup_SPID
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cch0C1iS.s:51     .text.Read_Buttons:00000000 Read_Buttons
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc6PADxl.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc6PADxl.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc6PADxl.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc6PADxl.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc6PADxl.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc6PADxl.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc6PADxl.s:13     .text.Setup_SPIC:00000000 Setup_SPIC
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc6PADxl.s:32     .text.Setup_SPID:00000000 Setup_SPID
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc6PADxl.s:51     .text.LCD_send_byte:00000000 LCD_send_byte
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc6PADxl.s:77     .text.Setup_LCD:00000000 Setup_LCD
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc6PADxl.s:180    .text.LCD_update:00000000 LCD_update
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc6PADxl.s:243    .text.Read_Buttons:00000000 Read_Buttons
 
 UNDEFINED SYMBOLS
 __do_copy_data

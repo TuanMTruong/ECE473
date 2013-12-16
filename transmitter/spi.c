@@ -11,7 +11,9 @@
 #include<util/delay.h>
 
 
-//sets up the SPI on port C
+/******************************************************************/
+// Set up SPIC and SPID
+/******************************************************************/
 void Setup_SPIC(){
 	//Setup DDR for SPIC (1 = output, 0 = input)
 	PORTC.DIRSET = SS_PIN | SCK_PIN | MOSI_PIN;
@@ -30,61 +32,85 @@ void Setup_SPID(){
 	PORTD.DIRCLR = MISO_PIN;
     
 	//Set up for 2x speed, enabled, master, at 64 prescale
-	SPID.CTRL = SPI_CLK2X_bm | SPI_ENABLE_bm | SPI_MASTER_bm |SPI_PRESCALER_DIV64_gc;
+	SPID.CTRL =  SPI_CLK2X_bm |SPI_ENABLE_bm | SPI_MASTER_bm |SPI_PRESCALER_DIV64_gc;
 	
 	return;
     
 }
 
+/******************************************************************/
+// Send byte to LCD
+/******************************************************************/
 void LCD_send_byte(uint8_t data){
-	PORTD.OUTCLR = LCD_SS_PIN;
-
-	SPIC.DATA = 0x00;
-	while(!(SPIC.STATUS & SPI_IF_bm)){};
-
-	PORTD.OUTSET = LCD_SS_PIN;
+	PORTD.OUTCLR = LCD_SS_PIN;          //clear slave select
+	SPID.DATA = data;                   //send data
+	while(!(SPID.STATUS & SPI_IF_bm)){};//wait till data send out
+	PORTD.OUTSET = LCD_SS_PIN;          //set slave select
 }
 
 
+/******************************************************************/
+// Initialize LCD
+/******************************************************************/
 void Setup_LCD(){
 	//Setup DDR
 	PORTD.DIRSET = LCD_SS_PIN | LCD_RST_PIN | LCD_SIG_PIN | LCD_LIGHT_PIN;
-
-	PORTD.OUTSET = LCD_RST_PIN;
-	PORTD.OUTCLR = LCD_SIG_PIN;
-
+    PORTA.DIRSET = LCD_E_PIN;
+    PORTA.OUTSET = LCD_LIGHT_PIN;   //turn on back light
+    PORTD.OUTCLR = SS_PIN;          //set to write mode
+    PORTA.OUTSET = LCD_E_PIN;       //enable operation
+    PORTD.OUTSET = LCD_RST_PIN;     //set reset
+	PORTD.OUTCLR = LCD_SIG_PIN;     //A0 low
 	_delay_ms(20);
 
-	LCD_send_byte(0xA2);
+	LCD_send_byte(0xA2);    // 1/9 bias
 	_delay_us(1);
-	LCD_send_byte(0xA1);
+	LCD_send_byte(0xA1);    //ADC Select (revers)
 	_delay_us(1);
-	LCD_send_byte(0xC8);
+	LCD_send_byte(0xC8);    //COM output leve to reverse
 	_delay_us(1);
-	LCD_send_byte(0xA4);
+	LCD_send_byte(0xA4);    //Display all points normal
 	_delay_us(1);
-	LCD_send_byte(0x40);
+	LCD_send_byte(0x40);    //Display Start Line set
 	_delay_us(1);
-	LCD_send_byte(0x25);
+	LCD_send_byte(0x25);    //Internal resistor ration
 	_delay_us(1);
-	LCD_send_byte(0x81);
+	LCD_send_byte(0x81);    //Electronic volume mode set
 	_delay_us(1);
-	LCD_send_byte(0x6F);
+	LCD_send_byte(0x6F);    //electronic volume (contrast)
 	_delay_us(1);
-	LCD_send_byte(0x2F);
+	LCD_send_byte(0x2F);    //pwr ctrl set
 	_delay_us(1);
-	LCD_send_byte(0xAF);
-	_delay_us(1);
+	LCD_send_byte(0xAF);    //Display one
+	_delay_us(1);           //wait
+    _delay_us(1);
 
-	PORTD.OUTSET LCD_SS_PIN;
 }
 
-
+/******************************************************************/
+// write to lcd (still in progress)
+/******************************************************************/
 void LCD_update(){
-
+    uint8_t i, j;                   //counters
+    PORTD.OUTCLR = SS_PIN;          //set to writing mode
+    for (i=0; i<8; i++) {
+        PORTD.OUTCLR = LCD_SIG_PIN; //clear A0
+        LCD_send_byte(0xB0 | i);    //select page address
+        LCD_send_byte(0x10);        //Select MS column addr
+        LCD_send_byte(0x00);        //select LS column addr
+        PORTD.OUTSET = LCD_SIG_PIN; //set A0
+        for (j=8; j>0; j--) {
+            LCD_send_byte(0xff);    //write to RAM
+        }
+    }
+    
 }
 
-//read from SPIC which has the buttons and encoders on it via a shift register
+
+/******************************************************************/
+// Read SPIC for buttons and Encoders
+// return byte 4 bits encoder, 4 bits buttons
+/******************************************************************/
 uint8_t Read_Buttons(){
 	uint8_t temp;
 
