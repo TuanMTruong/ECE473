@@ -36,6 +36,54 @@ void Setup_SPID(){
     
 }
 
+void LCD_send_byte(uint8_t data){
+	PORTD.OUTCLR = LCD_SS_PIN;
+
+	SPIC.DATA = 0x00;
+	while(!(SPIC.STATUS & SPI_IF_bm)){};
+
+	PORTD.OUTSET = LCD_SS_PIN;
+}
+
+
+void Setup_LCD(){
+	//Setup DDR
+	PORTD.DIRSET = LCD_SS_PIN | LCD_RST_PIN | LCD_SIG_PIN | LCD_LIGHT_PIN;
+
+	PORTD.OUTSET = LCD_RST_PIN;
+	PORTD.OUTCLR = LCD_SIG_PIN;
+
+	_delay_ms(20);
+
+	LCD_send_byte(0xA2);
+	_delay_us(1);
+	LCD_send_byte(0xA1);
+	_delay_us(1);
+	LCD_send_byte(0xC8);
+	_delay_us(1);
+	LCD_send_byte(0xA4);
+	_delay_us(1);
+	LCD_send_byte(0x40);
+	_delay_us(1);
+	LCD_send_byte(0x25);
+	_delay_us(1);
+	LCD_send_byte(0x81);
+	_delay_us(1);
+	LCD_send_byte(0x6F);
+	_delay_us(1);
+	LCD_send_byte(0x2F);
+	_delay_us(1);
+	LCD_send_byte(0xAF);
+	_delay_us(1);
+
+	PORTD.OUTSET LCD_SS_PIN;
+}
+
+
+void LCD_update(){
+
+}
+
 //read from SPIC which has the buttons and encoders on it via a shift register
 uint8_t Read_Buttons(){
 	uint8_t temp;
