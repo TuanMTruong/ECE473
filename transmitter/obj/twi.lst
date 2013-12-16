@@ -7,14 +7,41 @@
    7               	__zero_reg__ = 1
    8               		.global __do_copy_data
    9               		.global __do_clear_bss
+  10               		.section	.text.Setup_TWI,"ax",@progbits
+  11               	.global	Setup_TWI
+  13               	Setup_TWI:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16               	/* stack size = 0 */
+  17               	.L__stack_usage = 0
+  18 0000 E0E6      		ldi r30,lo8(1632)
+  19 0002 F6E0      		ldi r31,hi8(1632)
+  20 0004 8181      		ldd r24,Z+1
+  21 0006 8061      		ori r24,lo8(16)
+  22 0008 8183      		std Z+1,r24
+  23 000a 8481      		ldd r24,Z+4
+  24 000c 8061      		ori r24,lo8(16)
+  25 000e 8483      		std Z+4,r24
+  26 0010 E0E8      		ldi r30,lo8(1152)
+  27 0012 F4E0      		ldi r31,hi8(1152)
+  28 0014 82E0      		ldi r24,lo8(2)
+  29 0016 8083      		st Z,r24
+  30 0018 88E0      		ldi r24,lo8(8)
+  31 001a 8183      		std Z+1,r24
+  32 001c 81E0      		ldi r24,lo8(1)
+  33 001e 8283      		std Z+2,r24
+  34 0020 8483      		std Z+4,r24
+  35               	/* epilogue start */
+  36 0022 0895      		ret
 DEFINED SYMBOLS
                             *ABS*:00000000 twi.c
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccQxBZJg.s:2      *ABS*:0000003f __SREG__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccQxBZJg.s:3      *ABS*:0000003e __SP_H__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccQxBZJg.s:4      *ABS*:0000003d __SP_L__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccQxBZJg.s:5      *ABS*:00000034 __CCP__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccQxBZJg.s:6      *ABS*:00000000 __tmp_reg__
-/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccQxBZJg.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc1Uuw31.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc1Uuw31.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc1Uuw31.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc1Uuw31.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc1Uuw31.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc1Uuw31.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//cc1Uuw31.s:13     .text.Setup_TWI:00000000 Setup_TWI
 
 UNDEFINED SYMBOLS
 __do_copy_data

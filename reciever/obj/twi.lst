@@ -1,0 +1,219 @@
+   1               		.file	"twi.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__ = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.section	.text.__vector_36,"ax",@progbits
+  11               	.global	__vector_36
+  13               	__vector_36:
+  14 0000 1F92      		push r1
+  15 0002 0F92      		push r0
+  16 0004 0FB6      		in r0,__SREG__
+  17 0006 0F92      		push r0
+  18 0008 1124      		clr __zero_reg__
+  19 000a 2F93      		push r18
+  20 000c 3F93      		push r19
+  21 000e 8F93      		push r24
+  22 0010 9F93      		push r25
+  23 0012 EF93      		push r30
+  24 0014 FF93      		push r31
+  25               	/* prologue: Signal */
+  26               	/* frame size = 0 */
+  27               	/* stack size = 9 */
+  28               	.L__stack_usage = 9
+  29 0016 8091 B900 		lds r24,185
+  30 001a 8832      		cpi r24,lo8(40)
+  31 001c 01F0      		breq .L4
+  32 001e 8932      		cpi r24,lo8(41)
+  33 0020 00F4      		brsh .L9
+  34 0022 8031      		cpi r24,lo8(16)
+  35 0024 01F0      		breq .L3
+  36 0026 8831      		cpi r24,lo8(24)
+  37 0028 01F0      		breq .L4
+  38 002a 8830      		cpi r24,lo8(8)
+  39 002c 01F0      		breq .+2
+  40 002e 00C0      		rjmp .L2
+  41 0030 00C0      		rjmp .L3
+  42               	.L9:
+  43 0032 8034      		cpi r24,lo8(64)
+  44 0034 01F0      		breq .L6
+  45 0036 8134      		cpi r24,lo8(65)
+  46 0038 00F4      		brsh .L10
+  47 003a 8833      		cpi r24,lo8(56)
+  48 003c 01F0      		breq .+2
+  49 003e 00C0      		rjmp .L2
+  50 0040 00C0      		rjmp .L16
+  51               	.L10:
+  52 0042 8035      		cpi r24,lo8(80)
+  53 0044 01F0      		breq .L7
+  54 0046 8835      		cpi r24,lo8(88)
+  55 0048 01F0      		breq .+2
+  56 004a 00C0      		rjmp .L2
+  57 004c 00C0      		rjmp .L17
+  58               	.L3:
+  59 004e 8091 0000 		lds r24,twi_addr
+  60 0052 8093 BB00 		sts 187,r24
+  61 0056 1092 0000 		sts twi_index.1396,__zero_reg__
+  62 005a 00C0      		rjmp .L13
+  63               	.L4:
+  64 005c 8091 0000 		lds r24,twi_index.1396
+  65 0060 9091 0000 		lds r25,twi_pkg_size
+  66 0064 8917      		cp r24,r25
+  67 0066 00F4      		brsh .L15
+  68 0068 E091 0000 		lds r30,twi_buffer
+  69 006c F091 0000 		lds r31,twi_buffer+1
+  70 0070 E80F      		add r30,r24
+  71 0072 F11D      		adc r31,__zero_reg__
+  72 0074 9081      		ld r25,Z
+  73 0076 9093 BB00 		sts 187,r25
+  74 007a 8F5F      		subi r24,lo8(-(1))
+  75 007c 8093 0000 		sts twi_index.1396,r24
+  76 0080 00C0      		rjmp .L13
+  77               	.L7:
+  78 0082 8091 0000 		lds r24,twi_index.1396
+  79 0086 E091 0000 		lds r30,twi_buffer
+  80 008a F091 0000 		lds r31,twi_buffer+1
+  81 008e E80F      		add r30,r24
+  82 0090 F11D      		adc r31,__zero_reg__
+  83 0092 9091 BB00 		lds r25,187
+  84 0096 9083      		st Z,r25
+  85 0098 8F5F      		subi r24,lo8(-(1))
+  86 009a 8093 0000 		sts twi_index.1396,r24
+  87               	.L6:
+  88 009e 8091 0000 		lds r24,twi_pkg_size
+  89 00a2 2091 0000 		lds r18,twi_index.1396
+  90 00a6 30E0      		ldi r19,lo8(0)
+  91 00a8 90E0      		ldi r25,lo8(0)
+  92 00aa 0197      		sbiw r24,1
+  93 00ac 2817      		cp r18,r24
+  94 00ae 3907      		cpc r19,r25
+  95 00b0 04F4      		brge .L13
+  96 00b2 85EC      		ldi r24,lo8(-59)
+  97 00b4 00C0      		rjmp .L14
+  98               	.L13:
+  99 00b6 85E8      		ldi r24,lo8(-123)
+ 100 00b8 00C0      		rjmp .L14
+ 101               	.L17:
+ 102 00ba 8091 0000 		lds r24,twi_index.1396
+ 103 00be E091 0000 		lds r30,twi_buffer
+ 104 00c2 F091 0000 		lds r31,twi_buffer+1
+ 105 00c6 E80F      		add r30,r24
+ 106 00c8 F11D      		adc r31,__zero_reg__
+ 107 00ca 8091 BB00 		lds r24,187
+ 108 00ce 8083      		st Z,r24
+ 109               	.L15:
+ 110 00d0 84E9      		ldi r24,lo8(-108)
+ 111 00d2 00C0      		rjmp .L14
+ 112               	.L16:
+ 113 00d4 85EA      		ldi r24,lo8(-91)
+ 114 00d6 00C0      		rjmp .L14
+ 115               	.L2:
+ 116 00d8 84E0      		ldi r24,lo8(4)
+ 117               	.L14:
+ 118 00da 8093 BC00 		sts 188,r24
+ 119               	/* epilogue start */
+ 120 00de FF91      		pop r31
+ 121 00e0 EF91      		pop r30
+ 122 00e2 9F91      		pop r25
+ 123 00e4 8F91      		pop r24
+ 124 00e6 3F91      		pop r19
+ 125 00e8 2F91      		pop r18
+ 126 00ea 0F90      		pop r0
+ 127 00ec 0FBE      		out __SREG__,r0
+ 128 00ee 0F90      		pop r0
+ 129 00f0 1F90      		pop r1
+ 130 00f2 1895      		reti
+ 132               		.section	.text.Setup_twi,"ax",@progbits
+ 133               	.global	Setup_twi
+ 135               	Setup_twi:
+ 136               	/* prologue: function */
+ 137               	/* frame size = 0 */
+ 138               	/* stack size = 0 */
+ 139               	.L__stack_usage = 0
+ 140 0000 8FEF      		ldi r24,lo8(-1)
+ 141 0002 8093 BB00 		sts 187,r24
+ 142 0006 1092 B900 		sts 185,__zero_reg__
+ 143 000a 8CE0      		ldi r24,lo8(12)
+ 144 000c 8093 B800 		sts 184,r24
+ 145               	/* epilogue start */
+ 146 0010 0895      		ret
+ 148               		.section	.text.twi_busy,"ax",@progbits
+ 149               	.global	twi_busy
+ 151               	twi_busy:
+ 152               	/* prologue: function */
+ 153               	/* frame size = 0 */
+ 154               	/* stack size = 0 */
+ 155               	.L__stack_usage = 0
+ 156 0000 8091 BC00 		lds r24,188
+ 157 0004 8170      		andi r24,lo8(1)
+ 158               	/* epilogue start */
+ 159 0006 0895      		ret
+ 161               		.section	.text.twi_write,"ax",@progbits
+ 162               	.global	twi_write
+ 164               	twi_write:
+ 165               	/* prologue: function */
+ 166               	/* frame size = 0 */
+ 167               	/* stack size = 0 */
+ 168               	.L__stack_usage = 0
+ 169               	.L21:
+ 170 0000 9091 BC00 		lds r25,188
+ 171 0004 90FD      		sbrc r25,0
+ 172 0006 00C0      		rjmp .L21
+ 173 0008 8E7F      		andi r24,lo8(-2)
+ 174 000a 8093 0000 		sts twi_addr,r24
+ 175 000e 7093 0000 		sts twi_buffer+1,r23
+ 176 0012 6093 0000 		sts twi_buffer,r22
+ 177 0016 4093 0000 		sts twi_pkg_size,r20
+ 178 001a 85EA      		ldi r24,lo8(-91)
+ 179 001c 8093 BC00 		sts 188,r24
+ 180               	/* epilogue start */
+ 181 0020 0895      		ret
+ 183               		.section	.text.twi_read,"ax",@progbits
+ 184               	.global	twi_read
+ 186               	twi_read:
+ 187               	/* prologue: function */
+ 188               	/* frame size = 0 */
+ 189               	/* stack size = 0 */
+ 190               	.L__stack_usage = 0
+ 191               	.L24:
+ 192 0000 9091 BC00 		lds r25,188
+ 193 0004 90FD      		sbrc r25,0
+ 194 0006 00C0      		rjmp .L24
+ 195 0008 8160      		ori r24,lo8(1)
+ 196 000a 8093 0000 		sts twi_addr,r24
+ 197 000e 7093 0000 		sts twi_buffer+1,r23
+ 198 0012 6093 0000 		sts twi_buffer,r22
+ 199 0016 4093 0000 		sts twi_pkg_size,r20
+ 200 001a 85EA      		ldi r24,lo8(-91)
+ 201 001c 8093 BC00 		sts 188,r24
+ 202               	/* epilogue start */
+ 203 0020 0895      		ret
+ 205               		.comm twi_pkg_size,1,1
+ 206               		.comm twi_addr,1,1
+ 207               		.comm twi_buffer,2,1
+ 208               		.lcomm twi_index.1396,1
+DEFINED SYMBOLS
+                            *ABS*:00000000 twi.c
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccG0wVnw.s:2      *ABS*:0000003f __SREG__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccG0wVnw.s:3      *ABS*:0000003e __SP_H__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccG0wVnw.s:4      *ABS*:0000003d __SP_L__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccG0wVnw.s:5      *ABS*:00000034 __CCP__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccG0wVnw.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccG0wVnw.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccG0wVnw.s:13     .text.__vector_36:00000000 __vector_36
+                            *COM*:00000001 twi_addr
+                             .bss:00000000 twi_index.1396
+                            *COM*:00000001 twi_pkg_size
+                            *COM*:00000002 twi_buffer
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccG0wVnw.s:135    .text.Setup_twi:00000000 Setup_twi
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccG0wVnw.s:151    .text.twi_busy:00000000 twi_busy
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccG0wVnw.s:164    .text.twi_write:00000000 twi_write
+/var/folders/5w/yy1wvsvs3qlc3rl7_n518bq80000gr/T//ccG0wVnw.s:186    .text.twi_read:00000000 twi_read
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

@@ -30,7 +30,8 @@ BOOTLOADER = BootloaderCDC
 SRC =	$(TARGET).c \
 	usart.c\
 	spi.c\
-	hs_converter.c
+	hs_converter.c\
+	twi.c
 # MCU name, you MUST set this to match the board you are using
 # type "make clean" after changing this, so all files will be rebuilt
 MCU = atmega32u4

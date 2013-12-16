@@ -7,7 +7,12 @@
 #define SDA_PIN		PIN0_bm
 #define SCL_PIN		PIN1_bm
 
-#define LCD_SS_PIN	PIN0_bm
-#define LCD_RST_PIN	PIN1_bm
-#define LCD_SIG_PIN	PIN2_bm
-#define LCD_LIGHT_PIN	PIN3_bm
+
+#define CPU_SPEED 32000000
+#define BAUDRATE    400000 
+
+#define TWI_BAUD(F_SYS, F_TWI) ((F_SYS / (2 * F_TWI)) - 5)
+#define TWI_BAUDSETTING TWI_BAUD(CPU_SPEED, BAUDRATE)
+
+
+void Setup_TWI(void);

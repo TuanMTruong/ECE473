@@ -10,8 +10,8 @@
 
 
 //global variables
-uint8_t dataring[buffersize];
-uint8_t ringcounter= 0;
+volatile uint8_t dataring[buffersize];
+volatile uint8_t ringcounter= 0;
 
 
 void Setup_USART(){
@@ -27,6 +27,19 @@ void Setup_USART(){
 	//set baud rate to 57.6K
 	UBRR1 = 16;
 	return;
+}
+
+void send_byte_usart(uint8_t data){
+    while ( !( UCSR1A & (1<<UDRE1)) ){}
+    UDR1 = data;
+}
+
+void send_string_usart(uint8_t *str, uint8_t len){
+    uint8_t i = 0;
+    for(i=0; i<len; i++){
+        send_byte_usart(*str);
+        str++;
+    }
 }
 
 //functions that access data buffer

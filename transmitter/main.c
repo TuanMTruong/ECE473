@@ -70,6 +70,7 @@
 #define OPEN_COM 0xFF
 #define CLOSE_COM 0xBA
 #define MODE 1
+#define OPEN 0
 
 //different color mode
 #define ADDR_MODE 0xCB
@@ -90,7 +91,8 @@
 
 //debug & test modes
 #define SPECTRUM_TEST 0
-#define RTC_TEST 0
+#define RTC_TEST 1
+#define BUTTONS_TEST 0
 
 
 //global variables
@@ -130,8 +132,14 @@ void Setup_DDR(void){
 
 uint8_t set_mode(uint8_t mode){
 	SendData_buffer[MODE] = mode;
+    SendData_buffer[OPEN] = OPEN_COM;
+    if (mode != ADDR_MODE){
+        SendData_buffer[3] = CLOSE_COM;
+    }
+    
 	return(SendData_buffer[MODE]);
 }
+
 
 uint8_t check_mode(void){
 	return(SendData_buffer[MODE]);
@@ -140,72 +148,6 @@ uint8_t check_mode(void){
 
 
 
-
-//reads buttons and figure what to do with it...
-/**
-void checkbutton(uint8_t *encoders, uint8_t *array){
-	uint8_t input =0;
-	uint8_t i =0;
-	input = Read_Buttons();
-	if(input & 0xF0){
-		if(input & (1<<RED_BUTTON)){
-			set_mode(COLOR_MODE);
-			*(array+2) = 35;
-		}
-		else if(input & (1<<GREEN_BUTTON)){
-			*(array+1) = COLOR_MODE;
-			*(array+2) = 108;
-		}
-		else if(input & (1<<BLUE_BUTTON)){
-			*(array+1) = COLOR_MODE;
-			*(array+2) = 180;
-		}
-		else if(input & (1<<YELLOW_BUTTON)){
-
-			//mode = FULL_COLOR;
-			*(array+1) = RAINBOW_MODE;
-
-
-		}
-
-
-		usart_send_string(array, 4);
-		_delay_ms(10);
-		//while((Read_Buttons() & 0xF0));
-
-	}
-
-
-	uint8_t *prev = encoders;
-	uint8_t *curr = encoders +1;
-	*curr = input & 0x03;
-
-	if (((*prev &0x03) == 0x03) &&  ((*curr&0x03)==0x02)){
-		*(array+2) = *(array+2) +2;
-		if (*(array+2) > 252) {
-			*(array+2) = 252;
-			return;
-		}
-		usart_send_string(array, 4);
-		//_delay_ms(5);
-	}
-	else if (((*prev &0x03) == 0x03) &&  ((*curr&0x03)==0x01)){
-		*(array+2) = *(array+2) -2;
-		if (*(array+2) < 1) {
-			*(array+2) = 1;
-			return;
-		}
-		usart_send_string(array, 4);
-		//_delay_ms(5);
-
-	}
-
-
-	*prev = *curr;
-
-
-}
-**/
 
 uint8_t check_buttons(uint8_t inputs){
 	buttons[curr_BN] = inputs & 0xF0;
@@ -227,24 +169,15 @@ uint8_t check_buttons(uint8_t inputs){
             if (check_mode() == RAINBOW_MODE){
                 set_mode(TIME_MODE);
             }
-            /**
-            else if (check_mode() == TIME_MODE){
-                set_mode(TIME_MODE_2);
-            }
-             **/
+  
             else{
 			set_mode(RAINBOW_MODE);
             }
             SendData_buffer[2] = 10;
-            //usart_send_string(SendData_buffer, 4);
-            //_delay_ms(500);
-            //return 0;
-			//SendData_buffer(2) = 30;
+       
 		}
 
-		//usart_send_string(SendData_buffer, 4);
         usart_send_string(SendData_buffer, 4);
-        //_delay_ms(10);
         buttons[prev_BN] =buttons[curr_BN];
         _delay_ms(1);
         while (!(Read_Buttons()&0xF0) == (0x00)) {}
@@ -344,25 +277,19 @@ int main(void){
 	array[2] = 0x00;
 	array[3] = CLOSE_COM;
 
-	/**
+	
 	//send a rainbow to start, i just wanna see if it works...
 	usart_send_byte(OPEN_COM);
-	_delay_ms(3);
 	usart_send_byte(ADDR_MODE);
-	_delay_ms(3);
 	for(i =0; i<LED_NUM; i++){
 		usart_send_byte((i+1) * 6);
-		_delay_ms(3);
 	}
 	usart_send_byte(CLOSE_COM);
-	**/
+	
+    PORTC.PIN0CTRL = PORT_OPC_WIREDANDPULL_gc;
+    PORTC.PIN1CTRL = PORT_OPC_WIREDANDPULL_gc;
 
-	//lets take this slow shall we?
-	_delay_ms(200);
-	SendData_buffer[0]= OPEN_COM;
-	SendData_buffer[1] = COLOR_MODE;
-	SendData_buffer[2] = 0;
-	SendData_buffer[3] = CLOSE_COM;
+	
 	while(1){
 #if SPECTRUM_TEST
 		array[1] = COLOR_MODE;
@@ -370,12 +297,18 @@ int main(void){
 		usart_send_string(array, 4);
 		_delay_ms(50);
 		temp++;
+#endif
+        
 
-
+#if RTC_TEST
+        
+        
+        
+#endif
         
         
 
-#else
+#if BUTTONS_TEST
 
 		//_delay_ms(50);
 		temp = Read_Buttons();

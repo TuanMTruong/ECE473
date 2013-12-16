@@ -16,6 +16,8 @@
 #define buffersize 50
 
 void Setup_USART(void);
+void send_byte_usart(uint8_t data);
+void send_string_usart(uint8_t *str, uint8_t len);
 
 void PushData(uint8_t data);
 uint8_t PopData(void);

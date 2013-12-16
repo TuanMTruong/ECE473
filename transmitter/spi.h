@@ -16,6 +16,12 @@
 #define FQD_RST_PIN	PIN0_bm
 #define FQD_AUDIO_PIN	PIN2_bm
 
+#define LCD_SS_PIN	PIN0_bm
+#define LCD_RST_PIN	PIN1_bm
+#define LCD_SIG_PIN	PIN2_bm
+#define LCD_LIGHT_PIN	PIN3_bm
+
+
 
 void Setup_SPIC(void);
 void Setup_SPID(void);
