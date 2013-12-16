@@ -114,7 +114,7 @@ void Setup_Timer(void){
 
 void fill_time(uint8_t hour, uint8_t min){
 
-	uint8_t hour_1 = (rtc_array[3] & 0x10)<<2;  //shift time data
+	uint8_t hour_1 = (rtc_array[3] & 0x10)>>2;  //shift time data
 	uint8_t hour_0 = (rtc_array[3] & 0x0F)<<4;  //shift time data
 	uint8_t min_1 = (rtc_array[2] & 0xF0)>>4;   //shift time data
 	uint8_t min_0 = (rtc_array[2] & 0x0F)<<2;   //shift..

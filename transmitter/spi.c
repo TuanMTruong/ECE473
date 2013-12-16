@@ -32,7 +32,7 @@ void Setup_SPID(){
 	PORTD.DIRCLR = MISO_PIN;
     
 	//Set up for 2x speed, enabled, master, at 64 prescale
-	SPID.CTRL =  SPI_CLK2X_bm |SPI_ENABLE_bm | SPI_MASTER_bm |SPI_PRESCALER_DIV64_gc;
+	SPID.CTRL =  SPI_ENABLE_bm | SPI_MASTER_bm |SPI_PRESCALER_DIV128_gc;
 	
 	return;
     
@@ -54,18 +54,20 @@ void LCD_send_byte(uint8_t data){
 /******************************************************************/
 void Setup_LCD(){
 	//Setup DDR
-	PORTD.DIRSET = LCD_SS_PIN | LCD_RST_PIN | LCD_SIG_PIN | LCD_LIGHT_PIN;
+	PORTD.DIRSET = LCD_SS_PIN | LCD_RST_PIN | LCD_SIG_PIN | LCD_LIGHT_PIN | LCD_WR_PIN;
     PORTA.DIRSET = LCD_E_PIN;
-    PORTA.OUTSET = LCD_LIGHT_PIN;   //turn on back light
-    PORTD.OUTCLR = SS_PIN;          //set to write mode
+    
+    PORTD.OUTSET = LCD_LIGHT_PIN;   //turn on back light
+    PORTD.OUTSET = LCD_WR_PIN;          //set to write mode
     PORTA.OUTSET = LCD_E_PIN;       //enable operation
+    
     PORTD.OUTSET = LCD_RST_PIN;     //set reset
 	PORTD.OUTCLR = LCD_SIG_PIN;     //A0 low
 	_delay_ms(20);
 
 	LCD_send_byte(0xA2);    // 1/9 bias
 	_delay_us(1);
-	LCD_send_byte(0xA1);    //ADC Select (revers)
+	LCD_send_byte(0xA0);    //ADC Select (revers)
 	_delay_us(1);
 	LCD_send_byte(0xC8);    //COM output leve to reverse
 	_delay_us(1);
@@ -77,7 +79,7 @@ void Setup_LCD(){
 	_delay_us(1);
 	LCD_send_byte(0x81);    //Electronic volume mode set
 	_delay_us(1);
-	LCD_send_byte(0x6F);    //electronic volume (contrast)
+	LCD_send_byte(0x10);    //electronic volume (contrast)
 	_delay_us(1);
 	LCD_send_byte(0x2F);    //pwr ctrl set
 	_delay_us(1);
@@ -92,15 +94,19 @@ void Setup_LCD(){
 /******************************************************************/
 void LCD_update(){
     uint8_t i, j;                   //counters
-    PORTD.OUTCLR = SS_PIN;          //set to writing mode
+    //PORTD.OUTCLR = LCD_WR_PIN;          //set to writing mode
     for (i=0; i<8; i++) {
         PORTD.OUTCLR = LCD_SIG_PIN; //clear A0
         LCD_send_byte(0xB0 | i);    //select page address
+        _delay_us(1);
         LCD_send_byte(0x10);        //Select MS column addr
+        _delay_us(1);
         LCD_send_byte(0x00);        //select LS column addr
+        _delay_us(1);
         PORTD.OUTSET = LCD_SIG_PIN; //set A0
-        for (j=8; j>0; j--) {
+        for (j=0; j<128; j++) {
             LCD_send_byte(0xff);    //write to RAM
+            _delay_us(1);
         }
     }
     

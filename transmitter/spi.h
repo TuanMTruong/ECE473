@@ -21,6 +21,7 @@
 #define LCD_SIG_PIN	PIN2_bm
 #define LCD_LIGHT_PIN	PIN3_bm
 #define LCD_E_PIN	PIN4_bm
+#define LCD_WR_PIN		PIN4_bm
 
 
 void Setup_SPIC(void);

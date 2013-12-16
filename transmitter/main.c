@@ -304,7 +304,7 @@ int main(void){
 
 	PORTD.OUTSET = LCD_LIGHT_PIN;   //lCD back light on
 	LCD_update();                   //write to LCD (WIP)
-
+    
 	while(1){
 #if SPECTRUM_TEST
 		array[1] = COLOR_MODE;
