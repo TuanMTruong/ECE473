@@ -11,10 +11,17 @@
 #include<stdlib.h>
 #include "twi.h"
 
-volatile uint8_t *twi_buffer;
-volatile uint8_t twi_addr;
-volatile uint8_t twi_pkg_size;
+/****************************************************************/
+//twi data buffers
+/****************************************************************/
+volatile uint8_t *twi_buffer;   //pointer to buffer
+volatile uint8_t twi_addr;      //addr of slave
+volatile uint8_t twi_pkg_size;  //how many bytes do you want?
 
+/****************************************************************/
+//twi interrupt that checks the twi status register for instructions
+//on next task.
+/****************************************************************/
 ISR(TWI_vect){
     static uint8_t twi_index;   //keeps buffer location
 
@@ -69,7 +76,9 @@ ISR(TWI_vect){
     
 }
 
+/****************************************************************/
 //sets up twi
+/****************************************************************/
 void Setup_twi(void){
     
     TWDR = 0xFF;    //clear all data on twi data register
@@ -78,13 +87,18 @@ void Setup_twi(void){
     
 }
 
+/****************************************************************/
+//chect twi is in interrupt, sending data, or someone else has the bus
+/****************************************************************/
 uint8_t twi_busy( void ){
     return ( TWCR & (1<<TWIE) );    // IF TWI Interrupt is enabled then the Transceiver is busy
 }
 
 
-
-
+/****************************************************************/
+//copy data to buffer to begin writing process, interrupt handles
+//acks and nacks for you.
+/****************************************************************/
 void twi_write(uint8_t addr, uint8_t *buffer, uint8_t length){
     
     while (twi_busy()) {}   //wait for twi if busy
@@ -97,8 +111,10 @@ void twi_write(uint8_t addr, uint8_t *buffer, uint8_t length){
     
 }
 
-
-
+/****************************************************************/
+//brign reading process, interrupt handles
+//acks and nacks for you.
+/****************************************************************/
 void twi_read(uint8_t addr, uint8_t *buffer, uint8_t length){
     while (twi_busy()) {}   //wait for twi if busy
     twi_addr = addr | TW_READ; //set up address of slave and read mode

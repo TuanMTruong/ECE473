@@ -50,7 +50,7 @@
 #define RAINBOW2_MODE 	0xCA	//set operational mode to rainbow 2 mode
 #define TIME_MODE 	0xEE	//set operational to show time on LED
 #define TIME_MODE_2 	0xAA	//originally intended to speed up time
-#define RTC_REQUEST 0xAD
+#define RTC_REQUEST 	0xAD
 
 #define LED_NUM 	32	//number of LED per strip
 
@@ -68,7 +68,7 @@
 // Global variables
 /****************************************************************/
 
-uint8_t rtc_array[10];
+uint8_t rtc_array[10];  //storage buffer for rtc data
 uint8_t time_array[35];
 uint8_t flag = 0;
 
@@ -102,7 +102,7 @@ void Setup_Timer(void){
 	TCCR1B = (1<<WGM12) | (4<<CS10);
 	TIMSK1 = 1<<OCIE1A;
 	TCNT1 = 0;
-	OCR1A = 60000;
+	OCR1A = 60000; //count closest to a second
 	return;
 
 }
@@ -113,18 +113,15 @@ void Setup_Timer(void){
 /****************************************************************/
 
 void fill_time(uint8_t hour, uint8_t min){
-	uint8_t i =0;
 
-	uint8_t hour_1 = (rtc_array[3] & 0x10)<<2;
-	uint8_t hour_0 = (rtc_array[3] & 0x0F)<<4;
-	uint8_t min_1 = (rtc_array[2] & 0xF0)>>4;
-	uint8_t min_0 = (rtc_array[2] & 0x0F)<<2;
-
-
-	time_array[2] = hour_1;
-	time_array[3] = hour_0;
-	time_array[4] = min_1;
-	time_array[5] = min_0;
+	uint8_t hour_1 = (rtc_array[3] & 0x10)<<2;  //shift time data
+	uint8_t hour_0 = (rtc_array[3] & 0x0F)<<4;  //shift time data
+	uint8_t min_1 = (rtc_array[2] & 0xF0)>>4;   //shift time data
+	uint8_t min_0 = (rtc_array[2] & 0x0F)<<2;   //shift..
+	time_array[2] = hour_1; //store 10th hour digit
+    time_array[3] = hour_0; //store first hour digit
+	time_array[4] = min_1;  //store 10th minute digit
+	time_array[5] = min_0;  //store
 
 
 	return;
@@ -134,30 +131,28 @@ void fill_time(uint8_t hour, uint8_t min){
 //RTC: read and write to RTC 
 /****************************************************************/
 void rtc_write(uint8_t addr, uint8_t data){
-    uint8_t send_array[2];
-    send_array[0] = addr;
-    send_array[1] = data;
-    twi_write(RTC_ADDR, send_array, 2);
+	uint8_t send_array[2];              //create temp array
+	send_array[0] = addr;               //set address of rtc data to writ to
+	send_array[1] = data;               //data for position
+	twi_write(RTC_ADDR, send_array, 2); //send via twi
 }
 
 void rtc_read(){
-    //uint8_t send_array[2];
-    //send_array[0] = 0x00;
-   // twi_write(RTC_ADDR, send_array, 1);
-   // twi_read(RTC_ADDR, rtc_array, 8);
-    twi_read(RTC_ADDR, (rtc_array+1), 8);
-    
+	//uint8_t send_array[2];
+	//send_array[0] = 0x00;
+	// twi_write(RTC_ADDR, send_array, 1);
+	// twi_read(RTC_ADDR, rtc_array, 8);
+	twi_read(RTC_ADDR, (rtc_array+1), 8);   //read rtc via twi
+
 }
 
 /****************************************************************/
 //USART ISR
 /****************************************************************/
 ISR(USART1_RX_vect){
-	//Store data
-	uint8_t temp = UDR1;
-
-	if(temp == OPEN_COM){
-		set_buff_location(0);
+	uint8_t temp = UDR1;        //store data in USART data buffer
+	if(temp == OPEN_COM){       //if reieved an open comunication byte
+		set_buff_location(0);   //set data buffer location to begining
 	}
 
 	//push, push, push, just keep pushing
@@ -183,6 +178,9 @@ ISR(BADISR_vect){
 
 /****************************************************************/
 //TIMER ISR
+//the goal of this was to keep track of seconds and minutes
+//but with the addition of an rtc it just needs to read thr rtc
+//minute or so
 /****************************************************************/
 ISR(TIMER1_COMPA_vect){
 	LED_PORT ^= 1<<LED_PIN;
@@ -195,25 +193,25 @@ ISR(TIMER1_COMPA_vect){
 	if (time_array[T_SEC] > 59) {
 		time_array[T_SEC] =0;
 		time_array[T_MIN]++;
-        set_buff_location(0);
-        PushData(OPEN_COM);
-        PushData(RTC_REQUEST);
-        PushData(0x1E);
-        PushData(CLOSE_COM);
-        
-        /**
-      	if (time_array[T_MIN] > 59) {
-			time_array[T_MIN] =0;
-			time_array[T_HOUR]++;
-			if(time_array[T_HOUR]>12){
-				time_array[T_HOUR] = 1;
-			}
+		set_buff_location(0);
+		PushData(OPEN_COM);
+		PushData(RTC_REQUEST);
+		PushData(0x1E);
+		PushData(CLOSE_COM);
 
-		}
-         **/
+		/**
+		  if (time_array[T_MIN] > 59) {
+		  time_array[T_MIN] =0;
+		  time_array[T_HOUR]++;
+		  if(time_array[T_HOUR]>12){
+		  time_array[T_HOUR] = 1;
+		  }
+
+		  }
+		 **/
 	}
-    
-    
+
+
 
 	TCNT1=0;
 
@@ -222,17 +220,18 @@ ISR(TIMER1_COMPA_vect){
 
 /****************************************************************/
 //check if data in buffer is in correct format
+//return 1 if buffer is in correct format
 /****************************************************************/
 uint8_t verify_buff(void){
 
-	if (ReadData(0) == OPEN_COM ){
+	if (ReadData(0) == OPEN_COM ){  //check for open communication byte
 		if (ReadData(1) == COLOR_MODE || ReadData(1) == RAINBOW_MODE|| ReadData(1) == TIME_MODE || ReadData(1) ==TIME_MODE_2 ||ReadData(1) == RTC_REQUEST){
-			if (ReadData(3) == CLOSE_COM){
+			if (ReadData(3) == CLOSE_COM){  //check for closing byte
 				return 1;
 			}
 		}
 		else if (ReadData(1) == ADDR_MODE){
-			if (ReadData(LED_NUM+2) == CLOSE_COM){
+			if (ReadData(LED_NUM+2) == CLOSE_COM){  //check for closing byte
 				return 1;
 			}
 		}
@@ -362,25 +361,25 @@ void display_mode(uint8_t *data, uint8_t *disp_buff){
 		Send_SPI_byte(0x00);
 
 	}
-    
-    else if (*(disp_buff+1) == RTC_REQUEST) {
-        
-        twi_write(RTC_ADDR, rtc_array, 1);
-        _delay_ms(2);
-        rtc_read();
+
+	else if (*(disp_buff+1) == RTC_REQUEST) {
+
+		twi_write(RTC_ADDR, rtc_array, 1);
+		_delay_ms(2);
+		rtc_read();
 		//send_byte_usart(0xff);
-        send_string_usart(rtc_array+1, 8);
+		send_string_usart(rtc_array+1, 8);
 		_delay_ms(200);
-        
-        set_buff_location(0);
-        PushData(OPEN_COM);
-        PushData(TIME_MODE);
-        PushData(0x1E);
-        PushData(CLOSE_COM);
+
+		set_buff_location(0);
+		PushData(OPEN_COM);
+		PushData(TIME_MODE);
+		PushData(0x1E);
+		PushData(CLOSE_COM);
 
 
-        
-    }
+
+	}
 
 
 }
@@ -395,7 +394,7 @@ int main(void){
 	Setup_SPI();                //enable SPI
 	Setup_USART();              //enable USART
 	Setup_Timer();              //enable Timer
-    Setup_twi();                //enable TWI
+	Setup_twi();                //enable TWI
 
 	uint8_t hs_rgb[3];          //used to store hue and saturation data
 	uint8_t disp_buff[50];      //buffer that data gets copied to for displaying
@@ -404,7 +403,7 @@ int main(void){
 
 	LED_PORT |= (1<<LED_PIN);   //give me a light to show you are alive
 
-    set_buff_location(0);       //reset data buffer to index 0
+	set_buff_location(0);       //reset data buffer to index 0
 	PushData(OPEN_COM);         //send open command
 	PushData(ADDR_MODE);        //set to addressable mode
 	for(i =0; i<LED_NUM; i++){
@@ -416,10 +415,10 @@ int main(void){
 	//let the interrupts interrupt
 	sei();
 
-    time_array[6] = 12;
+	time_array[6] = 12;
 	time_array[7] = 11;
 
-    //twi_write(RTC_ADDR, rtc_array, 1);
+	//twi_write(RTC_ADDR, rtc_array, 1);
 	while(1){
 
 #if COLOR_TESTING
@@ -437,7 +436,7 @@ int main(void){
 			//give 3 element array to store rgb temp data
 			display_mode(hs_rgb, disp_buff);
 
-			
+
 
 
 		}
@@ -449,11 +448,11 @@ int main(void){
 		//twi_read(0xD0, (rtc_array+1), 8);
 		//send_byte_usart(rtc_array[1]);
 		//send_byte_usart(twi_array[2]);
-        rtc_read();
+		rtc_read();
 		//send_byte_usart(0xff);
-        send_string_usart(rtc_array+1, 8);
+		send_string_usart(rtc_array+1, 8);
 		_delay_ms(200);
-        twi_write(RTC_ADDR, rtc_array, 1);
+		twi_write(RTC_ADDR, rtc_array, 1);
 #endif
 
 	}
